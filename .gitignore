@@ -13,3 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# 本机 AI 协作文档，不提交到 Android 代码仓库。
+/AGENTS.md
+/docs/
