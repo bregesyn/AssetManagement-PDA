@@ -2,6 +2,26 @@ plugins {
     id 'com.android.application'
 }
 
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { localProperties.load(it) }
+}
+def debugBaseUrl = providers.gradleProperty("PDA_DEBUG_BASE_URL")
+        .getOrElse(localProperties.getProperty("PDA_DEBUG_BASE_URL", "http://192.168.0.105:8030/"))
+        .trim()
+if (!debugBaseUrl.endsWith("/")) {
+    throw new GradleException("PDA_DEBUG_BASE_URL 必须以 / 结尾")
+}
+
+def releaseBaseUrl = providers.gradleProperty("PDA_RELEASE_BASE_URL").getOrElse("")
+def uhfOutputPower = providers.gradleProperty("PDA_UHF_OUTPUT_POWER")
+        .map { Integer.parseInt(it) }
+        .getOrElse(-1)
+def uhfWorkArea = providers.gradleProperty("PDA_UHF_WORK_AREA")
+        .map { Integer.parseInt(it) }
+        .getOrElse(-1)
+
 android {
     namespace 'com.ruoyi.asset.pda'
     compileSdk 34
@@ -14,10 +34,20 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // 未完成 C6200 真机标定前保持未配置，禁止把厂商 Demo 参数当成生产事实。
+        buildConfigField "int", "UHF_OUTPUT_POWER", uhfOutputPower.toString()
+        buildConfigField "int", "UHF_WORK_AREA", uhfWorkArea.toString()
     }
 
     buildTypes {
+        debug {
+            // 命令行 -P 优先，其次读取本机 local.properties，最后使用已确认的家庭开发地址。
+            buildConfigField "String", "BASE_URL", '"' + debugBaseUrl + '"'
+        }
         release {
+            // Release 地址尚未确认；空值会由网络客户端在应用启动时明确拒绝。
+            buildConfigField "String", "BASE_URL", '"' + releaseBaseUrl + '"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -27,6 +57,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildFeatures {
+        buildConfig true
         viewBinding true
     }
 }
@@ -38,7 +69,14 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.7.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.google.code.gson:gson:2.14.0'
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
