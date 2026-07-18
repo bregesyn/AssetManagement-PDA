@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pda_screen_padding">20dp</dimen>
+    <dimen name="pda_card_padding">18dp</dimen>
+    <dimen name="pda_section_spacing">18dp</dimen>
+    <dimen name="pda_item_spacing">12dp</dimen>
+    <dimen name="pda_small_spacing">8dp</dimen>
+    <dimen name="pda_card_radius">14dp</dimen>
+    <dimen name="pda_touch_height">52dp</dimen>
+    <dimen name="pda_title_size">28sp</dimen>
+    <dimen name="pda_section_title_size">20sp</dimen>
+    <dimen name="pda_body_size">16sp</dimen>
+    <dimen name="pda_caption_size">14sp</dimen>
+</resources>

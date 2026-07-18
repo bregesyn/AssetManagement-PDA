@@ -15,12 +15,12 @@ if (!debugBaseUrl.endsWith("/")) {
 }
 
 def releaseBaseUrl = providers.gradleProperty("PDA_RELEASE_BASE_URL").getOrElse("")
-def uhfOutputPower = providers.gradleProperty("PDA_UHF_OUTPUT_POWER")
-        .map { Integer.parseInt(it) }
-        .getOrElse(-1)
-def uhfWorkArea = providers.gradleProperty("PDA_UHF_WORK_AREA")
-        .map { Integer.parseInt(it) }
-        .getOrElse(-1)
+def uhfOutputPower = Integer.parseInt(providers.gradleProperty("PDA_UHF_OUTPUT_POWER")
+        .getOrElse(localProperties.getProperty("PDA_UHF_OUTPUT_POWER", "-1"))
+        .trim())
+def uhfWorkArea = Integer.parseInt(providers.gradleProperty("PDA_UHF_WORK_AREA")
+        .getOrElse(localProperties.getProperty("PDA_UHF_WORK_AREA", "-1"))
+        .trim())
 
 android {
     namespace 'com.ruoyi.asset.pda'
@@ -35,14 +35,14 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        // 未完成 C6200 真机标定前保持未配置，禁止把厂商 Demo 参数当成生产事实。
+        // -P 优先于本机 local.properties；缺少显式配置时保持 -1，禁止误用未标定参数。
         buildConfigField "int", "UHF_OUTPUT_POWER", uhfOutputPower.toString()
         buildConfigField "int", "UHF_WORK_AREA", uhfWorkArea.toString()
     }
 
     buildTypes {
         debug {
-            // 命令行 -P 优先，其次读取本机 local.properties，最后使用已确认的家庭开发地址。
+            // 命令行 -P 优先，其次读取本机 local.properties，最后使用已确认的开发地址。
             buildConfigField "String", "BASE_URL", '"' + debugBaseUrl + '"'
         }
         release {
@@ -77,6 +77,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.14.0'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
+    testImplementation 'androidx.arch.core:core-testing:2.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }

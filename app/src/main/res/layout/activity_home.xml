@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".feature.home.HomeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/pda_screen_padding">
+
+        <LinearLayout
+            android:id="@+id/homeLoadingContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="96dp"
+            android:paddingBottom="96dp">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:indeterminate="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:text="@string/home_loading"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_body_size" />
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/homeErrorContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/pda_card_background"
+            app:cardCornerRadius="@dimen/pda_card_radius"
+            app:strokeColor="@color/pda_card_stroke"
+            app:strokeWidth="1dp"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="@dimen/pda_card_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_load_failed"
+                    android:textColor="@color/pda_text_primary"
+                    android:textSize="@dimen/pda_section_title_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/homeErrorText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/pda_small_spacing"
+                    android:accessibilityLiveRegion="polite"
+                    android:gravity="center"
+                    android:textColor="@color/pda_error"
+                    android:textSize="@dimen/pda_body_size"
+                    tools:text="网络连接失败，请检查网络后重试" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/homeRetryButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pda_touch_height"
+                    android:layout_marginTop="@dimen/pda_section_spacing"
+                    android:text="@string/common_retry" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/homeSwitchAccountButton"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pda_touch_height"
+                    android:layout_marginTop="@dimen/pda_small_spacing"
+                    android:text="@string/login_switch_account" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:id="@+id/homeContentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/pda_primary"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/pda_card_padding">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/home_title"
+                            android:textColor="@color/pda_card_background"
+                            android:textSize="@dimen/pda_title_size"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/logoutProgress"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_marginEnd="@dimen/pda_small_spacing"
+                            android:indeterminate="true"
+                            android:visibility="gone"
+                            app:indicatorColor="@color/pda_card_background"
+                            app:trackColor="@color/pda_primary_dark"
+                            tools:visibility="visible" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/logoutButton"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/pda_touch_height"
+                            android:text="@string/logout_action"
+                            android:textColor="@color/pda_card_background" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/homeUserText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_item_spacing"
+                        android:textColor="@color/pda_card_background"
+                        android:textSize="@dimen/pda_body_size"
+                        tools:text="用户：测试用户（ceshi）" />
+
+                    <TextView
+                        android:id="@+id/homeDeptText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/pda_card_background"
+                        android:textSize="@dimen/pda_caption_size"
+                        tools:text="部门：资产管理部" />
+
+                    <TextView
+                        android:id="@+id/homeServerTimeText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/pda_card_background"
+                        android:textSize="@dimen/pda_caption_size"
+                        tools:text="服务时间：2026-07-17 18:30:00" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_section_spacing"
+                android:text="@string/home_task_section"
+                android:textColor="@color/pda_text_primary"
+                android:textSize="@dimen/pda_section_title_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/home_task_hint"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_caption_size" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/assetIdentifyCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:alpha="0.72"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/pda_card_padding">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_asset_identify"
+                        android:textColor="@color/pda_text_primary"
+                        android:textSize="@dimen/pda_body_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/home_asset_identify_desc"
+                        android:textColor="@color/pda_text_secondary"
+                        android:textSize="@dimen/pda_caption_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:text="@string/home_task_pending"
+                        android:textColor="@color/pda_pending"
+                        android:textSize="@dimen/pda_caption_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/tagCreateCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:alpha="0.72"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="1dp"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/pda_card_padding">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_tag_create"
+                        android:textColor="@color/pda_text_primary"
+                        android:textSize="@dimen/pda_body_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/home_tag_create_desc"
+                        android:textColor="@color/pda_text_secondary"
+                        android:textSize="@dimen/pda_caption_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:text="@string/home_task_pending"
+                        android:textColor="@color/pda_pending"
+                        android:textSize="@dimen/pda_caption_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/rfidBindCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:alpha="0.72"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="1dp"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/pda_card_padding">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_rfid_bind"
+                        android:textColor="@color/pda_text_primary"
+                        android:textSize="@dimen/pda_body_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/home_rfid_bind_desc"
+                        android:textColor="@color/pda_text_secondary"
+                        android:textSize="@dimen/pda_caption_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:text="@string/home_task_pending"
+                        android:textColor="@color/pda_pending"
+                        android:textSize="@dimen/pda_caption_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/rfidUnbindCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:alpha="0.72"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="1dp"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/pda_card_padding">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_rfid_unbind"
+                        android:textColor="@color/pda_text_primary"
+                        android:textSize="@dimen/pda_body_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/home_rfid_unbind_desc"
+                        android:textColor="@color/pda_text_secondary"
+                        android:textSize="@dimen/pda_caption_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:text="@string/home_task_pending"
+                        android:textColor="@color/pda_pending"
+                        android:textSize="@dimen/pda_caption_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/inventoryCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:layout_marginBottom="@dimen/pda_section_spacing"
+                android:alpha="0.72"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="1dp"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/pda_card_padding">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_inventory"
+                        android:textColor="@color/pda_text_primary"
+                        android:textSize="@dimen/pda_body_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/home_inventory_desc"
+                        android:textColor="@color/pda_text_secondary"
+                        android:textSize="@dimen/pda_caption_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:text="@string/home_task_pending"
+                        android:textColor="@color/pda_pending"
+                        android:textSize="@dimen/pda_caption_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

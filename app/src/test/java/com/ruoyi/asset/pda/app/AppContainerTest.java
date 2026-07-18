@@ -24,5 +24,7 @@ public class AppContainerTest {
         assertSame(sessionManager, container.getSessionManager());
         assertSame(apiClient, container.getApiClient());
         assertSame(scanner, container.getUhfScanner());
+        assertSame(container.getAuthRepository(), container.getAuthRepository());
+        assertSame(container.getCommonRepository(), container.getCommonRepository());
     }
 }

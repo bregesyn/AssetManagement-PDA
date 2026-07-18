@@ -28,6 +28,13 @@ public final class ApiErrorMapper {
     }
 
     public ApiError mapResponse(ApiResponse<?> response) {
+        return mapResponse(response, null);
+    }
+
+    /**
+     * 按请求发出时的会话代次处理业务 401，避免旧请求迟到后清除新账号 Session。
+     */
+    public ApiError mapResponse(ApiResponse<?> response, Long expectedGeneration) {
         if (response == null || response.getCode() == null) {
             return new ApiError(Kind.PROTOCOL, "服务响应格式异常，请稍后重试");
         }
@@ -35,11 +42,19 @@ public final class ApiErrorMapper {
             throw new IllegalArgumentException("成功响应不应映射为错误");
         }
         if (response.isSessionExpired()) {
-            sessionManager.invalidate();
+            if (expectedGeneration == null) {
+                sessionManager.invalidate();
+            } else {
+                sessionManager.invalidate(expectedGeneration);
+            }
             return new ApiError(Kind.SESSION_EXPIRED, SESSION_EXPIRED_MESSAGE);
         }
         return new ApiError(Kind.BUSINESS,
                 hasText(response.getMessage()) ? response.getMessage().trim() : "操作失败，请重试");
+    }
+
+    public long getSessionGeneration() {
+        return sessionManager.getGeneration();
     }
 
     public ApiError mapThrowable(Throwable throwable) {

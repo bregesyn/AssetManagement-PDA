@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
  */
 public final class UhfDeviceManager implements UhfScanner {
     private static final int UNCONFIGURED = -1;
+    private static final int LEGACY_DEVELOPMENT_WORK_AREA = 0;
     private static final long EMPTY_ROUND_BACKOFF_MS = 30L;
 
     private final Object lock = new Object();
@@ -328,7 +329,10 @@ public final class UhfDeviceManager implements UhfScanner {
         if (outputPower < 16 || outputPower > 26) {
             throw new UhfOperationException("UHF 功率配置不合法");
         }
-        if (workArea != 1 && workArea != 2 && workArea != 3 && workArea != 4 && workArea != 6) {
+        // 历史项目 SZXBGJ 使用 0；厂商文档未定义该值，仅允许用于当前受控真机冒烟。
+        if (workArea != LEGACY_DEVELOPMENT_WORK_AREA
+                && workArea != 1 && workArea != 2 && workArea != 3
+                && workArea != 4 && workArea != 6) {
             throw new UhfOperationException("UHF 工作区配置不合法");
         }
     }

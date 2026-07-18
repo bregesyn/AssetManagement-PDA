@@ -47,6 +47,22 @@ public class UhfDeviceManagerTest {
     }
 
     @Test
+    public void legacyWorkAreaZeroIsForwardedForControlledDeviceTest() throws Exception {
+        FakeReader reader = new FakeReader();
+        UhfDeviceManager manager = new UhfDeviceManager(
+                26, 0, new FakeReaderFactory(reader));
+        RecordingListener listener = new RecordingListener();
+
+        manager.start(listener, UhfScanMode.BATCH, listener);
+        await(() -> manager.getState() == UhfScanState.SCANNING);
+
+        assertEquals(26, reader.lastOutputPower);
+        assertEquals(0, reader.lastWorkArea);
+        manager.close(listener);
+        await(() -> manager.getState() == UhfScanState.IDLE);
+    }
+
+    @Test
     public void nullReaderReportsInitializationFailure() throws Exception {
         FakeReaderFactory factory = new FakeReaderFactory(null);
         UhfDeviceManager manager = new UhfDeviceManager(20, 1, factory);
@@ -362,16 +378,20 @@ public class UhfDeviceManagerTest {
         private final AtomicInteger closeCount = new AtomicInteger();
         private boolean outputPowerAccepted = true;
         private int workAreaResult;
+        private int lastOutputPower = Integer.MIN_VALUE;
+        private int lastWorkArea = Integer.MIN_VALUE;
         private boolean failWhenRoundsEmpty;
         private int closeFailuresRemaining;
 
         @Override
         public boolean setOutputPower(int value) {
+            lastOutputPower = value;
             return outputPowerAccepted;
         }
 
         @Override
         public int setWorkArea(int area) {
+            lastWorkArea = area;
             return workAreaResult;
         }
 

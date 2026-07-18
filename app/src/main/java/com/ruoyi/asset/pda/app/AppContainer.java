@@ -10,6 +10,12 @@ import com.ruoyi.asset.pda.core.network.SessionCookieJar;
 import com.ruoyi.asset.pda.core.session.SessionManager;
 import com.ruoyi.asset.pda.core.uhf.UhfDeviceManager;
 import com.ruoyi.asset.pda.core.uhf.UhfScanner;
+import com.ruoyi.asset.pda.data.api.PdaApiService;
+import com.ruoyi.asset.pda.data.repository.ApiCallExecutor;
+import com.ruoyi.asset.pda.data.repository.AuthRepository;
+import com.ruoyi.asset.pda.data.repository.CommonRepository;
+import com.ruoyi.asset.pda.data.repository.DefaultAuthRepository;
+import com.ruoyi.asset.pda.data.repository.DefaultCommonRepository;
 
 /**
  * 一期使用显式依赖装配，避免为当前规模引入 Hilt 和隐式生命周期。
@@ -19,6 +25,8 @@ public final class AppContainer {
     private final SessionManager sessionManager;
     private final ApiClient apiClient;
     private final UhfScanner uhfScanner;
+    private final AuthRepository authRepository;
+    private final CommonRepository commonRepository;
 
     public AppContainer(Context context) {
         Context applicationContext = context.getApplicationContext();
@@ -28,6 +36,11 @@ public final class AppContainer {
         apiClient = new ApiClient(BuildConfig.BASE_URL, sessionCookieJar, sessionManager);
         // 未标定参数会在真正开始扫描时明确失败，Application 启动不会触碰硬件。
         uhfScanner = new UhfDeviceManager(BuildConfig.UHF_OUTPUT_POWER, BuildConfig.UHF_WORK_AREA);
+        PdaApiService pdaApiService = apiClient.create(PdaApiService.class);
+        ApiCallExecutor callExecutor = new ApiCallExecutor(apiClient.getErrorMapper());
+        authRepository = new DefaultAuthRepository(
+                pdaApiService, callExecutor, sessionCookieJar, sessionManager);
+        commonRepository = new DefaultCommonRepository(pdaApiService, callExecutor);
     }
 
     AppContainer(SessionCookieJar sessionCookieJar, SessionManager sessionManager,
@@ -36,6 +49,11 @@ public final class AppContainer {
         this.sessionManager = requireNonNull(sessionManager, "SessionManager");
         this.apiClient = requireNonNull(apiClient, "ApiClient");
         this.uhfScanner = requireNonNull(uhfScanner, "UhfScanner");
+        PdaApiService pdaApiService = apiClient.create(PdaApiService.class);
+        ApiCallExecutor callExecutor = new ApiCallExecutor(apiClient.getErrorMapper());
+        authRepository = new DefaultAuthRepository(
+                pdaApiService, callExecutor, sessionCookieJar, sessionManager);
+        commonRepository = new DefaultCommonRepository(pdaApiService, callExecutor);
     }
 
     public SessionCookieJar getSessionCookieJar() {
@@ -52,6 +70,14 @@ public final class AppContainer {
 
     public UhfScanner getUhfScanner() {
         return uhfScanner;
+    }
+
+    public AuthRepository getAuthRepository() {
+        return authRepository;
+    }
+
+    public CommonRepository getCommonRepository() {
+        return commonRepository;
     }
 
     private static <T> T requireNonNull(T value, String name) {
