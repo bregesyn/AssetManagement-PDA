@@ -8,6 +8,9 @@ public interface UhfScanner {
 
     void stop(Object owner);
 
+    /** 丢弃当前扫描窗口，不向业务层交付 SINGLE 模式已采集的 EPC。 */
+    void cancel(Object owner);
+
     void close(Object owner);
 
     UhfScanState getState();

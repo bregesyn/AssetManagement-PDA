@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/pda_small_spacing"
+    android:orientation="vertical"
+    android:padding="@dimen/pda_item_spacing">
+
+    <TextView
+        android:id="@+id/resultStatusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/pda_primary"
+        android:textSize="@dimen/pda_caption_size"
+        android:textStyle="bold"
+        tools:text="成功" />
+
+    <TextView
+        android:id="@+id/resultEpcText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/pda_text_primary"
+        android:textSize="@dimen/pda_caption_size"
+        tools:text="EPC：E20000172211000100000001" />
+
+    <TextView
+        android:id="@+id/resultTagText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/pda_text_secondary"
+        android:textSize="@dimen/pda_caption_size"
+        android:visibility="gone"
+        tools:text="标签：RFID0001"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/resultMessageText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/pda_text_secondary"
+        android:textSize="@dimen/pda_caption_size"
+        tools:text="建档成功" />
+</LinearLayout>

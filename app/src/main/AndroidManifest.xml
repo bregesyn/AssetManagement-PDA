@@ -16,6 +16,18 @@
         android:theme="@style/Theme.Assetmanagementpda"
         tools:targetApi="31">
         <activity
+            android:name=".feature.rfid.RfidUnbindActivity"
+            android:exported="false" />
+        <activity
+            android:name=".feature.rfid.RfidBindActivity"
+            android:exported="false" />
+        <activity
+            android:name=".feature.rfid.RfidTagBatchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".feature.identify.AssetIdentifyActivity"
+            android:exported="false" />
+        <activity
             android:name=".feature.home.HomeActivity"
             android:exported="false" />
         <activity

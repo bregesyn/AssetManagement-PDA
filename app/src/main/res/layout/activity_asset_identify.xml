@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".feature.identify.AssetIdentifyActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/identifyToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pda_primary"
+        app:navigationContentDescription="@string/common_back"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/identify_title"
+        app:titleTextColor="@color/pda_card_background" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/pda_screen_padding">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/identify_subtitle"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_body_size" />
+
+            <RadioGroup
+                android:id="@+id/identifyTypeGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/identifyEpcRadio"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/pda_touch_height"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="@string/identify_type_epc" />
+
+                <RadioButton
+                    android:id="@+id/identifyAssetCodeRadio"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/pda_touch_height"
+                    android:layout_weight="1"
+                    android:text="@string/identify_type_asset_code" />
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/identifyEpcContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/pda_small_spacing"
+                    android:text="@string/identify_epc_hint"
+                    android:textColor="@color/pda_text_secondary"
+                    android:textSize="@dimen/pda_caption_size" />
+
+                <TextView
+                    android:id="@+id/identifyScanStatusText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/pda_item_spacing"
+                    android:accessibilityLiveRegion="polite"
+                    android:text="@string/common_scan_idle"
+                    android:textColor="@color/pda_text_primary"
+                    android:textSize="@dimen/pda_body_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/identifyLastEpcText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/pda_text_secondary"
+                    android:textSize="@dimen/pda_caption_size"
+                    android:visibility="gone"
+                    tools:text="最近 EPC：E20000172211000100000001"
+                    tools:visibility="visible" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/identifyScanButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pda_touch_height"
+                    android:layout_marginTop="@dimen/pda_item_spacing"
+                    android:text="@string/common_scan_start" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/identifyAssetCodeContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/pda_item_spacing"
+                    android:hint="@string/identify_asset_code_hint">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/identifyAssetCodeEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionSearch"
+                        android:inputType="textCapCharacters"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/identifyAssetCodeButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pda_touch_height"
+                    android:layout_marginTop="@dimen/pda_item_spacing"
+                    android:text="@string/identify_asset_code_action" />
+            </LinearLayout>
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/identifyProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:indeterminate="true"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/identifyErrorText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:accessibilityLiveRegion="assertive"
+                android:textColor="@color/pda_error"
+                android:textSize="@dimen/pda_body_size"
+                android:visibility="gone"
+                tools:text="EPC 未绑定资产，请先完成 RFID 绑定"
+                tools:visibility="visible" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/identifyResultCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_section_spacing"
+                android:layout_marginBottom="@dimen/pda_section_spacing"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="1dp"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/pda_card_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/identify_result_title"
+                        android:textColor="@color/pda_primary"
+                        android:textSize="@dimen/pda_caption_size"
+                        android:textStyle="bold" />
+
+                    <TextView android:id="@+id/identifyAssetTitleText"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:textColor="@color/pda_text_primary"
+                        android:textSize="@dimen/pda_section_title_size" android:textStyle="bold"
+                        tools:text="测试资产（TEST-ASSET-001）" />
+                    <TextView android:id="@+id/identifyCategoryText"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:textColor="@color/pda_text_secondary" tools:text="类别：电子设备" />
+                    <TextView android:id="@+id/identifyStatusText"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp" android:textColor="@color/pda_text_secondary"
+                        tools:text="状态：在库" />
+                    <TextView android:id="@+id/identifyModelBrandText"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp" android:textColor="@color/pda_text_secondary"
+                        tools:text="规格 / 品牌：C6200 / 测试" />
+                    <TextView android:id="@+id/identifyWarehouseText"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp" android:textColor="@color/pda_text_secondary"
+                        tools:text="仓库：测试仓库" />
+                    <TextView android:id="@+id/identifyLocationText"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp" android:textColor="@color/pda_text_secondary"
+                        tools:text="位置：A-01" />
+                    <TextView android:id="@+id/identifyRfidText"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp" android:textColor="@color/pda_text_secondary"
+                        tools:text="RFID：已绑定；标签 TAG001；EPC E200..." />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

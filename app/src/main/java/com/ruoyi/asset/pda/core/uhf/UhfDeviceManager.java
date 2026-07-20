@@ -24,6 +24,8 @@ import java.util.concurrent.TimeUnit;
 public final class UhfDeviceManager implements UhfScanner {
     private static final int UNCONFIGURED = -1;
     private static final int LEGACY_DEVELOPMENT_WORK_AREA = 0;
+    private static final long VENDOR_READER_READY_DELAY_MS = 1000L;
+    private static final long POWER_CONFIGURATION_RETRY_DELAY_MS = 200L;
     private static final long EMPTY_ROUND_BACKOFF_MS = 30L;
 
     private final Object lock = new Object();
@@ -97,6 +99,15 @@ public final class UhfDeviceManager implements UhfScanner {
 
     @Override
     public void stop(Object owner) {
+        finishScan(owner, true);
+    }
+
+    @Override
+    public void cancel(Object owner) {
+        finishScan(owner, false);
+    }
+
+    private void finishScan(Object owner, boolean deliverSingleReading) {
         if (owner == null) {
             throw new IllegalArgumentException("扫描所有者不能为空");
         }
@@ -111,7 +122,8 @@ public final class UhfDeviceManager implements UhfScanner {
             stoppedGeneration = generation;
             cancelScanFuture();
             listener = activeListener;
-            if (state == UhfScanState.SCANNING && activeMode == UhfScanMode.SINGLE
+            if (deliverSingleReading && state == UhfScanState.SCANNING
+                    && activeMode == UhfScanMode.SINGLE
                     && readings.size() == 1) {
                 singleReading = readings.values().iterator().next();
             }
@@ -124,7 +136,7 @@ public final class UhfDeviceManager implements UhfScanner {
         Listener stoppedListener = listener;
         UhfTagReading completedReading = singleReading;
         if (stoppedListener != null) {
-            // SINGLE 只在扫描窗口结束且唯一性已确认后交付，避免先取第一条再发现串读。
+            // 只有正常结束才交付 SINGLE 结果；切模式或重置使用 cancel 丢弃旧窗口。
             dispatchCallback(stoppedGeneration, owner, () -> {
                 if (completedReading != null) {
                     stoppedListener.onTagRead(completedReading);
@@ -221,7 +233,7 @@ public final class UhfDeviceManager implements UhfScanner {
                     // 打开后立即保存句柄；后续参数设置或清理失败时仍可由页面退出重试释放。
                     reader = readyReader;
                 }
-                if (!readyReader.setOutputPower(outputPower)) {
+                if (!setOutputPowerWithRetry(readyReader)) {
                     releaseReader(readyReader);
                     throw new UhfOperationException("UHF 功率设置失败");
                 }
@@ -335,6 +347,21 @@ public final class UhfDeviceManager implements UhfScanner {
                 && workArea != 4 && workArea != 6) {
             throw new UhfOperationException("UHF 工作区配置不合法");
         }
+    }
+
+    private boolean setOutputPowerWithRetry(Reader readyReader)
+            throws UhfOperationException {
+        if (readyReader.setOutputPower(outputPower)) {
+            return true;
+        }
+        try {
+            // C6200 真机偶发丢失首次配置确认；功率设置幂等，因此只允许一次短间隔重试。
+            Thread.sleep(POWER_CONFIGURATION_RETRY_DELAY_MS);
+        } catch (InterruptedException exception) {
+            Thread.currentThread().interrupt();
+            throw new UhfOperationException("UHF 设备初始化失败");
+        }
+        return readyReader.setOutputPower(outputPower);
     }
 
     private void fail(long currentGeneration, String message) {
@@ -471,7 +498,18 @@ public final class UhfDeviceManager implements UhfScanner {
         @Override
         public Reader open() {
             UhfReader vendorReader = UhfReader.getInstance();
-            return vendorReader == null ? null : new VendorReader(vendorReader);
+            if (vendorReader == null) {
+                return null;
+            }
+            try {
+                // 厂商 Demo 在上电取得实例后保留 1 秒稳定窗口；真机若立即发配置命令会无响应。
+                Thread.sleep(VENDOR_READER_READY_DELAY_MS);
+            } catch (InterruptedException exception) {
+                Thread.currentThread().interrupt();
+                vendorReader.close();
+                return null;
+            }
+            return new VendorReader(vendorReader);
         }
     }
 

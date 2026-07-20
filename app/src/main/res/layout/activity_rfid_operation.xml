@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".feature.rfid.RfidBindActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/operationToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pda_primary"
+        app:navigationContentDescription="@string/common_back"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:titleTextColor="@color/pda_card_background"
+        tools:title="RFID 绑定" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/pda_screen_padding">
+
+            <TextView
+                android:id="@+id/operationSubtitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_body_size"
+                tools:text="先核对资产，再扫描标签" />
+
+            <LinearLayout
+                android:id="@+id/operationAssetInputContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/pda_item_spacing"
+                    android:hint="@string/bind_asset_code_hint">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/operationAssetCodeEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionSearch"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="64"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/operationAssetQueryButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pda_touch_height"
+                    android:layout_marginTop="@dimen/pda_item_spacing"
+                    android:text="@string/bind_asset_query" />
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/operationAssetCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_section_spacing"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="1dp"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/pda_card_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bind_asset_section"
+                        android:textColor="@color/pda_primary"
+                        android:textSize="@dimen/pda_caption_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/operationAssetTitleText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:textColor="@color/pda_text_primary"
+                        android:textSize="@dimen/pda_section_title_size"
+                        android:textStyle="bold"
+                        tools:text="测试资产（ASSET-001）" />
+
+                    <TextView
+                        android:id="@+id/operationAssetCategoryText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:textColor="@color/pda_text_secondary"
+                        tools:text="类别：电子设备" />
+
+                    <TextView
+                        android:id="@+id/operationAssetStatusText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/pda_text_secondary"
+                        tools:text="状态：在库" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/operationScanHintText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_section_spacing"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_caption_size"
+                tools:text="按住功能键或点击按钮扫描一个标签" />
+
+            <TextView
+                android:id="@+id/operationScanStatusText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:accessibilityLiveRegion="polite"
+                android:text="@string/common_scan_idle"
+                android:textColor="@color/pda_text_primary"
+                android:textSize="@dimen/pda_body_size"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/operationScanButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pda_touch_height"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:text="@string/common_scan_start" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/operationProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:indeterminate="true"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/operationProgressText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_small_spacing"
+                android:accessibilityLiveRegion="polite"
+                android:gravity="center"
+                android:textColor="@color/pda_text_secondary"
+                android:visibility="gone"
+                tools:text="正在查询标签"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/operationErrorText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:accessibilityLiveRegion="assertive"
+                android:textColor="@color/pda_error"
+                android:textSize="@dimen/pda_body_size"
+                android:visibility="gone"
+                tools:text="标签不存在"
+                tools:visibility="visible" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/operationTagCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_section_spacing"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="1dp"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/pda_card_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rfid_tag_section"
+                        android:textColor="@color/pda_primary"
+                        android:textSize="@dimen/pda_caption_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/operationTagCodeText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:textColor="@color/pda_text_primary"
+                        android:textSize="@dimen/pda_body_size"
+                        android:textStyle="bold"
+                        tools:text="标签编号：TAG001" />
+
+                    <TextView
+                        android:id="@+id/operationEpcText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/pda_text_secondary"
+                        tools:text="EPC：E2000017..." />
+
+                    <TextView
+                        android:id="@+id/operationTagStatusText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/pda_text_secondary"
+                        tools:text="标签状态：正常" />
+
+                    <TextView
+                        android:id="@+id/operationBindStatusText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/pda_text_secondary"
+                        tools:text="绑定状态：未绑定" />
+
+                    <TextView
+                        android:id="@+id/operationBoundAssetText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/pda_text_secondary"
+                        tools:text="关联资产：无" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/operationNoticeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:textColor="@color/pda_pending"
+                android:textSize="@dimen/pda_body_size"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="该标签未绑定，无需操作"
+                tools:visibility="visible" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/operationSubmitButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pda_touch_height"
+                android:layout_marginTop="@dimen/pda_section_spacing"
+                android:enabled="false"
+                tools:text="确认建立绑定" />
+
+            <TextView
+                android:id="@+id/operationSuccessText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_section_spacing"
+                android:accessibilityLiveRegion="assertive"
+                android:textColor="@color/pda_primary"
+                android:textSize="@dimen/pda_body_size"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="操作成功"
+                tools:visibility="visible" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/operationContinueButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pda_touch_height"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:layout_marginBottom="@dimen/pda_section_spacing"
+                android:text="@string/rfid_operation_continue"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -59,6 +59,18 @@ public final class FakeUhfScanner implements UhfScanner {
 
     @Override
     public void stop(Object owner) {
+        synchronized (this) {
+            stopCallCount++;
+        }
+        finishScan(owner, true);
+    }
+
+    @Override
+    public void cancel(Object owner) {
+        finishScan(owner, false);
+    }
+
+    private void finishScan(Object owner, boolean deliverSingleReading) {
         if (owner == null) {
             throw new IllegalArgumentException("扫描所有者不能为空");
         }
@@ -66,14 +78,14 @@ public final class FakeUhfScanner implements UhfScanner {
         UhfTagReading completedReading = null;
         long stoppedGeneration;
         synchronized (this) {
-            stopCallCount++;
             if (this.owner != owner || state == UhfScanState.IDLE) {
                 return;
             }
             generation++;
             stoppedGeneration = generation;
             stoppedListener = listener;
-            if (state == UhfScanState.SCANNING && mode == UhfScanMode.SINGLE
+            if (deliverSingleReading && state == UhfScanState.SCANNING
+                    && mode == UhfScanMode.SINGLE
                     && readings.size() == 1 && stoppedListener != null) {
                 completedReading = readings.values().iterator().next();
             }

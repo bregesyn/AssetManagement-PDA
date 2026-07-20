@@ -13,7 +13,11 @@ import com.ruoyi.asset.pda.R;
 import com.ruoyi.asset.pda.app.AppContainer;
 import com.ruoyi.asset.pda.core.session.SessionManager;
 import com.ruoyi.asset.pda.databinding.ActivityHomeBinding;
+import com.ruoyi.asset.pda.feature.identify.AssetIdentifyActivity;
 import com.ruoyi.asset.pda.feature.login.LoginActivity;
+import com.ruoyi.asset.pda.feature.rfid.RfidBindActivity;
+import com.ruoyi.asset.pda.feature.rfid.RfidTagBatchActivity;
+import com.ruoyi.asset.pda.feature.rfid.RfidUnbindActivity;
 
 public final class HomeActivity extends AppCompatActivity {
     private ActivityHomeBinding binding;
@@ -37,6 +41,14 @@ public final class HomeActivity extends AppCompatActivity {
         binding.homeRetryButton.setOnClickListener(view -> viewModel.retry());
         binding.homeSwitchAccountButton.setOnClickListener(view -> viewModel.switchAccount());
         binding.logoutButton.setOnClickListener(view -> confirmLogout());
+        binding.assetIdentifyCard.setOnClickListener(
+                view -> openOperation(AssetIdentifyActivity.class));
+        binding.tagCreateCard.setOnClickListener(
+                view -> openOperation(RfidTagBatchActivity.class));
+        binding.rfidBindCard.setOnClickListener(
+                view -> openOperation(RfidBindActivity.class));
+        binding.rfidUnbindCard.setOnClickListener(
+                view -> openOperation(RfidUnbindActivity.class));
         viewModel.getUiState().observe(this, this::render);
         if (sessionManager.getState() != SessionManager.State.VALID) {
             navigateToLogin();
@@ -135,6 +147,12 @@ public final class HomeActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
+    }
+
+    private void openOperation(Class<? extends AppCompatActivity> activityClass) {
+        if (sessionManager.getState() == SessionManager.State.VALID) {
+            startActivity(new Intent(this, activityClass));
+        }
     }
 
     @Override

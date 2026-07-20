@@ -12,10 +12,14 @@ import com.ruoyi.asset.pda.core.uhf.UhfDeviceManager;
 import com.ruoyi.asset.pda.core.uhf.UhfScanner;
 import com.ruoyi.asset.pda.data.api.PdaApiService;
 import com.ruoyi.asset.pda.data.repository.ApiCallExecutor;
+import com.ruoyi.asset.pda.data.repository.AssetRepository;
 import com.ruoyi.asset.pda.data.repository.AuthRepository;
 import com.ruoyi.asset.pda.data.repository.CommonRepository;
+import com.ruoyi.asset.pda.data.repository.DefaultAssetRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultAuthRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultCommonRepository;
+import com.ruoyi.asset.pda.data.repository.DefaultRfidRepository;
+import com.ruoyi.asset.pda.data.repository.RfidRepository;
 
 /**
  * 一期使用显式依赖装配，避免为当前规模引入 Hilt 和隐式生命周期。
@@ -27,6 +31,8 @@ public final class AppContainer {
     private final UhfScanner uhfScanner;
     private final AuthRepository authRepository;
     private final CommonRepository commonRepository;
+    private final AssetRepository assetRepository;
+    private final RfidRepository rfidRepository;
 
     public AppContainer(Context context) {
         Context applicationContext = context.getApplicationContext();
@@ -41,6 +47,8 @@ public final class AppContainer {
         authRepository = new DefaultAuthRepository(
                 pdaApiService, callExecutor, sessionCookieJar, sessionManager);
         commonRepository = new DefaultCommonRepository(pdaApiService, callExecutor);
+        assetRepository = new DefaultAssetRepository(pdaApiService, callExecutor);
+        rfidRepository = new DefaultRfidRepository(pdaApiService, callExecutor);
     }
 
     AppContainer(SessionCookieJar sessionCookieJar, SessionManager sessionManager,
@@ -54,6 +62,8 @@ public final class AppContainer {
         authRepository = new DefaultAuthRepository(
                 pdaApiService, callExecutor, sessionCookieJar, sessionManager);
         commonRepository = new DefaultCommonRepository(pdaApiService, callExecutor);
+        assetRepository = new DefaultAssetRepository(pdaApiService, callExecutor);
+        rfidRepository = new DefaultRfidRepository(pdaApiService, callExecutor);
     }
 
     public SessionCookieJar getSessionCookieJar() {
@@ -78,6 +88,14 @@ public final class AppContainer {
 
     public CommonRepository getCommonRepository() {
         return commonRepository;
+    }
+
+    public AssetRepository getAssetRepository() {
+        return assetRepository;
+    }
+
+    public RfidRepository getRfidRepository() {
+        return rfidRepository;
     }
 
     private static <T> T requireNonNull(T value, String name) {

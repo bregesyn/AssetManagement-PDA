@@ -89,10 +89,28 @@ public class UhfDeviceManagerTest {
         await(() -> !listener.errors.isEmpty());
 
         assertEquals("UHF 功率设置失败", listener.errors.get(0));
+        assertEquals("功率配置只允许一次重试", 2, reader.outputPowerCallCount.get());
         assertEquals(1, reader.closeCount.get());
         manager.close(listener);
         await(() -> manager.getState() == UhfScanState.IDLE);
         assertEquals(1, reader.closeCount.get());
+    }
+
+    @Test
+    public void transientPowerFailureRetriesOnceBeforeScanning() throws Exception {
+        FakeReader reader = new FakeReader();
+        reader.outputPowerFailuresRemaining = 1;
+        UhfDeviceManager manager = new UhfDeviceManager(
+                24, 1, new FakeReaderFactory(reader));
+        RecordingListener listener = new RecordingListener();
+
+        manager.start(listener, UhfScanMode.BATCH, listener);
+        await(() -> manager.getState() == UhfScanState.SCANNING);
+
+        assertEquals(2, reader.outputPowerCallCount.get());
+        assertTrue(listener.errors.isEmpty());
+        manager.close(listener);
+        await(() -> manager.getState() == UhfScanState.IDLE);
     }
 
     @Test
@@ -105,8 +123,10 @@ public class UhfDeviceManagerTest {
         RecordingListener listener = new RecordingListener();
 
         manager.start(owner, UhfScanMode.BATCH, listener);
-        await(() -> manager.getState() == UhfScanState.ERROR);
+        // ERROR 状态先于主线程回调可见；必须等待可观察回调，避免测试线程抢跑。
+        await(() -> !listener.errors.isEmpty());
 
+        assertEquals(UhfScanState.ERROR, manager.getState());
         assertEquals("UHF 功率设置失败", listener.errors.get(0));
         assertEquals(1, reader.closeCount.get());
         manager.close(owner);
@@ -155,6 +175,24 @@ public class UhfDeviceManagerTest {
         assertTrue(listener.readings.isEmpty());
         assertEquals("检测到多个 RFID 标签，请靠近目标标签后重试", listener.errors.get(0));
         assertEquals(UhfScanState.ERROR, manager.getState());
+        manager.close(listener);
+        await(() -> manager.getState() == UhfScanState.IDLE);
+    }
+
+    @Test
+    public void cancellingSingleScanDoesNotDeliverCollectedTag() throws Exception {
+        FakeReader reader = new FakeReader();
+        reader.rounds.add(Collections.singletonList(
+                new UhfDeviceManager.RawTag(new byte[] {(byte) 0xAA}, -60)));
+        UhfDeviceManager manager = new UhfDeviceManager(20, 1, new FakeReaderFactory(reader));
+        RecordingListener listener = new RecordingListener();
+
+        manager.start(listener, UhfScanMode.SINGLE, listener);
+        await(reader.rounds::isEmpty);
+        manager.cancel(listener);
+
+        assertTrue(listener.readings.isEmpty());
+        assertEquals(UhfScanState.IDLE, manager.getState());
         manager.close(listener);
         await(() -> manager.getState() == UhfScanState.IDLE);
     }
@@ -376,7 +414,9 @@ public class UhfDeviceManagerTest {
         private final ConcurrentLinkedQueue<List<UhfDeviceManager.RawTag>> rounds =
                 new ConcurrentLinkedQueue<>();
         private final AtomicInteger closeCount = new AtomicInteger();
+        private final AtomicInteger outputPowerCallCount = new AtomicInteger();
         private boolean outputPowerAccepted = true;
+        private int outputPowerFailuresRemaining;
         private int workAreaResult;
         private int lastOutputPower = Integer.MIN_VALUE;
         private int lastWorkArea = Integer.MIN_VALUE;
@@ -386,6 +426,11 @@ public class UhfDeviceManagerTest {
         @Override
         public boolean setOutputPower(int value) {
             lastOutputPower = value;
+            outputPowerCallCount.incrementAndGet();
+            if (outputPowerFailuresRemaining > 0) {
+                outputPowerFailuresRemaining--;
+                return false;
+            }
             return outputPowerAccepted;
         }
 

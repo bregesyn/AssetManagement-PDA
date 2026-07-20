@@ -62,6 +62,19 @@ public class FakeUhfScannerTest {
     }
 
     @Test
+    public void cancellingSingleScanDiscardsUniqueTag() {
+        FakeUhfScanner scanner = new FakeUhfScanner();
+        RecordingListener listener = new RecordingListener();
+        scanner.start(listener, UhfScanMode.SINGLE, listener);
+        scanner.emit("AA", -60);
+
+        scanner.cancel(listener);
+
+        assertTrue(listener.readings.isEmpty());
+        assertEquals(UhfScanState.IDLE, scanner.getState());
+    }
+
+    @Test
     public void closeIsIdempotent() {
         FakeUhfScanner scanner = new FakeUhfScanner();
         RecordingListener listener = new RecordingListener();
