@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">资产管理 PDA</string>
 
-    <string name="login_title">资产管理 PDA</string>
-    <string name="login_subtitle">登录后开始现场资产作业</string>
+    <string name="login_mark">AM</string>
+    <string name="login_eyebrow">现场作业终端</string>
+    <string name="login_title">资产现场作业</string>
+    <string name="login_subtitle">登录后开始今天的仓库任务</string>
+    <string name="login_form_title">登录现场终端</string>
+    <string name="login_form_hint">账号权限由服务端决定</string>
+    <string name="login_device_hint">C6200 PDA · 在线操作</string>
     <string name="login_username_hint">用户名</string>
     <string name="login_password_hint">密码</string>
     <string name="login_action">登录</string>
@@ -138,17 +143,22 @@
     <string name="rfid_operation_verifying">网络结果未知，正在查询服务端事实</string>
     <string name="rfid_operation_continue">继续下一笔作业</string>
 
+    <string name="home_greeting_label">资产管理部 · 今日作业</string>
     <string name="home_title">现场作业</string>
+    <string name="home_connection_label">会话已建立</string>
     <string name="home_user_format">用户：%1$s（%2$s）</string>
     <string name="home_dept_format">部门：%1$s</string>
     <string name="home_server_time_format">服务时间：%1$s</string>
     <string name="home_unknown_value">-</string>
     <string name="home_loading">正在加载启动配置</string>
-    <string name="home_load_failed">启动配置加载失败</string>
-    <string name="home_task_section">任务入口</string>
-    <string name="home_task_hint">入口由当前账号的 PDA 权限控制</string>
-    <string name="home_task_pending">待开发</string>
-    <string name="home_task_available">进入作业</string>
+    <string name="home_load_failed">暂时无法进入现场作业</string>
+    <string name="home_error_hint">请检查网络后重新加载；不会清除当前登录会话。</string>
+    <string name="home_current_work_section">当前作业</string>
+    <string name="home_current_work_hint">优先处理进行中的现场任务</string>
+    <string name="home_task_section">快速操作</string>
+    <string name="home_task_hint">只显示当前账号有权限的作业入口</string>
+    <string name="home_task_pending">功能待开发</string>
+    <string name="home_task_available">开始作业</string>
     <string name="home_asset_identify">资产识别</string>
     <string name="home_asset_identify_desc">通过 EPC 或资产编码核验资产</string>
     <string name="home_tag_create">标签批量建档</string>
@@ -159,6 +169,7 @@
     <string name="home_rfid_unbind_desc">核对当前关系后解除绑定</string>
     <string name="home_inventory">盘点任务</string>
     <string name="home_inventory_desc">进入盘点任务并执行批量采集</string>
+    <string name="home_rfid_section">标签关系</string>
 
     <string name="logout_action">退出登录</string>
     <string name="logout_confirm_title">确认退出登录？</string>

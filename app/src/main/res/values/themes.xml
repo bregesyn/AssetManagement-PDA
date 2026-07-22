@@ -2,6 +2,9 @@
     <style name="Base.Theme.Assetmanagementpda" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/pda_primary</item>
         <item name="colorPrimaryDark">@color/pda_primary_dark</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:colorAccent">@color/pda_primary</item>
         <item name="android:statusBarColor">@color/pda_primary_dark</item>
         <item name="android:navigationBarColor">@color/pda_card_background</item>
         <item name="android:windowLightNavigationBar">true</item>
@@ -9,6 +12,34 @@
     </style>
 
     <style name="Theme.Assetmanagementpda" parent="Base.Theme.Assetmanagementpda" />
+
+    <style name="PdaPrimaryButton" parent="Widget.Material3.Button">
+        <item name="android:minHeight">@dimen/pda_touch_height</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/pda_button_text_size</item>
+        <item name="cornerRadius">@dimen/pda_control_radius</item>
+    </style>
+
+    <style name="PdaOutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">@dimen/pda_touch_height</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/pda_button_text_size</item>
+        <item name="cornerRadius">@dimen/pda_control_radius</item>
+    </style>
+
+    <style name="PdaTextButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:minHeight">@dimen/pda_compact_touch_height</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/pda_caption_size</item>
+        <item name="cornerRadius">@dimen/pda_control_radius</item>
+    </style>
+
+    <style name="PdaTextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">@dimen/pda_control_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/pda_control_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/pda_control_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/pda_control_radius</item>
+    </style>
 
     <!--
         详情页沿用历史 PDA 的“标签 + 值”阅读顺序；值区域保持可换行，

@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="pda_screen_padding">20dp</dimen>
-    <dimen name="pda_card_padding">18dp</dimen>
-    <dimen name="pda_section_spacing">18dp</dimen>
-    <dimen name="pda_item_spacing">12dp</dimen>
-    <dimen name="pda_small_spacing">8dp</dimen>
+    <dimen name="pda_screen_padding">16dp</dimen>
+    <dimen name="pda_screen_bottom_padding">24dp</dimen>
+    <dimen name="pda_card_padding">16dp</dimen>
+    <dimen name="pda_section_spacing">20dp</dimen>
+    <dimen name="pda_item_spacing">10dp</dimen>
+    <dimen name="pda_small_spacing">6dp</dimen>
     <dimen name="pda_card_radius">14dp</dimen>
+    <dimen name="pda_control_radius">10dp</dimen>
+    <dimen name="pda_stroke_width">1dp</dimen>
+    <dimen name="pda_status_rail_width">4dp</dimen>
+    <dimen name="pda_card_min_height">84dp</dimen>
     <dimen name="pda_touch_height">52dp</dimen>
-    <!-- 参考旧 PDA 的紧凑业务字段行，但使用最小高度，避免长 EPC 被固定行高裁切。 -->
+    <dimen name="pda_compact_touch_height">44dp</dimen>
+    <dimen name="pda_input_min_height">52dp</dimen>
+    <dimen name="pda_home_loading_padding">72dp</dimen>
+    <dimen name="pda_login_top_spacing">28dp</dimen>
+    <dimen name="pda_login_mark_size">48dp</dimen>
+    <dimen name="pda_login_mark_radius">13dp</dimen>
+    <dimen name="pda_page_title_size">24sp</dimen>
+    <dimen name="pda_button_text_size">16sp</dimen>
+    <dimen name="pda_utility_size">11sp</dimen>
+    <!-- EPC 和资产名称允许换行，避免现场核对时被固定行高截断。 -->
     <dimen name="pda_fact_label_width">90dp</dimen>
     <dimen name="pda_fact_row_min_height">45dp</dimen>
     <dimen name="pda_fact_row_spacing">4dp</dimen>

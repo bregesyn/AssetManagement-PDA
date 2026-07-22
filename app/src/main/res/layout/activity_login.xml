@@ -4,23 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
     android:fillViewport="true"
+    android:paddingBottom="@dimen/pda_screen_bottom_padding"
     tools:context=".feature.login.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="@dimen/pda_screen_padding">
-
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="32dp" />
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingTop="@dimen/pda_login_top_spacing"
+        android:paddingEnd="@dimen/pda_screen_padding">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/login_eyebrow"
+            android:textColor="@color/pda_primary"
+            android:textSize="@dimen/pda_utility_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="@dimen/pda_login_mark_size"
+            android:layout_height="@dimen/pda_login_mark_size"
+            android:layout_marginTop="@dimen/pda_item_spacing"
+            android:background="@drawable/pda_login_mark"
+            android:gravity="center"
+            android:text="@string/login_mark"
+            android:textColor="@color/pda_card_background"
+            android:textSize="@dimen/pda_body_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_section_spacing"
             android:text="@string/login_title"
             android:textColor="@color/pda_text_primary"
             android:textSize="@dimen/pda_title_size"
@@ -32,93 +51,142 @@
             android:layout_marginTop="@dimen/pda_small_spacing"
             android:text="@string/login_subtitle"
             android:textColor="@color/pda_text_secondary"
-            android:textSize="@dimen/pda_body_size" />
+            android:textSize="@dimen/pda_caption_size" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/loginFormContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="@dimen/pda_section_spacing"
             app:cardBackgroundColor="@color/pda_card_background"
             app:cardCornerRadius="@dimen/pda_card_radius"
-            app:cardElevation="2dp"
+            app:cardElevation="0dp"
             app:strokeColor="@color/pda_card_stroke"
             app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/pda_card_padding">
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/usernameInputLayout"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
+                <View
+                    android:layout_width="@dimen/pda_status_rail_width"
+                    android:layout_height="match_parent"
+                    android:background="@color/pda_primary" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="@string/login_username_hint">
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/pda_card_padding">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/usernameEditText"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:importantForAutofill="no"
-                        android:inputType="text"
-                        android:imeOptions="actionNext"
-                        android:maxLines="1"
-                        android:saveEnabled="false"
-                        android:singleLine="true" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:text="@string/login_form_title"
+                        android:textColor="@color/pda_text_primary"
+                        android:textSize="@dimen/pda_section_title_size"
+                        android:textStyle="bold" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/passwordInputLayout"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/pda_item_spacing"
-                    android:hint="@string/login_password_hint"
-                    app:endIconMode="password_toggle">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/passwordEditText"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:importantForAutofill="no"
-                        android:imeOptions="actionDone"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:saveEnabled="false"
-                        android:singleLine="true" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:text="@string/login_form_hint"
+                        android:textColor="@color/pda_text_secondary"
+                        android:textSize="@dimen/pda_caption_size" />
 
-                <TextView
-                    android:id="@+id/loginErrorText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/pda_item_spacing"
-                    android:accessibilityLiveRegion="polite"
-                    android:textColor="@color/pda_error"
-                    android:textSize="@dimen/pda_caption_size"
-                    android:visibility="gone"
-                    tools:text="用户名或密码错误"
-                    tools:visibility="visible" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/usernameInputLayout"
+                        style="@style/PdaTextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_section_spacing"
+                        android:hint="@string/login_username_hint">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/loginButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/pda_touch_height"
-                    android:layout_marginTop="@dimen/pda_section_spacing"
-                    android:text="@string/login_action" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/usernameEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:importantForAutofill="no"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:minHeight="@dimen/pda_input_min_height"
+                            android:saveEnabled="false"
+                            android:singleLine="true" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/loginProgress"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/pda_item_spacing"
-                    android:indeterminate="true"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/passwordInputLayout"
+                        style="@style/PdaTextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_item_spacing"
+                        android:hint="@string/login_password_hint"
+                        app:endIconMode="password_toggle">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/passwordEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:importantForAutofill="no"
+                            android:imeOptions="actionDone"
+                            android:inputType="textPassword"
+                            android:maxLines="1"
+                            android:minHeight="@dimen/pda_input_min_height"
+                            android:saveEnabled="false"
+                            android:singleLine="true" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/loginErrorText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_item_spacing"
+                        android:accessibilityLiveRegion="polite"
+                        android:background="@drawable/pda_error_surface"
+                        android:padding="@dimen/pda_small_spacing"
+                        android:textColor="@color/pda_error"
+                        android:textSize="@dimen/pda_caption_size"
+                        android:visibility="gone"
+                        tools:text="用户名或密码错误"
+                        tools:visibility="visible" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/loginButton"
+                        style="@style/PdaPrimaryButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_section_spacing"
+                        android:text="@string/login_action" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_item_spacing"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/loginProgress"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:indeterminate="true"
+                            android:visibility="gone"
+                            tools:visibility="visible" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/pda_small_spacing"
+                            android:layout_weight="1"
+                            android:text="@string/login_device_hint"
+                            android:textColor="@color/pda_text_secondary"
+                            android:textSize="@dimen/pda_utility_size" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -126,11 +194,11 @@
             android:id="@+id/recoveryContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="@dimen/pda_section_spacing"
             android:visibility="gone"
             app:cardBackgroundColor="@color/pda_card_background"
             app:cardCornerRadius="@dimen/pda_card_radius"
-            app:cardElevation="2dp"
+            app:cardElevation="0dp"
             app:strokeColor="@color/pda_card_stroke"
             app:strokeWidth="1dp"
             tools:visibility="visible">
@@ -138,58 +206,65 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:padding="@dimen/pda_card_padding">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <View
+                    android:layout_width="@dimen/pda_status_rail_width"
+                    android:layout_height="match_parent"
+                    android:background="@color/pda_pending" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/login_recovering_title"
-                    android:textColor="@color/pda_text_primary"
-                    android:textSize="@dimen/pda_section_title_size"
-                    android:textStyle="bold" />
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/pda_card_padding">
 
-                <TextView
-                    android:id="@+id/recoveryMessageText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/pda_small_spacing"
-                    android:gravity="center"
-                    android:text="@string/login_recovering_message"
-                    android:textColor="@color/pda_text_secondary"
-                    android:textSize="@dimen/pda_body_size" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/login_recovering_title"
+                        android:textColor="@color/pda_text_primary"
+                        android:textSize="@dimen/pda_section_title_size"
+                        android:textStyle="bold" />
 
-                <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/recoveryProgress"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="@dimen/pda_section_spacing"
-                    android:indeterminate="true" />
+                    <TextView
+                        android:id="@+id/recoveryMessageText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:text="@string/login_recovering_message"
+                        android:textColor="@color/pda_text_secondary"
+                        android:textSize="@dimen/pda_body_size" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/retryRecoveryButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/pda_touch_height"
-                    android:layout_marginTop="@dimen/pda_section_spacing"
-                    android:text="@string/login_retry"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/recoveryProgress"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="@dimen/pda_section_spacing"
+                        android:indeterminate="true" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/switchAccountButton"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/pda_touch_height"
-                    android:layout_marginTop="@dimen/pda_small_spacing"
-                    android:text="@string/login_switch_account"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/retryRecoveryButton"
+                        style="@style/PdaPrimaryButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_section_spacing"
+                        android:text="@string/login_retry"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/switchAccountButton"
+                        style="@style/PdaOutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:text="@string/login_switch_account"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="32dp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
