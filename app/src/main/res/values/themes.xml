@@ -9,4 +9,39 @@
     </style>
 
     <style name="Theme.Assetmanagementpda" parent="Base.Theme.Assetmanagementpda" />
+
+    <!--
+        详情页沿用历史 PDA 的“标签 + 值”阅读顺序；值区域保持可换行，
+        这样 EPC 或资产名称较长时不会被小屏固定行高截断。
+    -->
+    <style name="PdaFactRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/pda_fact_row_spacing</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">@dimen/pda_fact_row_min_height</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="PdaFactLabel">
+        <item name="android:layout_width">@dimen/pda_fact_label_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingEnd">@dimen/pda_small_spacing</item>
+        <item name="android:textColor">@color/pda_text_secondary</item>
+        <item name="android:textSize">@dimen/pda_caption_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="PdaFactValue">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">@dimen/pda_fact_row_min_height</item>
+        <item name="android:paddingStart">@dimen/pda_small_spacing</item>
+        <item name="android:textColor">@color/pda_text_primary</item>
+        <item name="android:textSize">@dimen/pda_body_size</item>
+    </style>
+
 </resources>

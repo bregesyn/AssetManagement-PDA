@@ -94,15 +94,16 @@ public final class RfidTagBatchViewModel extends BaseUhfViewModel {
         }
     }
 
-    public void onScanKeyDown() {
+    public void onScanKeyPressed() {
         RfidTagBatchUiState current = state();
-        if (!current.isSubmitting() && !current.isResultMode() && !current.isScanning()) {
+        if (current.isSubmitting() || current.isResultMode()) {
+            return;
+        }
+        if (current.isScanning()) {
+            stopScanning();
+        } else {
             startScanning(UhfScanMode.BATCH);
         }
-    }
-
-    public void onScanKeyUp() {
-        stopScanning();
     }
 
     public void submit() {

@@ -64,15 +64,16 @@ public final class AssetIdentifyViewModel extends BaseUhfViewModel {
         }
     }
 
-    public void onScanKeyDown() {
+    public void onScanKeyPressed() {
         AssetIdentifyUiState current = state();
-        if (current.isEpcMode() && !current.isLoading() && !current.isScanning()) {
+        if (!current.isEpcMode() || current.isLoading()) {
+            return;
+        }
+        if (current.isScanning()) {
+            stopScanning();
+        } else {
             startFreshEpcScan(current);
         }
-    }
-
-    public void onScanKeyUp() {
-        stopScanning();
     }
 
     private void startFreshEpcScan(AssetIdentifyUiState current) {

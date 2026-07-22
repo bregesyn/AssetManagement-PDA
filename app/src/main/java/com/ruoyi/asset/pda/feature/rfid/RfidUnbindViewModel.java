@@ -44,14 +44,17 @@ public final class RfidUnbindViewModel extends BaseUhfViewModel {
         else startFreshTagScan(current);
     }
 
-    public void onScanKeyDown() {
+    public void onScanKeyPressed() {
         RfidUnbindUiState current = state();
-        if (!current.isBusy() && !current.isSuccess() && !current.isScanning()) {
+        if (current.isBusy() || current.isSuccess()) {
+            return;
+        }
+        if (current.isScanning()) {
+            stopScanning();
+        } else {
             startFreshTagScan(current);
         }
     }
-
-    public void onScanKeyUp() { stopScanning(); }
 
     private void startFreshTagScan(RfidUnbindUiState current) {
         uiState.setValue(current.beginTagScan());

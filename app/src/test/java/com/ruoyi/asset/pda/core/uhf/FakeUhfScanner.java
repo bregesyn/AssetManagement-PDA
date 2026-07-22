@@ -135,23 +135,46 @@ public final class FakeUhfScanner implements UhfScanner {
     }
 
     public void emit(String epc, int rssi) {
+        emitRound(new TagInput(epc, rssi));
+    }
+
+    /**
+     * 模拟一次硬件 inventory 回合；同一回合可同时返回多个 EPC，用于验证 SINGLE 歧义边界。
+     */
+    public void emitRound(String... epcs) {
+        TagInput[] inputs = new TagInput[epcs == null ? 0 : epcs.length];
+        for (int index = 0; index < inputs.length; index++) {
+            inputs[index] = new TagInput(epcs[index], -40);
+        }
+        emitRound(inputs);
+    }
+
+    private void emitRound(TagInput... tags) {
         Listener callbackListener;
-        UhfTagReading updated;
+        List<UhfTagReading> updatedReadings = new ArrayList<>();
         Object callbackOwner;
         long callbackGeneration;
         boolean ambiguous;
+        UhfScanMode currentMode;
         synchronized (this) {
             requireScanning();
             long now = System.currentTimeMillis();
-            String normalized = UhfTagReading.normalizeEpc(epc);
-            UhfTagReading previous = readings.get(normalized);
-            updated = previous == null
-                    ? new UhfTagReading(normalized, rssi, 1, now, now)
-                    : previous.next(rssi, now);
-            readings.put(normalized, updated);
+            for (TagInput tag : tags) {
+                if (tag == null) {
+                    continue;
+                }
+                String normalized = UhfTagReading.normalizeEpc(tag.epc);
+                UhfTagReading previous = readings.get(normalized);
+                UhfTagReading updated = previous == null
+                        ? new UhfTagReading(normalized, tag.rssi, 1, now, now)
+                        : previous.next(tag.rssi, now);
+                readings.put(normalized, updated);
+                updatedReadings.add(updated);
+            }
             callbackListener = listener;
             callbackOwner = owner;
             ambiguous = mode == UhfScanMode.SINGLE && readings.size() > 1;
+            currentMode = mode;
             if (ambiguous) {
                 generation++;
                 state = UhfScanState.ERROR;
@@ -168,8 +191,18 @@ public final class FakeUhfScanner implements UhfScanner {
                     callbackListener.onError("检测到多个 RFID 标签，请靠近目标标签后重试");
                 }
             });
-        } else if (getMode() == UhfScanMode.BATCH) {
-            dispatch(callbackGeneration, callbackOwner, () -> callbackListener.onTagRead(updated));
+        } else if (currentMode == UhfScanMode.BATCH) {
+            dispatch(callbackGeneration, callbackOwner, () -> {
+                for (UhfTagReading reading : updatedReadings) {
+                    callbackListener.onTagRead(reading);
+                    if (!isCurrent(callbackGeneration, callbackOwner)) {
+                        return;
+                    }
+                }
+            });
+        } else if (currentMode == UhfScanMode.SINGLE && !updatedReadings.isEmpty()) {
+            // 与真实 UhfDeviceManager 保持一致：一个唯一 EPC 到达后自动结束 SINGLE 扫描。
+            finishScan(callbackOwner, true);
         }
     }
 
@@ -240,6 +273,16 @@ public final class FakeUhfScanner implements UhfScanner {
     private void awaitCallbacks() {
         synchronized (callbackLock) {
             // 与生产包装层保持相同的关闭语义：不越过已经开始执行的旧页面回调。
+        }
+    }
+
+    private static final class TagInput {
+        private final String epc;
+        private final int rssi;
+
+        private TagInput(String epc, int rssi) {
+            this.epc = epc;
+            this.rssi = rssi;
         }
     }
 }

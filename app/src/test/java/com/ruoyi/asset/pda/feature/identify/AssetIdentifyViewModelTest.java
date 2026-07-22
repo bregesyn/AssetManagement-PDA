@@ -47,23 +47,29 @@ public class AssetIdentifyViewModelTest {
     }
 
     @Test
-    public void singleScanQueriesOnlyAfterScanWindowStops() {
+    public void singleScanQueriesImmediatelyAfterFirstUniqueTag() {
         viewModel.toggleScan();
         scanner.emit("e20001", -42);
-
-        assertEquals(0, repository.getRequestCount());
-        viewModel.toggleScan();
 
         assertEquals(1, repository.getRequestCount());
         assertEquals(AssetRepository.IDENTIFY_TYPE_EPC, repository.getLastType());
         assertEquals("E20001", repository.getLastValue());
+        assertFalse(state().isScanning());
+    }
+
+    @Test
+    public void physicalKeyPressTogglesScanAndReleaseDoesNotStopIt() {
+        viewModel.onScanKeyPressed();
+        assertTrue(state().isScanning());
+
+        viewModel.onScanKeyPressed();
+        assertFalse(state().isScanning());
     }
 
     @Test
     public void multipleTagsAreRejectedWithoutNetworkRequest() {
         viewModel.toggleScan();
-        scanner.emit("E20001", -42);
-        scanner.emit("E20002", -45);
+        scanner.emitRound("E20001", "E20002");
 
         assertEquals(0, repository.getRequestCount());
         assertTrue(state().getErrorMessage().contains("多个 RFID 标签"));
@@ -91,9 +97,9 @@ public class AssetIdentifyViewModelTest {
     }
 
     @Test
-    public void switchingTypeCancelsSingleWindowWithoutQueryingCollectedEpc() {
+    public void switchingTypeCancelsSingleWindowWithoutTag() {
         viewModel.toggleScan();
-        scanner.emit("E20001", -42);
+        scanner.emitEmptyRound();
 
         viewModel.selectIdentifyType(AssetRepository.IDENTIFY_TYPE_ASSET_CODE);
 
@@ -107,7 +113,6 @@ public class AssetIdentifyViewModelTest {
     public void startingNewEpcScanClearsPreviousResult() {
         viewModel.toggleScan();
         scanner.emit("E20001", -42);
-        viewModel.toggleScan();
         repository.completeLast(asset());
         assertEquals("E20001", state().getLastEpc());
         assertEquals("测试资产", state().getAsset().getAssetName());

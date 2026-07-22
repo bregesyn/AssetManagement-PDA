@@ -326,6 +326,9 @@ public final class UhfDeviceManager implements UhfScanner {
                         }
                     }
                 });
+            } else if (mode == UhfScanMode.SINGLE && owner != null) {
+                // 单标签作业只需确认一个唯一 EPC；立即结束扫描可避免继续串读邻近标签。
+                finishScan(owner, true);
             }
         } catch (IllegalArgumentException exception) {
             fail(currentGeneration, "读取到无效的 EPC 数据");

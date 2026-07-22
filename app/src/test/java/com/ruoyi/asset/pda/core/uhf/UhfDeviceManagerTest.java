@@ -180,7 +180,7 @@ public class UhfDeviceManagerTest {
     }
 
     @Test
-    public void cancellingSingleScanDoesNotDeliverCollectedTag() throws Exception {
+    public void singleModeStopsAfterFirstUniqueTagAndDeliversIt() throws Exception {
         FakeReader reader = new FakeReader();
         reader.rounds.add(Collections.singletonList(
                 new UhfDeviceManager.RawTag(new byte[] {(byte) 0xAA}, -60)));
@@ -188,7 +188,21 @@ public class UhfDeviceManagerTest {
         RecordingListener listener = new RecordingListener();
 
         manager.start(listener, UhfScanMode.SINGLE, listener);
-        await(reader.rounds::isEmpty);
+        await(() -> listener.readings.size() == 1);
+
+        assertEquals("AA", listener.readings.get(0).getEpc());
+        assertEquals(UhfScanState.IDLE, manager.getState());
+        manager.close(listener);
+        await(() -> manager.getState() == UhfScanState.IDLE);
+    }
+
+    @Test
+    public void cancellingSingleScanBeforeTagDoesNotDeliverCollectedTag() throws Exception {
+        FakeReader reader = new FakeReader();
+        UhfDeviceManager manager = new UhfDeviceManager(20, 1, new FakeReaderFactory(reader));
+        RecordingListener listener = new RecordingListener();
+
+        manager.start(listener, UhfScanMode.SINGLE, listener);
         manager.cancel(listener);
 
         assertTrue(listener.readings.isEmpty());

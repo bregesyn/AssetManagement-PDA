@@ -93,31 +93,46 @@
                         android:textSize="@dimen/pda_caption_size"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/operationAssetTitleText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/pda_small_spacing"
-                        android:textColor="@color/pda_text_primary"
-                        android:textSize="@dimen/pda_section_title_size"
-                        android:textStyle="bold"
-                        tools:text="测试资产（ASSET-001）" />
+                    <LinearLayout
+                        style="@style/PdaFactRow">
 
-                    <TextView
-                        android:id="@+id/operationAssetCategoryText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/pda_small_spacing"
-                        android:textColor="@color/pda_text_secondary"
-                        tools:text="类别：电子设备" />
+                        <TextView
+                            style="@style/PdaFactLabel"
+                            android:text="@string/bind_label_asset" />
 
-                    <TextView
-                        android:id="@+id/operationAssetStatusText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textColor="@color/pda_text_secondary"
-                        tools:text="状态：在库" />
+                        <TextView
+                            android:id="@+id/operationAssetTitleText"
+                            style="@style/PdaFactValue"
+                            android:textStyle="bold"
+                            tools:text="测试资产（ASSET-001）" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/PdaFactRow">
+
+                        <TextView
+                            style="@style/PdaFactLabel"
+                            android:text="@string/bind_label_category" />
+
+                        <TextView
+                            android:id="@+id/operationAssetCategoryText"
+                            style="@style/PdaFactValue"
+                            tools:text="电子设备" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/PdaFactRow">
+
+                        <TextView
+                            style="@style/PdaFactLabel"
+                            android:text="@string/bind_label_status" />
+
+                        <TextView
+                            android:id="@+id/operationAssetStatusText"
+                            style="@style/PdaFactValue"
+                            android:textStyle="bold"
+                            tools:text="在库" />
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -207,47 +222,71 @@
                         android:textSize="@dimen/pda_caption_size"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/operationTagCodeText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/pda_small_spacing"
-                        android:textColor="@color/pda_text_primary"
-                        android:textSize="@dimen/pda_body_size"
-                        android:textStyle="bold"
-                        tools:text="标签编号：TAG001" />
+                    <LinearLayout
+                        style="@style/PdaFactRow">
 
-                    <TextView
-                        android:id="@+id/operationEpcText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textColor="@color/pda_text_secondary"
-                        tools:text="EPC：E2000017..." />
+                        <TextView
+                            style="@style/PdaFactLabel"
+                            android:text="@string/rfid_label_tag_code" />
 
-                    <TextView
-                        android:id="@+id/operationTagStatusText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textColor="@color/pda_text_secondary"
-                        tools:text="标签状态：正常" />
+                        <TextView
+                            android:id="@+id/operationTagCodeText"
+                            style="@style/PdaFactValue"
+                            android:textStyle="bold"
+                            tools:text="TAG001" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/operationBindStatusText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textColor="@color/pda_text_secondary"
-                        tools:text="绑定状态：未绑定" />
+                    <LinearLayout
+                        style="@style/PdaFactRow">
 
-                    <TextView
-                        android:id="@+id/operationBoundAssetText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textColor="@color/pda_text_secondary"
-                        tools:text="关联资产：无" />
+                        <TextView
+                            style="@style/PdaFactLabel"
+                            android:text="@string/rfid_label_epc" />
+
+                        <TextView
+                            android:id="@+id/operationEpcText"
+                            style="@style/PdaFactValue"
+                            tools:text="E2000017..." />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/PdaFactRow">
+
+                        <TextView
+                            style="@style/PdaFactLabel"
+                            android:text="@string/rfid_label_tag_status" />
+
+                        <TextView
+                            android:id="@+id/operationTagStatusText"
+                            style="@style/PdaFactValue"
+                            tools:text="正常" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/PdaFactRow">
+
+                        <TextView
+                            style="@style/PdaFactLabel"
+                            android:text="@string/rfid_label_bind_status" />
+
+                        <TextView
+                            android:id="@+id/operationBindStatusText"
+                            style="@style/PdaFactValue"
+                            tools:text="未绑定" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/PdaFactRow">
+
+                        <TextView
+                            style="@style/PdaFactLabel"
+                            android:text="@string/rfid_label_bound_asset" />
+
+                        <TextView
+                            android:id="@+id/operationBoundAssetText"
+                            style="@style/PdaFactValue"
+                            tools:text="无" />
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

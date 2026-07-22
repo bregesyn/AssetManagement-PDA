@@ -93,15 +93,17 @@ public final class RfidBindViewModel extends BaseUhfViewModel {
         else startFreshTagScan(current);
     }
 
-    public void onScanKeyDown() {
+    public void onScanKeyPressed() {
         RfidBindUiState current = state();
-        if (!current.isBusy() && !current.isSuccess() && !current.isScanning()
-                && canScanTag(current)) {
+        if (current.isBusy() || current.isSuccess() || !canScanTag(current)) {
+            return;
+        }
+        if (current.isScanning()) {
+            stopScanning();
+        } else {
             startFreshTagScan(current);
         }
     }
-
-    public void onScanKeyUp() { stopScanning(); }
 
     public void onAssetCodeChanged(String assetCode) {
         RfidBindUiState current = state();

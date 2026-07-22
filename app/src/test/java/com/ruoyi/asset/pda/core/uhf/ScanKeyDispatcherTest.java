@@ -10,16 +10,15 @@ import static org.junit.Assert.assertTrue;
 
 public class ScanKeyDispatcherTest {
     @Test
-    public void acceptsBothVendorActionsAndF1ThroughF5() {
+    public void acceptsBothVendorActionsAndC6200F6Only() {
         assertTrue(ScanKeyDispatcher.KeyState.isSupportedAction(
                 ScanKeyDispatcher.ACTION_RFID_KEY));
         assertTrue(ScanKeyDispatcher.KeyState.isSupportedAction(
                 ScanKeyDispatcher.ACTION_FUNCTION_KEY));
-        for (int key = KeyEvent.KEYCODE_F1; key <= KeyEvent.KEYCODE_F5; key++) {
-            assertTrue(ScanKeyDispatcher.KeyState.isSupportedKey(key));
-        }
-        assertFalse(ScanKeyDispatcher.KeyState.isSupportedKey(KeyEvent.KEYCODE_F1 - 1));
-        assertFalse(ScanKeyDispatcher.KeyState.isSupportedKey(KeyEvent.KEYCODE_F5 + 1));
+        assertTrue(ScanKeyDispatcher.KeyState.isSupportedKey(KeyEvent.KEYCODE_F6));
+        assertFalse(ScanKeyDispatcher.KeyState.isSupportedKey(KeyEvent.KEYCODE_F1));
+        assertFalse(ScanKeyDispatcher.KeyState.isSupportedKey(KeyEvent.KEYCODE_F5));
+        assertFalse(ScanKeyDispatcher.KeyState.isSupportedKey(KeyEvent.KEYCODE_F7));
     }
 
     @Test
@@ -27,15 +26,15 @@ public class ScanKeyDispatcherTest {
         ScanKeyDispatcher.KeyState state = new ScanKeyDispatcher.KeyState();
 
         assertEquals(ScanKeyDispatcher.KeyState.EVENT_DOWN, state.accept(
-                ScanKeyDispatcher.ACTION_RFID_KEY, KeyEvent.KEYCODE_F2, true));
+                ScanKeyDispatcher.ACTION_RFID_KEY, KeyEvent.KEYCODE_F6, true));
         assertEquals(ScanKeyDispatcher.KeyState.EVENT_NONE, state.accept(
-                ScanKeyDispatcher.ACTION_RFID_KEY, KeyEvent.KEYCODE_F2, true));
+                ScanKeyDispatcher.ACTION_RFID_KEY, KeyEvent.KEYCODE_F6, true));
         assertEquals(ScanKeyDispatcher.KeyState.EVENT_NONE, state.accept(
-                ScanKeyDispatcher.ACTION_RFID_KEY, KeyEvent.KEYCODE_F3, false));
+                ScanKeyDispatcher.ACTION_RFID_KEY, KeyEvent.KEYCODE_F5, false));
         assertEquals(ScanKeyDispatcher.KeyState.EVENT_UP, state.accept(
-                ScanKeyDispatcher.ACTION_RFID_KEY, KeyEvent.KEYCODE_F2, false));
+                ScanKeyDispatcher.ACTION_RFID_KEY, KeyEvent.KEYCODE_F6, false));
         assertEquals(ScanKeyDispatcher.KeyState.EVENT_NONE, state.accept(
-                ScanKeyDispatcher.ACTION_RFID_KEY, KeyEvent.KEYCODE_F2, false));
+                ScanKeyDispatcher.ACTION_RFID_KEY, KeyEvent.KEYCODE_F6, false));
     }
 
     @Test
@@ -43,11 +42,11 @@ public class ScanKeyDispatcherTest {
         ScanKeyDispatcher.KeyState state = new ScanKeyDispatcher.KeyState();
 
         assertEquals(ScanKeyDispatcher.KeyState.EVENT_NONE,
-                state.accept("unknown.action", KeyEvent.KEYCODE_F1, true));
+                state.accept("unknown.action", KeyEvent.KEYCODE_F6, true));
         assertEquals(ScanKeyDispatcher.KeyState.EVENT_DOWN, state.accept(
-                ScanKeyDispatcher.ACTION_FUNCTION_KEY, KeyEvent.KEYCODE_F1, true));
+                ScanKeyDispatcher.ACTION_FUNCTION_KEY, KeyEvent.KEYCODE_F6, true));
         state.reset();
         assertEquals(ScanKeyDispatcher.KeyState.EVENT_DOWN, state.accept(
-                ScanKeyDispatcher.ACTION_FUNCTION_KEY, KeyEvent.KEYCODE_F5, true));
+                ScanKeyDispatcher.ACTION_FUNCTION_KEY, KeyEvent.KEYCODE_F6, true));
     }
 }

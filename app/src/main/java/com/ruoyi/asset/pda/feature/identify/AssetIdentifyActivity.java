@@ -38,13 +38,8 @@ public final class AssetIdentifyActivity extends SessionAwareActivity {
         scanKeyDispatcher = new ScanKeyDispatcher(this,
                 new ScanKeyDispatcher.Listener() {
                     @Override
-                    public void onScanKeyDown() {
-                        viewModel.onScanKeyDown();
-                    }
-
-                    @Override
-                    public void onScanKeyUp() {
-                        viewModel.onScanKeyUp();
+                    public void onScanKeyPressed() {
+                        viewModel.onScanKeyPressed();
                     }
                 });
         bindActions();
@@ -113,6 +108,8 @@ public final class AssetIdentifyActivity extends SessionAwareActivity {
     }
 
     private void renderAsset(PdaAssetIdentifyDto asset) {
+        binding.identifyEpcText.setText(getString(R.string.identify_epc_format,
+                display(asset.getEpcCode())));
         binding.identifyAssetTitleText.setText(getString(R.string.identify_asset_name_format,
                 display(asset.getAssetName()), display(asset.getAssetCode())));
         binding.identifyCategoryText.setText(getString(R.string.identify_category_format,
@@ -128,7 +125,7 @@ public final class AssetIdentifyActivity extends SessionAwareActivity {
         binding.identifyRfidText.setText(getString(R.string.identify_rfid_format,
                 getString(asset.isRfidBound()
                         ? R.string.identify_rfid_bound : R.string.identify_rfid_unbound),
-                display(asset.getTagCode()), display(asset.getEpcCode())));
+                display(asset.getTagCode())));
     }
 
     private int scanStateText(UhfScanState state) {

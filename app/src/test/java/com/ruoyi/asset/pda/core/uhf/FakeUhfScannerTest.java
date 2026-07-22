@@ -36,8 +36,7 @@ public class FakeUhfScannerTest {
         RecordingListener listener = new RecordingListener();
         scanner.start(listener, UhfScanMode.SINGLE, listener);
 
-        scanner.emit("AA", -60);
-        scanner.emit("BB", -55);
+        scanner.emitRound("AA", "BB");
 
         assertEquals(UhfScanState.ERROR, scanner.getState());
         assertTrue(listener.readings.isEmpty());
@@ -45,28 +44,24 @@ public class FakeUhfScannerTest {
     }
 
     @Test
-    public void singleDeliversUniqueTagOnlyWhenStopped() {
+    public void singleDeliversUniqueTagAndStopsAutomatically() {
         FakeUhfScanner scanner = new FakeUhfScanner();
         RecordingListener listener = new RecordingListener();
         scanner.start(listener, UhfScanMode.SINGLE, listener);
         scanner.emit("AA", -60);
-        scanner.emit("AA", -55);
-
-        scanner.stop(listener);
-        scanner.stop(listener);
 
         assertEquals(1, listener.readings.size());
-        assertEquals(2, listener.readings.get(0).getReadCount());
+        assertEquals("AA", listener.readings.get(0).getEpc());
+        assertEquals(1, listener.readings.get(0).getReadCount());
         assertEquals(UhfScanState.IDLE, scanner.getState());
-        assertEquals(2, scanner.getStopCallCount());
+        assertEquals(0, scanner.getStopCallCount());
     }
 
     @Test
-    public void cancellingSingleScanDiscardsUniqueTag() {
+    public void cancellingSingleScanBeforeTagDiscardsScanWindow() {
         FakeUhfScanner scanner = new FakeUhfScanner();
         RecordingListener listener = new RecordingListener();
         scanner.start(listener, UhfScanMode.SINGLE, listener);
-        scanner.emit("AA", -60);
 
         scanner.cancel(listener);
 

@@ -7,6 +7,10 @@
     <dimen name="pda_small_spacing">8dp</dimen>
     <dimen name="pda_card_radius">14dp</dimen>
     <dimen name="pda_touch_height">52dp</dimen>
+    <!-- 参考旧 PDA 的紧凑业务字段行，但使用最小高度，避免长 EPC 被固定行高裁切。 -->
+    <dimen name="pda_fact_label_width">90dp</dimen>
+    <dimen name="pda_fact_row_min_height">45dp</dimen>
+    <dimen name="pda_fact_row_spacing">4dp</dimen>
     <dimen name="pda_title_size">28sp</dimen>
     <dimen name="pda_section_title_size">20sp</dimen>
     <dimen name="pda_body_size">16sp</dimen>

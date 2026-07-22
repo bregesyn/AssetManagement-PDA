@@ -89,7 +89,7 @@ public class RfidBindingViewModelTest {
         assetRepository.completeLast(boundAsset());
 
         viewModel.toggleScan();
-        viewModel.onScanKeyDown();
+        viewModel.onScanKeyPressed();
 
         assertFalse(bindState(viewModel).isScanning());
         assertEquals(0, rfidRepository.getQueryCount());
@@ -201,7 +201,6 @@ public class RfidBindingViewModelTest {
         assetRepository.completeLast(asset());
         viewModel.toggleScan();
         scanner.emit("E20001", -40);
-        viewModel.toggleScan();
         rfidRepository.completeLastQuery(unboundTag());
         assertTrue(bindState(viewModel).canBind());
         return viewModel;
@@ -218,7 +217,6 @@ public class RfidBindingViewModelTest {
     private void scanOne(RfidUnbindViewModel viewModel, String epc) {
         viewModel.toggleScan();
         scanner.emit(epc, -40);
-        viewModel.toggleScan();
     }
 
     private RfidBindUiState bindState(RfidBindViewModel viewModel) {

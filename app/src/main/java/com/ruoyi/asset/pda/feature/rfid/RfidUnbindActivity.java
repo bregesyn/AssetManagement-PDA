@@ -35,8 +35,7 @@ public final class RfidUnbindActivity extends SessionAwareActivity {
                 .get(RfidUnbindViewModel.class);
         scanKeyDispatcher = new ScanKeyDispatcher(this,
                 new ScanKeyDispatcher.Listener() {
-                    @Override public void onScanKeyDown() { viewModel.onScanKeyDown(); }
-                    @Override public void onScanKeyUp() { viewModel.onScanKeyUp(); }
+                    @Override public void onScanKeyPressed() { viewModel.onScanKeyPressed(); }
                 });
         configureUi();
         bindActions();

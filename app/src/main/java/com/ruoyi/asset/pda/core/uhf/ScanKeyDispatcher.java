@@ -30,9 +30,8 @@ public final class ScanKeyDispatcher {
             int event = keyState.accept(intent.getAction(), keyCode,
                     intent.getBooleanExtra("keydown", false));
             if (event == KeyState.EVENT_DOWN) {
-                listener.onScanKeyDown();
-            } else if (event == KeyState.EVENT_UP) {
-                listener.onScanKeyUp();
+                // 物理键采用“按下切换”语义；抬起只释放按键去重状态，不停止扫描。
+                listener.onScanKeyPressed();
             }
         }
     };
@@ -68,9 +67,7 @@ public final class ScanKeyDispatcher {
     }
 
     public interface Listener {
-        void onScanKeyDown();
-
-        void onScanKeyUp();
+        void onScanKeyPressed();
     }
 
     static final class KeyState {
@@ -107,7 +104,8 @@ public final class ScanKeyDispatcher {
         }
 
         static boolean isSupportedKey(int keyCode) {
-            return keyCode >= KeyEvent.KEYCODE_F1 && keyCode <= KeyEvent.KEYCODE_F5;
+            // C6200 真机已在 /dev/input/event1 确认扫描键为 F6；收窄白名单可避免其他功能键误触发作业。
+            return keyCode == KeyEvent.KEYCODE_F6;
         }
     }
 }

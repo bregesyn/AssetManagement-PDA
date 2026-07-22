@@ -30,7 +30,7 @@
     <string name="identify_subtitle">通过唯一 EPC 或资产编码查询服务端资产事实</string>
     <string name="identify_type_epc">EPC 扫描</string>
     <string name="identify_type_asset_code">资产编码</string>
-    <string name="identify_epc_hint">按住 F1-F5 任一功能键，或点击按钮开始；停止后确认唯一标签。</string>
+    <string name="identify_epc_hint">按下 F6 功能键或点击按钮开始；读到唯一 EPC 后自动停止，多标签会被明确阻断。</string>
     <string name="identify_last_epc_format">最近 EPC：%1$s</string>
     <string name="identify_asset_code_hint">资产编码</string>
     <string name="identify_asset_code_action">查询资产</string>
@@ -39,19 +39,28 @@
     <string name="identify_epc_too_long">EPC 长度不能超过 128 个字符</string>
     <string name="identify_scan_failed">UHF 扫描失败，请重试</string>
     <string name="identify_result_title">识别结果</string>
+    <string name="identify_label_epc">EPC</string>
+    <string name="identify_label_asset">资产</string>
+    <string name="identify_label_category">类别</string>
+    <string name="identify_label_status">状态</string>
+    <string name="identify_label_model_brand">规格 / 品牌</string>
+    <string name="identify_label_warehouse">仓库</string>
+    <string name="identify_label_location">位置</string>
+    <string name="identify_label_rfid">RFID</string>
+    <string name="identify_epc_format">%1$s</string>
     <string name="identify_asset_name_format">%1$s（%2$s）</string>
-    <string name="identify_category_format">类别：%1$s</string>
-    <string name="identify_status_format">状态：%1$s</string>
-    <string name="identify_model_brand_format">规格 / 品牌：%1$s / %2$s</string>
-    <string name="identify_warehouse_format">仓库：%1$s</string>
-    <string name="identify_location_format">位置：%1$s</string>
-    <string name="identify_rfid_format">RFID：%1$s；标签 %2$s；EPC %3$s</string>
+    <string name="identify_category_format">%1$s</string>
+    <string name="identify_status_format">%1$s</string>
+    <string name="identify_model_brand_format">%1$s / %2$s</string>
+    <string name="identify_warehouse_format">%1$s</string>
+    <string name="identify_location_format">%1$s</string>
+    <string name="identify_rfid_format">%1$s；标签 %2$s</string>
     <string name="identify_rfid_bound">已绑定</string>
     <string name="identify_rfid_unbound">未绑定</string>
 
     <string name="batch_title">标签批量建档</string>
     <string name="batch_subtitle">连续采集 EPC，本地去重后一次性提交标签台账</string>
-    <string name="batch_scan_hint">按住 F1-F5 任一功能键，或点击按钮连续采集；停止后再提交。</string>
+    <string name="batch_scan_hint">按下 F6 功能键切换连续采集，或点击按钮开始/停止；停止后再提交。</string>
     <string name="batch_unique_format">唯一 EPC：%1$d / 5000</string>
     <string name="batch_duplicate_format">重复读取：%1$d</string>
     <string name="batch_last_format">最近：%1$s　RSSI %2$d　读取 %3$d 次</string>
@@ -78,12 +87,17 @@
 
     <string name="rfid_invalid_tag_response">服务响应缺少有效或预期状态的 RFID 标签信息</string>
     <string name="rfid_tag_section">RFID 标签</string>
-    <string name="rfid_tag_code_format">标签编号：%1$s</string>
-    <string name="rfid_epc_format">EPC：%1$s</string>
-    <string name="rfid_tag_status_format">标签状态：%1$s</string>
-    <string name="rfid_bind_status_format">绑定状态：%1$s</string>
-    <string name="rfid_bound_asset_format">关联资产：%1$s（%2$s）</string>
-    <string name="rfid_no_bound_asset">关联资产：无</string>
+    <string name="rfid_label_tag_code">标签编号</string>
+    <string name="rfid_label_epc">EPC</string>
+    <string name="rfid_label_tag_status">标签状态</string>
+    <string name="rfid_label_bind_status">绑定状态</string>
+    <string name="rfid_label_bound_asset">关联资产</string>
+    <string name="rfid_tag_code_format">%1$s</string>
+    <string name="rfid_epc_format">%1$s</string>
+    <string name="rfid_tag_status_format">%1$s</string>
+    <string name="rfid_bind_status_format">%1$s</string>
+    <string name="rfid_bound_asset_format">%1$s（%2$s）</string>
+    <string name="rfid_no_bound_asset">无</string>
 
     <string name="bind_title">RFID 绑定</string>
     <string name="bind_subtitle">先核对资产，再扫描一个已建档且未绑定的正常标签</string>
@@ -91,11 +105,14 @@
     <string name="bind_asset_query">查询资产</string>
     <string name="bind_asset_code_too_long">资产编码长度不能超过 64 个字符</string>
     <string name="bind_asset_section">待绑定资产</string>
+    <string name="bind_label_asset">资产</string>
+    <string name="bind_label_category">类别</string>
+    <string name="bind_label_status">状态</string>
     <string name="bind_asset_title_format">%1$s（%2$s）</string>
     <string name="bind_asset_category_format">类别：%1$s</string>
     <string name="bind_asset_status_format">状态：%1$s</string>
     <string name="bind_asset_already_bound">该资产已经绑定 RFID，不能重复绑定</string>
-    <string name="bind_scan_hint">按住 F1-F5 任一功能键，或点击按钮扫描一个标签；多标签会被明确阻断。</string>
+    <string name="bind_scan_hint">按下 F6 功能键或点击按钮开始；读到唯一 EPC 后自动停止，多标签会被明确阻断。</string>
     <string name="bind_tag_unavailable">标签必须为正常且未绑定状态</string>
     <string name="bind_action">确认建立绑定</string>
     <string name="bind_confirm_title">确认建立 RFID 绑定？</string>
@@ -106,7 +123,7 @@
 
     <string name="unbind_title">RFID 解绑</string>
     <string name="unbind_subtitle">扫描一个已建档标签，核对当前资产关系后解除绑定</string>
-    <string name="unbind_scan_hint">按住 F1-F5 任一功能键，或点击按钮扫描一个标签；多标签会被明确阻断。</string>
+    <string name="unbind_scan_hint">按下 F6 功能键或点击按钮开始；读到唯一 EPC 后自动停止，多标签会被明确阻断。</string>
     <string name="unbind_not_bound">该标签当前未绑定资产，无需执行解绑</string>
     <string name="unbind_action">确认解除绑定</string>
     <string name="unbind_confirm_title">确认解除 RFID 绑定？</string>

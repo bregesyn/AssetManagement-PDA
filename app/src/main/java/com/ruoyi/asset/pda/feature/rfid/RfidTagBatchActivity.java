@@ -44,10 +44,7 @@ public final class RfidTagBatchActivity extends SessionAwareActivity {
         scanKeyDispatcher = new ScanKeyDispatcher(this,
                 new ScanKeyDispatcher.Listener() {
                     @Override
-                    public void onScanKeyDown() { viewModel.onScanKeyDown(); }
-
-                    @Override
-                    public void onScanKeyUp() { viewModel.onScanKeyUp(); }
+                    public void onScanKeyPressed() { viewModel.onScanKeyPressed(); }
                 });
         binding.batchReadingsList.setLayoutManager(new LinearLayoutManager(this));
         binding.batchReadingsList.setAdapter(readingAdapter);
