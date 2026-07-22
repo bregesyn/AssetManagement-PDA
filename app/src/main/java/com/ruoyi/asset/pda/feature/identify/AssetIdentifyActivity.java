@@ -84,11 +84,14 @@ public final class AssetIdentifyActivity extends SessionAwareActivity {
         binding.identifyAssetCodeButton.setEnabled(!state.isLoading());
         binding.identifyScanButton.setEnabled(!state.isLoading());
         binding.identifyScanButton.setText(state.isScanning()
-                ? R.string.common_scan_stop : R.string.common_scan_start);
+                ? R.string.identify_scan_stop : R.string.identify_scan_start);
         binding.identifyScanStatusText.setText(scanStateText(state.getScanState()));
+        binding.identifyScanCountText.setText(scanCountText(state));
+        binding.identifyScanCaptionText.setText(scanCaptionText(state));
         setVisible(binding.identifyProgress, state.isLoading());
 
-        boolean hasLastEpc = hasText(state.getLastEpc());
+        // 识别成功后 EPC 已在“最近一次识别”卡片中展示；仅在未匹配资产时保留，便于现场复核失败标签。
+        boolean hasLastEpc = state.getAsset() == null && hasText(state.getLastEpc());
         setVisible(binding.identifyLastEpcText, hasLastEpc);
         if (hasLastEpc) {
             binding.identifyLastEpcText.setText(
@@ -108,6 +111,13 @@ public final class AssetIdentifyActivity extends SessionAwareActivity {
     }
 
     private void renderAsset(PdaAssetIdentifyDto asset) {
+        boolean rfidBound = asset.isRfidBound();
+        binding.identifyResultStatusText.setText(rfidBound
+                ? R.string.identify_rfid_bound : R.string.identify_rfid_unbound);
+        binding.identifyResultStatusText.setTextColor(getColor(rfidBound
+                ? R.color.pda_success : R.color.pda_pending));
+        binding.identifyResultStatusText.setBackgroundResource(rfidBound
+                ? R.drawable.pda_online_badge : R.drawable.pda_pending_badge);
         binding.identifyEpcText.setText(getString(R.string.identify_epc_format,
                 display(asset.getEpcCode())));
         binding.identifyAssetTitleText.setText(getString(R.string.identify_asset_name_format,
@@ -120,25 +130,35 @@ public final class AssetIdentifyActivity extends SessionAwareActivity {
                 display(asset.getSpecModel()), display(asset.getBrand())));
         binding.identifyWarehouseText.setText(getString(R.string.identify_warehouse_format,
                 display(asset.getWarehouseName())));
-        binding.identifyLocationText.setText(getString(R.string.identify_location_format,
-                display(asset.getLocationName())));
+        binding.identifyLocationText.setText(getString(R.string.identify_warehouse_location_format,
+                display(asset.getWarehouseName()), display(asset.getLocationName())));
         binding.identifyRfidText.setText(getString(R.string.identify_rfid_format,
-                getString(asset.isRfidBound()
+                getString(rfidBound
                         ? R.string.identify_rfid_bound : R.string.identify_rfid_unbound),
                 display(asset.getTagCode())));
     }
 
     private int scanStateText(UhfScanState state) {
         if (state == UhfScanState.PROCESSING) {
-            return R.string.common_scan_starting;
+            return R.string.identify_scan_preparing;
         }
         if (state == UhfScanState.SCANNING) {
-            return R.string.common_scan_active;
+            return R.string.identify_scan_active;
         }
         if (state == UhfScanState.ERROR) {
             return R.string.common_scan_error;
         }
-        return R.string.common_scan_idle;
+        return R.string.identify_scan_ready;
+    }
+
+    private int scanCountText(AssetIdentifyUiState state) {
+        return state.isScanning() || state.isLoading() || hasText(state.getLastEpc())
+                ? R.string.identify_scan_count_one : R.string.identify_scan_count_zero;
+    }
+
+    private int scanCaptionText(AssetIdentifyUiState state) {
+        return state.isScanning() || state.isLoading()
+                ? R.string.identify_scan_caption_active : R.string.identify_scan_caption_idle;
     }
 
     private String display(String value) {

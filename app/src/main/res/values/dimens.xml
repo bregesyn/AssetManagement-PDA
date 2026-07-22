@@ -8,6 +8,7 @@
     <dimen name="pda_small_spacing">6dp</dimen>
     <dimen name="pda_card_radius">14dp</dimen>
     <dimen name="pda_control_radius">10dp</dimen>
+    <dimen name="pda_segmented_padding">4dp</dimen>
     <dimen name="pda_stroke_width">1dp</dimen>
     <dimen name="pda_status_rail_width">4dp</dimen>
     <dimen name="pda_card_min_height">84dp</dimen>
@@ -21,6 +22,8 @@
     <dimen name="pda_page_title_size">24sp</dimen>
     <dimen name="pda_button_text_size">16sp</dimen>
     <dimen name="pda_utility_size">11sp</dimen>
+    <dimen name="pda_scan_count_size">52sp</dimen>
+    <dimen name="pda_signal_dot_size">8dp</dimen>
     <!-- EPC 和资产名称允许换行，避免现场核对时被固定行高截断。 -->
     <dimen name="pda_fact_label_width">90dp</dimen>
     <dimen name="pda_fact_row_min_height">45dp</dimen>

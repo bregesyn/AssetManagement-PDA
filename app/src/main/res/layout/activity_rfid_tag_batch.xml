@@ -10,7 +10,7 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/batchToolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/pda_primary"
         app:navigationContentDescription="@string/common_back"
         app:navigationIcon="?attr/homeAsUpIndicator"
@@ -21,175 +21,293 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fillViewport="true">
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="@dimen/pda_screen_bottom_padding">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/pda_screen_padding">
+            android:paddingStart="@dimen/pda_screen_padding"
+            android:paddingTop="@dimen/pda_screen_padding"
+            android:paddingEnd="@dimen/pda_screen_padding">
 
-            <LinearLayout
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/batch_eyebrow"
+                android:textColor="@color/pda_primary"
+                android:textSize="@dimen/pda_caption_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_small_spacing"
+                android:text="@string/batch_subtitle"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_body_size" />
+
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/batchCaptureContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/batch_subtitle"
-                    android:textColor="@color/pda_text_primary"
-                    android:textSize="@dimen/pda_body_size"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/batch_scan_hint"
-                    android:textColor="@color/pda_text_secondary"
-                    android:textSize="@dimen/pda_caption_size" />
-
-                <TextView
-                    android:id="@+id/batchScanStatusText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/pda_item_spacing"
-                    android:accessibilityLiveRegion="polite"
-                    android:text="@string/common_scan_idle"
-                    android:textColor="@color/pda_text_primary"
-                    android:textSize="@dimen/pda_body_size"
-                    android:textStyle="bold" />
+                android:layout_marginTop="@dimen/pda_section_spacing"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="@dimen/pda_stroke_width">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/batchUniqueText"
+                    <View
+                        android:layout_width="@dimen/pda_status_rail_width"
+                        android:layout_height="match_parent"
+                        android:background="@color/pda_primary" />
+
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="@color/pda_text_secondary"
-                        tools:text="唯一 EPC：12 / 5000" />
+                        android:orientation="vertical"
+                        android:padding="@dimen/pda_card_padding">
 
-                    <TextView
-                        android:id="@+id/batchDuplicateText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/pda_text_secondary"
-                        tools:text="重复读取：20" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/batch_capture_section"
+                            android:textColor="@color/pda_primary"
+                            android:textSize="@dimen/pda_body_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_small_spacing"
+                            android:text="@string/batch_capture_note"
+                            android:textColor="@color/pda_text_secondary"
+                            android:textSize="@dimen/pda_caption_size" />
+
+                        <TextView
+                            android:id="@+id/batchScanStatusText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:accessibilityLiveRegion="polite"
+                            android:text="@string/common_scan_idle"
+                            android:textColor="@color/pda_text_primary"
+                            android:textSize="@dimen/pda_body_size"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/pda_small_spacing"
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="@color/pda_success_soft"
+                                app:cardCornerRadius="@dimen/pda_control_radius"
+                                app:strokeColor="@color/pda_card_stroke"
+                                app:strokeWidth="@dimen/pda_stroke_width">
+
+                                <TextView
+                                    android:id="@+id/batchUniqueText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:minHeight="@dimen/pda_card_min_height"
+                                    android:padding="@dimen/pda_small_spacing"
+                                    android:textColor="@color/pda_success"
+                                    android:textSize="@dimen/pda_caption_size"
+                                    android:textStyle="bold"
+                                    tools:text="唯一 EPC：12 / 5000" />
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/pda_small_spacing"
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="@color/pda_pending_soft"
+                                app:cardCornerRadius="@dimen/pda_control_radius"
+                                app:strokeColor="@color/pda_card_stroke"
+                                app:strokeWidth="@dimen/pda_stroke_width">
+
+                                <TextView
+                                    android:id="@+id/batchDuplicateText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:minHeight="@dimen/pda_card_min_height"
+                                    android:padding="@dimen/pda_small_spacing"
+                                    android:textColor="@color/pda_pending"
+                                    android:textSize="@dimen/pda_caption_size"
+                                    android:textStyle="bold"
+                                    tools:text="重复读取：20" />
+                            </com.google.android.material.card.MaterialCardView>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/batchLastText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:fontFamily="monospace"
+                            android:padding="@dimen/pda_small_spacing"
+                            android:textColor="@color/pda_text_secondary"
+                            android:textSize="@dimen/pda_utility_size"
+                            android:visibility="gone"
+                            tools:text="最近：E200...　RSSI -42　读取 3 次"
+                            tools:visibility="visible" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/batchScanButton"
+                            style="@style/PdaPrimaryButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:text="@string/common_scan_start" />
+
+                        <TextView
+                            android:id="@+id/batchEmptyText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:background="@color/pda_background"
+                            android:gravity="center"
+                            android:padding="@dimen/pda_section_spacing"
+                            android:text="@string/batch_empty"
+                            android:textColor="@color/pda_text_secondary"
+                            android:textSize="@dimen/pda_caption_size" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/batchReadingsList"
+                            android:layout_width="match_parent"
+                            android:layout_height="280dp"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:clipToPadding="false"
+                            android:paddingBottom="@dimen/pda_small_spacing"
+                            android:visibility="gone"
+                            tools:itemCount="4"
+                            tools:listitem="@layout/item_uhf_tag_reading"
+                            tools:visibility="visible" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/batchRemarkInputLayout"
+                            style="@style/PdaTextInputLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:hint="@string/batch_remark_hint"
+                            app:counterEnabled="true"
+                            app:counterMaxLength="500">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/batchRemarkEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textCapSentences|textMultiLine"
+                                android:maxLength="500"
+                                android:maxLines="3" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/batchSubmitButton"
+                            style="@style/PdaPrimaryButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:text="@string/batch_submit" />
+                    </LinearLayout>
                 </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                <TextView
-                    android:id="@+id/batchLastText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/pda_text_secondary"
-                    android:textSize="@dimen/pda_caption_size"
-                    android:visibility="gone"
-                    tools:text="最近：E200...　RSSI -42　读取 3 次"
-                    tools:visibility="visible" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/batchScanButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/pda_touch_height"
-                    android:layout_marginTop="@dimen/pda_item_spacing"
-                    android:text="@string/common_scan_start" />
-
-                <TextView
-                    android:id="@+id/batchEmptyText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/pda_item_spacing"
-                    android:gravity="center"
-                    android:padding="@dimen/pda_section_spacing"
-                    android:text="@string/batch_empty"
-                    android:textColor="@color/pda_text_secondary" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/batchReadingsList"
-                    android:layout_width="match_parent"
-                    android:layout_height="280dp"
-                    android:layout_marginTop="@dimen/pda_item_spacing"
-                    android:clipToPadding="false"
-                    android:paddingBottom="@dimen/pda_small_spacing"
-                    android:visibility="gone"
-                    tools:itemCount="4"
-                    tools:listitem="@layout/item_uhf_tag_reading"
-                    tools:visibility="visible" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/batchRemarkInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/pda_item_spacing"
-                    android:hint="@string/batch_remark_hint"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="500">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/batchRemarkEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textCapSentences|textMultiLine"
-                        android:maxLength="500"
-                        android:maxLines="3" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/batchSubmitButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/pda_touch_height"
-                    android:layout_marginTop="@dimen/pda_item_spacing"
-                    android:text="@string/batch_submit" />
-            </LinearLayout>
-
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/batchResultContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_marginTop="@dimen/pda_section_spacing"
                 android:visibility="gone"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="@dimen/pda_stroke_width"
                 tools:visibility="visible">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/batch_result_title"
-                    android:textColor="@color/pda_text_primary"
-                    android:textSize="@dimen/pda_section_title_size"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/batchResultSummaryText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/pda_small_spacing"
-                    android:textColor="@color/pda_text_secondary"
-                    android:textSize="@dimen/pda_body_size"
-                    tools:text="成功 2　已存在/重复 1　失败 1" />
+                    <View
+                        android:layout_width="@dimen/pda_status_rail_width"
+                        android:layout_height="match_parent"
+                        android:background="@color/pda_success" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/batchResultList"
-                    android:layout_width="match_parent"
-                    android:layout_height="420dp"
-                    android:layout_marginTop="@dimen/pda_item_spacing"
-                    tools:itemCount="4"
-                    tools:listitem="@layout/item_rfid_batch_result" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="@dimen/pda_card_padding">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/batchContinueButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/pda_touch_height"
-                    android:layout_marginTop="@dimen/pda_item_spacing"
-                    android:text="@string/batch_continue" />
-            </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/batch_result_title"
+                            android:textColor="@color/pda_success"
+                            android:textSize="@dimen/pda_body_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_small_spacing"
+                            android:text="@string/batch_result_hint"
+                            android:textColor="@color/pda_text_secondary"
+                            android:textSize="@dimen/pda_caption_size" />
+
+                        <TextView
+                            android:id="@+id/batchResultSummaryText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:background="@drawable/pda_online_badge"
+                            android:padding="@dimen/pda_card_padding"
+                            android:textColor="@color/pda_success"
+                            android:textSize="@dimen/pda_body_size"
+                            android:textStyle="bold"
+                            tools:text="成功 12　已存在/重复 2　失败 1" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/batchResultList"
+                            android:layout_width="match_parent"
+                            android:layout_height="420dp"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:clipToPadding="false"
+                            android:paddingBottom="@dimen/pda_small_spacing"
+                            tools:itemCount="4"
+                            tools:listitem="@layout/item_rfid_batch_result" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/batchContinueButton"
+                            style="@style/PdaOutlinedButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:text="@string/batch_continue" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/batchProgress"
@@ -207,6 +325,8 @@
                 android:layout_marginTop="@dimen/pda_item_spacing"
                 android:layout_marginBottom="@dimen/pda_section_spacing"
                 android:accessibilityLiveRegion="assertive"
+                android:background="@drawable/pda_error_surface"
+                android:padding="@dimen/pda_card_padding"
                 android:textColor="@color/pda_error"
                 android:textSize="@dimen/pda_body_size"
                 android:visibility="gone"

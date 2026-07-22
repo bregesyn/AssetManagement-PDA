@@ -4,12 +4,14 @@
     <color name="pda_primary_dark">#174766</color>
     <color name="pda_background">#F3F6F8</color>
     <color name="pda_card_background">#FFFFFFFF</color>
+    <color name="pda_primary_soft">#E4EEF4</color>
     <color name="pda_success">#2F6B5D</color>
     <color name="pda_success_soft">#E7F1ED</color>
     <color name="pda_text_primary">#1D2A35</color>
     <color name="pda_text_secondary">#5D6B76</color>
     <color name="pda_card_stroke">#D7E0E6</color>
     <color name="pda_pending">#8A5A00</color>
+    <color name="pda_pending_soft">#FBF0D8</color>
     <color name="pda_error">#B3261E</color>
     <color name="pda_error_soft">#FAE6E4</color>
 </resources>

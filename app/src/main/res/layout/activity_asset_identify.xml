@@ -10,129 +10,257 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/identifyToolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/pda_primary"
         app:navigationContentDescription="@string/common_back"
         app:navigationIcon="?attr/homeAsUpIndicator"
+        app:subtitle="@string/identify_subtitle"
+        app:subtitleTextColor="@color/pda_primary_soft"
         app:title="@string/identify_title"
-        app:titleTextColor="@color/pda_card_background" />
+        app:titleTextColor="@color/pda_card_background">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/pda_screen_padding"
+            android:paddingStart="@dimen/pda_small_spacing"
+            android:paddingEnd="@dimen/pda_small_spacing"
+            android:text="@string/identify_mode_mark"
+            android:textColor="@color/pda_primary_soft"
+            android:textSize="@dimen/pda_utility_size"
+            android:textStyle="bold" />
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fillViewport="true">
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="@dimen/pda_screen_bottom_padding">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/pda_screen_padding">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/identify_subtitle"
-                android:textColor="@color/pda_text_secondary"
-                android:textSize="@dimen/pda_body_size" />
+            android:paddingStart="@dimen/pda_screen_padding"
+            android:paddingTop="@dimen/pda_screen_padding"
+            android:paddingEnd="@dimen/pda_screen_padding">
 
             <RadioGroup
                 android:id="@+id/identifyTypeGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/pda_item_spacing"
-                android:orientation="horizontal">
+                android:background="@drawable/pda_segmented_container"
+                android:orientation="horizontal"
+                android:padding="@dimen/pda_segmented_padding">
 
                 <RadioButton
                     android:id="@+id/identifyEpcRadio"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/pda_touch_height"
                     android:layout_weight="1"
+                    android:background="@drawable/pda_segmented_option"
+                    android:button="@null"
+                    android:gravity="center"
                     android:checked="true"
-                    android:text="@string/identify_type_epc" />
+                    android:text="@string/identify_type_epc"
+                    android:textColor="@color/pda_text_primary"
+                    android:textSize="@dimen/pda_body_size"
+                    android:textStyle="bold" />
 
                 <RadioButton
                     android:id="@+id/identifyAssetCodeRadio"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/pda_touch_height"
                     android:layout_weight="1"
-                    android:text="@string/identify_type_asset_code" />
+                    android:background="@drawable/pda_segmented_option"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/identify_type_asset_code"
+                    android:textColor="@color/pda_text_secondary"
+                    android:textSize="@dimen/pda_body_size"
+                    android:textStyle="bold" />
             </RadioGroup>
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/identifyEpcContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="@dimen/pda_stroke_width">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/pda_small_spacing"
-                    android:text="@string/identify_epc_hint"
-                    android:textColor="@color/pda_text_secondary"
-                    android:textSize="@dimen/pda_caption_size" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/identifyScanStatusText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/pda_item_spacing"
-                    android:accessibilityLiveRegion="polite"
-                    android:text="@string/common_scan_idle"
-                    android:textColor="@color/pda_text_primary"
-                    android:textSize="@dimen/pda_body_size"
-                    android:textStyle="bold" />
+                    <View
+                        android:layout_width="@dimen/pda_status_rail_width"
+                        android:layout_height="match_parent"
+                        android:background="@color/pda_primary" />
 
-                <TextView
-                    android:id="@+id/identifyLastEpcText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/pda_text_secondary"
-                    android:textSize="@dimen/pda_caption_size"
-                    android:visibility="gone"
-                    tools:text="最近 EPC：E20000172211000100000001"
-                    tools:visibility="visible" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="@dimen/pda_card_padding">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/identifyScanButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/pda_touch_height"
-                    android:layout_marginTop="@dimen/pda_item_spacing"
-                    android:text="@string/common_scan_start" />
-            </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
 
-            <LinearLayout
+                            <View
+                                android:layout_width="@dimen/pda_signal_dot_size"
+                                android:layout_height="@dimen/pda_signal_dot_size"
+                                android:background="@drawable/pda_signal_dot" />
+
+                            <TextView
+                                android:id="@+id/identifyScanStatusText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/pda_small_spacing"
+                                android:accessibilityLiveRegion="polite"
+                                android:text="@string/identify_scan_ready"
+                                android:textColor="@color/pda_primary"
+                                android:textSize="@dimen/pda_body_size"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/identifyScanCountText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_small_spacing"
+                            android:gravity="center"
+                            android:text="@string/identify_scan_count_zero"
+                            android:textColor="@color/pda_primary_dark"
+                            android:textSize="@dimen/pda_scan_count_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/identifyScanCaptionText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/identify_scan_caption_idle"
+                            android:textColor="@color/pda_text_secondary"
+                            android:textSize="@dimen/pda_caption_size" />
+
+                        <TextView
+                            android:id="@+id/identifyLastEpcText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_small_spacing"
+                            android:fontFamily="monospace"
+                            android:gravity="center"
+                            android:padding="@dimen/pda_small_spacing"
+                            android:textColor="@color/pda_text_secondary"
+                            android:textSize="@dimen/pda_utility_size"
+                            android:visibility="gone"
+                            tools:text="最近 EPC：E20000172211000100000001"
+                            tools:visibility="visible" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/identifyScanButton"
+                            style="@style/PdaPrimaryButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:text="@string/identify_scan_start" />
+
+                        <TextView
+                            android:id="@+id/identifyScanHintText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:gravity="center"
+                            android:text="@string/identify_epc_hint"
+                            android:textColor="@color/pda_text_secondary"
+                            android:textSize="@dimen/pda_caption_size" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/identifyAssetCodeContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_marginTop="@dimen/pda_item_spacing"
                 android:visibility="gone"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="@dimen/pda_stroke_width"
                 tools:visibility="visible">
 
-                <com.google.android.material.textfield.TextInputLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/pda_item_spacing"
-                    android:hint="@string/identify_asset_code_hint">
+                    android:orientation="horizontal">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/identifyAssetCodeEditText"
-                        android:layout_width="match_parent"
+                    <View
+                        android:layout_width="@dimen/pda_status_rail_width"
+                        android:layout_height="match_parent"
+                        android:background="@color/pda_primary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:imeOptions="actionSearch"
-                        android:inputType="textCapCharacters"
-                        android:maxLines="1" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="@dimen/pda_card_padding">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/identifyAssetCodeButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/pda_touch_height"
-                    android:layout_marginTop="@dimen/pda_item_spacing"
-                    android:text="@string/identify_asset_code_action" />
-            </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/identify_asset_code_section"
+                            android:textColor="@color/pda_primary"
+                            android:textSize="@dimen/pda_body_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_small_spacing"
+                            android:text="@string/identify_asset_code_note"
+                            android:textColor="@color/pda_text_secondary"
+                            android:textSize="@dimen/pda_caption_size" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/PdaTextInputLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:hint="@string/identify_asset_code_hint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/identifyAssetCodeEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/pda_input_min_height"
+                                android:imeOptions="actionSearch"
+                                android:inputType="textCapCharacters"
+                                android:maxLines="1" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/identifyAssetCodeButton"
+                            style="@style/PdaPrimaryButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:text="@string/identify_asset_code_action" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/identifyProgress"
@@ -149,6 +277,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/pda_item_spacing"
                 android:accessibilityLiveRegion="assertive"
+                android:background="@drawable/pda_error_surface"
+                android:padding="@dimen/pda_card_padding"
                 android:textColor="@color/pda_error"
                 android:textSize="@dimen/pda_body_size"
                 android:visibility="gone"
@@ -165,127 +295,134 @@
                 app:cardBackgroundColor="@color/pda_card_background"
                 app:cardCornerRadius="@dimen/pda_card_radius"
                 app:strokeColor="@color/pda_card_stroke"
-                app:strokeWidth="1dp"
+                app:strokeWidth="@dimen/pda_stroke_width"
                 tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/pda_card_padding">
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <View
+                        android:layout_width="@dimen/pda_status_rail_width"
+                        android:layout_height="match_parent"
+                        android:background="@color/pda_primary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/identify_result_title"
-                        android:textColor="@color/pda_primary"
-                        android:textSize="@dimen/pda_caption_size"
-                        android:textStyle="bold" />
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="@dimen/pda_card_padding">
 
-                    <LinearLayout
-                        style="@style/PdaFactRow">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                        <TextView
-                            style="@style/PdaFactLabel"
-                            android:text="@string/identify_label_epc" />
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/identify_result_title"
+                                android:textColor="@color/pda_text_primary"
+                                android:textSize="@dimen/pda_section_title_size"
+                                android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/identifyEpcText"
-                            style="@style/PdaFactValue"
-                            tools:text="E20000172211000100000001" />
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/identifyResultStatusText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/pda_online_badge"
+                                android:paddingStart="@dimen/pda_item_spacing"
+                                android:paddingTop="@dimen/pda_small_spacing"
+                                android:paddingEnd="@dimen/pda_item_spacing"
+                                android:paddingBottom="@dimen/pda_small_spacing"
+                                android:textColor="@color/pda_success"
+                                android:textSize="@dimen/pda_caption_size"
+                                android:textStyle="bold"
+                                tools:text="已绑定" />
+                        </LinearLayout>
 
-                    <LinearLayout
-                        style="@style/PdaFactRow">
+                        <LinearLayout style="@style/PdaFactRow">
+                            <TextView style="@style/PdaFactLabel" android:text="@string/identify_label_epc" />
+                            <TextView
+                                android:id="@+id/identifyEpcText"
+                                style="@style/PdaFactValue"
+                                android:fontFamily="monospace"
+                                tools:text="E2000017…ABCD" />
+                        </LinearLayout>
 
-                        <TextView
-                            style="@style/PdaFactLabel"
-                            android:text="@string/identify_label_asset" />
+                        <LinearLayout style="@style/PdaFactRow">
+                            <TextView style="@style/PdaFactLabel" android:text="@string/identify_label_asset" />
+                            <TextView
+                                android:id="@+id/identifyAssetTitleText"
+                                style="@style/PdaFactValue"
+                                android:textStyle="bold"
+                                tools:text="便携式打印机 · ZC2026…0001" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/identifyAssetTitleText"
-                            style="@style/PdaFactValue"
-                            android:textStyle="bold"
-                            tools:text="测试资产（TEST-ASSET-001）" />
-                    </LinearLayout>
+                        <LinearLayout style="@style/PdaFactRow">
+                            <TextView style="@style/PdaFactLabel" android:text="@string/identify_label_status" />
+                            <TextView
+                                android:id="@+id/identifyStatusText"
+                                style="@style/PdaFactValue"
+                                android:textStyle="bold"
+                                tools:text="在库" />
+                        </LinearLayout>
 
-                    <LinearLayout
-                        style="@style/PdaFactRow">
+                        <LinearLayout style="@style/PdaFactRow">
+                            <TextView style="@style/PdaFactLabel" android:text="@string/identify_label_location" />
+                            <TextView
+                                android:id="@+id/identifyLocationText"
+                                style="@style/PdaFactValue"
+                                tools:text="一号仓 · A-01" />
+                        </LinearLayout>
 
-                        <TextView
-                            style="@style/PdaFactLabel"
-                            android:text="@string/identify_label_category" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
+                            <TextView style="@style/PdaFactLabel" android:text="@string/identify_label_category" />
+                            <TextView
+                                android:id="@+id/identifyCategoryText"
+                                style="@style/PdaFactValue"
+                                tools:text="电子设备" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/identifyCategoryText"
-                            style="@style/PdaFactValue"
-                            tools:text="电子设备" />
-                    </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
+                            <TextView style="@style/PdaFactLabel" android:text="@string/identify_label_model_brand" />
+                            <TextView
+                                android:id="@+id/identifyModelBrandText"
+                                style="@style/PdaFactValue"
+                                tools:text="C6200 / 测试" />
+                        </LinearLayout>
 
-                    <LinearLayout
-                        style="@style/PdaFactRow">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
+                            <TextView style="@style/PdaFactLabel" android:text="@string/identify_label_warehouse" />
+                            <TextView
+                                android:id="@+id/identifyWarehouseText"
+                                style="@style/PdaFactValue"
+                                tools:text="一号仓" />
+                        </LinearLayout>
 
-                        <TextView
-                            style="@style/PdaFactLabel"
-                            android:text="@string/identify_label_status" />
-
-                        <TextView
-                            android:id="@+id/identifyStatusText"
-                            style="@style/PdaFactValue"
-                            android:textStyle="bold"
-                            tools:text="在库" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        style="@style/PdaFactRow">
-
-                        <TextView
-                            style="@style/PdaFactLabel"
-                            android:text="@string/identify_label_model_brand" />
-
-                        <TextView
-                            android:id="@+id/identifyModelBrandText"
-                            style="@style/PdaFactValue"
-                            tools:text="C6200 / 测试" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        style="@style/PdaFactRow">
-
-                        <TextView
-                            style="@style/PdaFactLabel"
-                            android:text="@string/identify_label_warehouse" />
-
-                        <TextView
-                            android:id="@+id/identifyWarehouseText"
-                            style="@style/PdaFactValue"
-                            tools:text="测试仓库" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        style="@style/PdaFactRow">
-
-                        <TextView
-                            style="@style/PdaFactLabel"
-                            android:text="@string/identify_label_location" />
-
-                        <TextView
-                            android:id="@+id/identifyLocationText"
-                            style="@style/PdaFactValue"
-                            tools:text="A-01" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        style="@style/PdaFactRow">
-
-                        <TextView
-                            style="@style/PdaFactLabel"
-                            android:text="@string/identify_label_rfid" />
-
-                        <TextView
-                            android:id="@+id/identifyRfidText"
-                            style="@style/PdaFactValue"
-                            tools:text="已绑定；标签 TAG001" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
+                            <TextView style="@style/PdaFactLabel" android:text="@string/identify_label_rfid" />
+                            <TextView
+                                android:id="@+id/identifyRfidText"
+                                style="@style/PdaFactValue"
+                                tools:text="已绑定；标签 TAG001" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
