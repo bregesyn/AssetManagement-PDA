@@ -116,7 +116,8 @@ public final class HomeViewModel extends ViewModel {
                                 isEnabled(features, PdaPermissions.RFID_TAG_ADD),
                                 isEnabled(features, PdaPermissions.RFID_BIND),
                                 isEnabled(features, PdaPermissions.RFID_UNBIND),
-                                isEnabled(features, PdaPermissions.INVENTORY_LIST)));
+                                isEnabled(features, PdaPermissions.INVENTORY_LIST),
+                                isEnabled(features, PdaPermissions.INVENTORY_SUBMIT)));
                     }
 
                     @Override

@@ -18,7 +18,9 @@ import com.ruoyi.asset.pda.data.repository.CommonRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultAssetRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultAuthRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultCommonRepository;
+import com.ruoyi.asset.pda.data.repository.DefaultInventoryRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultRfidRepository;
+import com.ruoyi.asset.pda.data.repository.InventoryRepository;
 import com.ruoyi.asset.pda.data.repository.RfidRepository;
 
 /**
@@ -33,6 +35,7 @@ public final class AppContainer {
     private final CommonRepository commonRepository;
     private final AssetRepository assetRepository;
     private final RfidRepository rfidRepository;
+    private final InventoryRepository inventoryRepository;
 
     public AppContainer(Context context) {
         Context applicationContext = context.getApplicationContext();
@@ -49,6 +52,7 @@ public final class AppContainer {
         commonRepository = new DefaultCommonRepository(pdaApiService, callExecutor);
         assetRepository = new DefaultAssetRepository(pdaApiService, callExecutor);
         rfidRepository = new DefaultRfidRepository(pdaApiService, callExecutor);
+        inventoryRepository = new DefaultInventoryRepository(pdaApiService, callExecutor);
     }
 
     AppContainer(SessionCookieJar sessionCookieJar, SessionManager sessionManager,
@@ -64,6 +68,7 @@ public final class AppContainer {
         commonRepository = new DefaultCommonRepository(pdaApiService, callExecutor);
         assetRepository = new DefaultAssetRepository(pdaApiService, callExecutor);
         rfidRepository = new DefaultRfidRepository(pdaApiService, callExecutor);
+        inventoryRepository = new DefaultInventoryRepository(pdaApiService, callExecutor);
     }
 
     public SessionCookieJar getSessionCookieJar() {
@@ -96,6 +101,10 @@ public final class AppContainer {
 
     public RfidRepository getRfidRepository() {
         return rfidRepository;
+    }
+
+    public InventoryRepository getInventoryRepository() {
+        return inventoryRepository;
     }
 
     private static <T> T requireNonNull(T value, String name) {

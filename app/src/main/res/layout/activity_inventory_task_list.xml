@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pda_background"
+    android:orientation="vertical"
+    tools:context=".feature.inventory.InventoryTaskListActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/inventoryTaskToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="64dp"
+        android:background="@color/pda_background"
+        android:title="@string/inventory_task_list_title"
+        android:titleTextColor="@color/pda_text_primary"
+        app:navigationIcon="@android:drawable/ic_media_previous" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingEnd="@dimen/pda_screen_padding">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/inventoryTaskCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_small_spacing"
+                android:textColor="@color/pda_primary_dark"
+                android:textSize="@dimen/pda_utility_size"
+                android:textStyle="bold"
+                tools:text="可处理 02" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/inventoryTaskRefresh"
+            style="@style/PdaTextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/common_refresh" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pda_screen_padding"
+        android:layout_marginTop="@dimen/pda_section_spacing"
+        android:layout_marginEnd="@dimen/pda_screen_padding"
+        android:background="@color/pda_primary_soft"
+        android:orientation="horizontal"
+        android:padding="@dimen/pda_segmented_padding">
+
+        <TextView
+            android:id="@+id/inventoryTaskActionTab"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/pda_touch_height"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="sans"
+            android:text="@string/inventory_task_actionable_tab"
+            android:textColor="@color/pda_primary_dark"
+            android:textSize="@dimen/pda_body_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/inventoryTaskReadonlyTab"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/pda_touch_height"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/inventory_task_readonly_tab"
+            android:textColor="@color/pda_text_secondary"
+            android:textSize="@dimen/pda_body_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/inventoryTaskContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingTop="@dimen/pda_item_spacing"
+        android:paddingEnd="@dimen/pda_screen_padding">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/inventoryTaskProgress"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/pda_section_spacing"
+            android:indeterminate="true" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/inventoryTaskRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/pda_small_spacing"
+            android:paddingBottom="@dimen/pda_small_spacing"
+            tools:listitem="@layout/item_inventory_task" />
+
+        <TextView
+            android:id="@+id/inventoryTaskEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_section_spacing"
+            android:gravity="center"
+            android:text="@string/inventory_task_empty"
+            android:textColor="@color/pda_text_secondary"
+            android:textSize="@dimen/pda_body_size"
+            android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/inventoryTaskLoadMore"
+            style="@style/PdaOutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:layout_marginBottom="@dimen/pda_small_spacing"
+            android:text="@string/inventory_task_load_more"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/inventoryTaskError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/pda_screen_padding"
+        android:background="@color/pda_error_soft"
+        android:padding="@dimen/pda_card_padding"
+        android:textColor="@color/pda_error"
+        android:textSize="@dimen/pda_caption_size"
+        android:visibility="gone"
+        tools:text="任务列表加载失败" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/inventoryTaskRetry"
+        style="@style/PdaPrimaryButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pda_screen_padding"
+        android:layout_marginEnd="@dimen/pda_screen_padding"
+        android:layout_marginBottom="@dimen/pda_screen_padding"
+        android:text="@string/common_retry"
+        android:visibility="gone" />
+</LinearLayout>

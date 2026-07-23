@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pda_background"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/inventoryExecuteToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/pda_card_background"
+        android:elevation="1dp"
+        android:navigationIcon="@drawable/ic_arrow_back"
+        android:title="执行盘点"
+        android:titleTextColor="@color/pda_text_primary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pda_card_background"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingTop="@dimen/pda_item_spacing"
+        android:paddingEnd="@dimen/pda_screen_padding"
+        android:paddingBottom="@dimen/pda_item_spacing">
+
+        <TextView
+            android:id="@+id/inventoryTaskMeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/pda_text_secondary"
+            android:textSize="@dimen/pda_utility_size"
+            tools:text="PD202607230007 · 测试二号仓" />
+
+        <TextView
+            android:id="@+id/inventoryProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/pda_text_primary"
+            android:textSize="@dimen/pda_section_title_size"
+            android:textStyle="bold"
+            tools:text="已盘 12 / 42" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_item_spacing"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inventoryWarehouseLayout"
+                style="@style/PdaTextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/pda_small_spacing"
+                android:layout_weight="1"
+                android:hint="@string/inventory_execute_actual_warehouse">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/inventoryWarehouseInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pda_input_min_height"
+                    android:inputType="none"
+                    android:textSize="@dimen/pda_caption_size" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inventoryLocationLayout"
+                style="@style/PdaTextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/inventory_execute_actual_location">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/inventoryLocationInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pda_input_min_height"
+                    android:inputType="none"
+                    android:textSize="@dimen/pda_caption_size" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/inventoryBatchSummary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/pda_primary_dark"
+                android:textSize="@dimen/pda_caption_size"
+                android:textStyle="bold"
+                tools:text="本轮采集 0 个 EPC" />
+
+            <TextView
+                android:id="@+id/inventoryBatchDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_utility_size"
+                tools:text="重复读取 0 次" />
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/inventoryExceptionBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/pda_pending_soft"
+            app:cardCornerRadius="@dimen/pda_control_radius"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/pda_card_stroke"
+            app:strokeWidth="@dimen/pda_stroke_width">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/pda_small_spacing">
+
+                <TextView
+                    android:id="@+id/inventoryExceptionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/pda_pending"
+                    android:textSize="@dimen/pda_caption_size"
+                    android:textStyle="bold"
+                    tools:text="本轮异常 2 项" />
+
+                <TextView
+                    android:id="@+id/inventoryExceptionDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/pda_text_secondary"
+                    android:textSize="@dimen/pda_utility_size"
+                    tools:text="范围外资产 1 项待登记盘盈 · 未知 EPC 1 项待人工处理" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/inventoryPermissionHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:background="@color/pda_pending_soft"
+            android:padding="@dimen/pda_small_spacing"
+            android:text="@string/inventory_execute_no_submit_permission"
+            android:textColor="@color/pda_pending"
+            android:textSize="@dimen/pda_utility_size"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/inventoryMessageText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:textColor="@color/pda_success"
+            android:textSize="@dimen/pda_utility_size"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/inventoryErrorText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:background="@color/pda_error_soft"
+            android:padding="@dimen/pda_small_spacing"
+            android:textColor="@color/pda_error"
+            android:textSize="@dimen/pda_utility_size"
+            android:visibility="gone"
+            tools:text="本轮请求失败，请重试" />
+
+        <TextView
+            android:id="@+id/inventoryReadonlyBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:background="@color/pda_primary_soft"
+            android:padding="@dimen/pda_small_spacing"
+            android:text="@string/inventory_execute_readonly_banner"
+            android:textColor="@color/pda_primary_dark"
+            android:textSize="@dimen/pda_utility_size"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingTop="@dimen/pda_item_spacing"
+        android:paddingEnd="@dimen/pda_screen_padding"
+        android:paddingBottom="@dimen/pda_small_spacing">
+
+        <TextView
+            android:id="@+id/inventoryExpectedTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/pda_text_primary"
+            android:textSize="@dimen/pda_caption_size"
+            android:textStyle="bold"
+            tools:text="应盘清单 · 已加载 42 / 42" />
+
+        <TextView
+            android:id="@+id/inventoryExpectedLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="加载中…"
+            android:textColor="@color/pda_text_secondary"
+            android:textSize="@dimen/pda_utility_size"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingEnd="@dimen/pda_screen_padding">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/inventoryExpectedList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/pda_item_spacing"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_inventory_item" />
+
+        <TextView
+            android:id="@+id/inventoryExpectedEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="暂无应盘明细"
+            android:textColor="@color/pda_text_secondary"
+            android:textSize="@dimen/pda_caption_size"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/inventoryActionDock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pda_card_background"
+        android:elevation="4dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingTop="@dimen/pda_small_spacing"
+        android:paddingEnd="@dimen/pda_screen_padding"
+        android:paddingBottom="@dimen/pda_small_spacing">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/inventorySecondaryAction"
+            style="@style/PdaOutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/pda_small_spacing"
+            android:layout_weight="1"
+            android:text="全部未盘标记盘亏" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/inventoryPrimaryAction"
+            style="@style/PdaPrimaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="开始采集" />
+    </LinearLayout>
+</LinearLayout>

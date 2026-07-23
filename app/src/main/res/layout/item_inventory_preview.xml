@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/pda_small_spacing"
+    app:cardBackgroundColor="@color/pda_card_background"
+    app:cardCornerRadius="@dimen/pda_control_radius"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/pda_card_stroke"
+    app:strokeWidth="@dimen/pda_stroke_width">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/pda_item_spacing">
+
+        <CheckBox
+            android:id="@+id/inventoryPreviewCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="48dp"
+            android:minHeight="48dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/inventoryPreviewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pda_text_primary"
+                android:textSize="@dimen/pda_body_size"
+                android:textStyle="bold"
+                tools:text="ASSET-0001" />
+
+            <TextView
+                android:id="@+id/inventoryPreviewDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_small_spacing"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_utility_size"
+                tools:text="范围外已建档资产 · 确认后登记盘盈&#10;EPC E200001722110144" />
+
+            <TextView
+                android:id="@+id/inventoryPreviewResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_small_spacing"
+                android:textColor="@color/pda_primary_dark"
+                android:textSize="@dimen/pda_caption_size"
+                android:textStyle="bold"
+                tools:text="确认后登记盘盈" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

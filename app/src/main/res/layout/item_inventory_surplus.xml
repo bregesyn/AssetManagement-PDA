@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/pda_small_spacing"
+    app:cardBackgroundColor="@color/pda_card_background"
+    app:cardCornerRadius="@dimen/pda_control_radius"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/pda_card_stroke"
+    app:strokeWidth="@dimen/pda_stroke_width">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/pda_item_spacing">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/inventorySurplusIdentity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pda_text_primary"
+                android:textSize="@dimen/pda_body_size"
+                android:textStyle="bold"
+                tools:text="E200001722110144" />
+
+            <TextView
+                android:id="@+id/inventorySurplusDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_small_spacing"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_caption_size"
+                tools:text="盘盈实物 · 一号仓 · A-01" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/inventorySurplusDelete"
+            style="@style/PdaTextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inventory_surplus_delete" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

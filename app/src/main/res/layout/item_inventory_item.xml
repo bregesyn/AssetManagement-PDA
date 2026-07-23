@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="1dp"
+    app:cardBackgroundColor="@color/pda_card_background"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/pda_card_stroke"
+    app:strokeWidth="@dimen/pda_stroke_width">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/pda_touch_height"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/pda_item_spacing"
+        android:paddingTop="@dimen/pda_small_spacing"
+        android:paddingEnd="@dimen/pda_item_spacing"
+        android:paddingBottom="@dimen/pda_small_spacing">
+
+        <View
+            android:id="@+id/inventoryItemStatusDot"
+            android:layout_width="@dimen/pda_signal_dot_size"
+            android:layout_height="@dimen/pda_signal_dot_size"
+            android:layout_marginEnd="@dimen/pda_item_spacing"
+            android:background="@drawable/inventory_status_uninventoried_dot" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/inventoryItemAsset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/pda_text_primary"
+                android:textSize="@dimen/pda_caption_size"
+                android:textStyle="bold"
+                tools:text="ASSET-0001 · 笔记本电脑" />
+
+            <TextView
+                android:id="@+id/inventoryItemBook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_utility_size"
+                tools:text="账面 一号仓 · A-01" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/inventoryItemResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/pda_small_spacing"
+            android:gravity="end"
+            android:textColor="@color/pda_text_secondary"
+            android:textSize="@dimen/pda_utility_size"
+            android:textStyle="bold"
+            tools:text="本轮已扫 · 待确认" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

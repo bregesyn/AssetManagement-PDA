@@ -2,7 +2,7 @@
     <style name="Base.Theme.Assetmanagementpda" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/pda_primary</item>
         <item name="colorPrimaryDark">@color/pda_primary_dark</item>
-        <item name="android:fontFamily">sans</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="fontFamily">sans-serif</item>
         <item name="android:colorAccent">@color/pda_primary</item>
         <item name="android:statusBarColor">@color/pda_primary_dark</item>

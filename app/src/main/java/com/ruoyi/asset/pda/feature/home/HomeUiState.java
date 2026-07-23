@@ -19,12 +19,14 @@ public final class HomeUiState {
     private final boolean showRfidBind;
     private final boolean showRfidUnbind;
     private final boolean showInventory;
+    private final boolean showInventorySubmit;
     private final int errorTextResId;
     private final String errorMessage;
 
     private HomeUiState(Mode mode, String loginName, String userName, String deptName,
             String serverTime, boolean showTagCreate, boolean showRfidBind,
-            boolean showRfidUnbind, boolean showInventory, int errorTextResId,
+            boolean showRfidUnbind, boolean showInventory, boolean showInventorySubmit,
+            int errorTextResId,
             String errorMessage) {
         this.mode = mode;
         this.loginName = loginName;
@@ -35,35 +37,45 @@ public final class HomeUiState {
         this.showRfidBind = showRfidBind;
         this.showRfidUnbind = showRfidUnbind;
         this.showInventory = showInventory;
+        this.showInventorySubmit = showInventorySubmit;
         this.errorTextResId = errorTextResId;
         this.errorMessage = errorMessage;
     }
 
     public static HomeUiState loading() {
         return new HomeUiState(Mode.LOADING, null, null, null, null,
-                false, false, false, false, 0, null);
+                false, false, false, false, false, 0, null);
     }
 
     public static HomeUiState content(String loginName, String userName, String deptName,
             String serverTime, boolean showTagCreate, boolean showRfidBind,
             boolean showRfidUnbind, boolean showInventory) {
+        return content(loginName, userName, deptName, serverTime, showTagCreate,
+                showRfidBind, showRfidUnbind, showInventory, false);
+    }
+
+    public static HomeUiState content(String loginName, String userName, String deptName,
+            String serverTime, boolean showTagCreate, boolean showRfidBind,
+            boolean showRfidUnbind, boolean showInventory, boolean showInventorySubmit) {
         return new HomeUiState(Mode.CONTENT, loginName, userName, deptName, serverTime,
-                showTagCreate, showRfidBind, showRfidUnbind, showInventory, 0, null);
+                showTagCreate, showRfidBind, showRfidUnbind, showInventory,
+                showInventorySubmit, 0, null);
     }
 
     public static HomeUiState error(@StringRes int errorTextResId) {
         return new HomeUiState(Mode.ERROR, null, null, null, null,
-                false, false, false, false, errorTextResId, null);
+                false, false, false, false, false, errorTextResId, null);
     }
 
     public static HomeUiState error(String errorMessage) {
         return new HomeUiState(Mode.ERROR, null, null, null, null,
-                false, false, false, false, 0, errorMessage);
+                false, false, false, false, false, 0, errorMessage);
     }
 
     public HomeUiState asLoggingOut() {
         return new HomeUiState(Mode.LOGGING_OUT, loginName, userName, deptName, serverTime,
-                showTagCreate, showRfidBind, showRfidUnbind, showInventory, 0, null);
+                showTagCreate, showRfidBind, showRfidUnbind, showInventory,
+                showInventorySubmit, 0, null);
     }
 
     public Mode getMode() {
@@ -100,6 +112,10 @@ public final class HomeUiState {
 
     public boolean isShowInventory() {
         return showInventory;
+    }
+
+    public boolean isShowInventorySubmit() {
+        return showInventorySubmit;
     }
 
     public int getErrorTextResId() {

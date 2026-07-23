@@ -19,6 +19,12 @@
             android:name=".feature.rfid.RfidUnbindActivity"
             android:exported="false" />
         <activity
+            android:name=".feature.inventory.InventoryExecuteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".feature.inventory.InventoryTaskListActivity"
+            android:exported="false" />
+        <activity
             android:name=".feature.rfid.RfidBindActivity"
             android:exported="false" />
         <activity
