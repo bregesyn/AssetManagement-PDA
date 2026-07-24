@@ -11,11 +11,12 @@
         android:id="@+id/inboundToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/pda_card_background"
+        android:background="@color/pda_primary"
         android:elevation="1dp"
-        android:navigationIcon="@drawable/ic_arrow_back"
-        android:title="@string/inbound_title"
-        android:titleTextColor="@color/pda_text_primary" />
+        app:navigationContentDescription="@string/common_back"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/inbound_title"
+        app:titleTextColor="@color/pda_card_background" />
 
     <LinearLayout
         android:layout_width="match_parent"
