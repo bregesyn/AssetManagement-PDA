@@ -18,6 +18,11 @@ import com.ruoyi.asset.pda.data.dto.PdaInventorySurplusDto;
 import com.ruoyi.asset.pda.data.dto.PdaInventorySurplusRequestDto;
 import com.ruoyi.asset.pda.data.dto.PdaInventoryTaskActionRequestDto;
 import com.ruoyi.asset.pda.data.dto.PdaInventoryTaskDto;
+import com.ruoyi.asset.pda.data.dto.PdaInboundBatchCheckDto;
+import com.ruoyi.asset.pda.data.dto.PdaInboundBatchCheckRequestDto;
+import com.ruoyi.asset.pda.data.dto.PdaInboundBatchConfirmDto;
+import com.ruoyi.asset.pda.data.dto.PdaInboundBatchConfirmRequestDto;
+import com.ruoyi.asset.pda.data.dto.PdaInboundEligibilityDto;
 import com.ruoyi.asset.pda.data.dto.PdaPageResultDto;
 import com.ruoyi.asset.pda.data.dto.PdaLoginRequest;
 import com.ruoyi.asset.pda.data.dto.PdaMasterDataDto;
@@ -84,6 +89,18 @@ public interface PdaApiService {
 
     @POST("asset/pda/rfid/unbind")
     Call<ApiResponse<PdaRfidTagDto>> unbindRfid(@Body PdaRfidUnbindRequest request);
+
+    @GET("asset/pda/inbound/asset")
+    Call<ApiResponse<PdaInboundEligibilityDto>> inboundAsset(
+            @Query("epcCode") String epcCode, @Query("assetCode") String assetCode);
+
+    @POST("asset/pda/inbound/batch-check")
+    Call<ApiResponse<PdaInboundBatchCheckDto>> inboundBatchCheck(
+            @Body PdaInboundBatchCheckRequestDto request);
+
+    @POST("asset/pda/inbound/batch-confirm")
+    Call<ApiResponse<PdaInboundBatchConfirmDto>> inboundBatchConfirm(
+            @Body PdaInboundBatchConfirmRequestDto request);
 
     @GET("asset/pda/inventory/tasks")
     Call<ApiResponse<PdaPageResultDto<PdaInventoryTaskDto>>> inventoryTasks(

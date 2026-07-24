@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".feature.inbound.InboundActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/inboundToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/pda_card_background"
+        android:elevation="1dp"
+        android:navigationIcon="@drawable/ic_arrow_back"
+        android:title="@string/inbound_title"
+        android:titleTextColor="@color/pda_text_primary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pda_card_background"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingTop="@dimen/pda_item_spacing"
+        android:paddingEnd="@dimen/pda_screen_padding"
+        android:paddingBottom="@dimen/pda_item_spacing">
+
+        <TextView
+            android:id="@+id/inboundOperatorTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/pda_text_secondary"
+            android:textSize="@dimen/pda_utility_size"
+            tools:text="操作人：管理员 · 服务时间：2026-07-24 09:30:00" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inboundWarehouseLayout"
+                style="@style/PdaTextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/pda_small_spacing"
+                android:layout_weight="1"
+                android:hint="@string/inbound_warehouse"
+                app:endIconMode="dropdown_menu">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/inboundWarehouseInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pda_input_min_height"
+                    android:inputType="none"
+                    android:textSize="@dimen/pda_caption_size" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inboundLocationLayout"
+                style="@style/PdaTextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/inbound_location"
+                app:endIconMode="dropdown_menu">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/inboundLocationInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pda_input_min_height"
+                    android:inputType="none"
+                    android:textSize="@dimen/pda_caption_size" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/inboundScanButton"
+            style="@style/PdaOutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:text="@string/inbound_scan_start" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/PdaTextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/pda_small_spacing"
+                android:layout_weight="1"
+                android:hint="@string/inbound_asset_code">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inboundAssetCodeInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pda_input_min_height"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="64"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/inboundAssetCodeButton"
+                style="@style/PdaPrimaryButton"
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:text="@string/inbound_add_asset" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/inboundWorkSummary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/pda_primary_dark"
+                android:textSize="@dimen/pda_caption_size"
+                android:textStyle="bold"
+                tools:text="已加入 8 · 本轮 EPC 0" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/inboundIssueButton"
+                style="@style/PdaTextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/inbound_issues"
+                android:textColor="@color/pda_pending"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/inboundLatestEpc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:fontFamily="monospace"
+            android:maxLines="1"
+            android:textColor="@color/pda_text_secondary"
+            android:textSize="@dimen/pda_utility_size"
+            android:visibility="gone"
+            tools:text="最近 EPC：E2000017221101441890ABCD"
+            tools:visibility="visible" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/inboundProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:indeterminate="true"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/inboundInfoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:background="@color/pda_success_soft"
+            android:padding="@dimen/pda_small_spacing"
+            android:textColor="@color/pda_success"
+            android:textSize="@dimen/pda_utility_size"
+            android:visibility="gone"
+            tools:text="预检完成：加入 8 件，异常 2 件"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/inboundErrorText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:accessibilityLiveRegion="assertive"
+            android:background="@color/pda_error_soft"
+            android:padding="@dimen/pda_small_spacing"
+            android:textColor="@color/pda_error"
+            android:textSize="@dimen/pda_utility_size"
+            android:visibility="gone"
+            tools:text="请先选择入库仓库和位置"
+            tools:visibility="visible" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/inboundRetryButton"
+            style="@style/PdaTextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/common_retry"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/inboundPermissionHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:background="@color/pda_pending_soft"
+            android:padding="@dimen/pda_small_spacing"
+            android:text="@string/inbound_no_confirm_permission"
+            android:textColor="@color/pda_pending"
+            android:textSize="@dimen/pda_utility_size"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/inboundResultText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:background="@color/pda_success_soft"
+            android:padding="@dimen/pda_small_spacing"
+            android:textColor="@color/pda_success"
+            android:textSize="@dimen/pda_caption_size"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:text="RK202607240001 · 一号仓 / A-01 · 8 件 · 管理员 · 09:32"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingTop="@dimen/pda_small_spacing"
+        android:paddingEnd="@dimen/pda_screen_padding"
+        android:paddingBottom="@dimen/pda_small_spacing">
+
+        <TextView
+            android:id="@+id/inboundListTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/inbound_asset_list"
+            android:textColor="@color/pda_text_primary"
+            android:textSize="@dimen/pda_caption_size"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingEnd="@dimen/pda_screen_padding">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/inboundAssetList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/pda_small_spacing"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_inbound_asset" />
+
+        <TextView
+            android:id="@+id/inboundEmptyText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="@dimen/pda_screen_padding"
+            android:text="@string/inbound_empty"
+            android:textColor="@color/pda_text_secondary"
+            android:textSize="@dimen/pda_caption_size" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/inboundActionDock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pda_card_background"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingTop="@dimen/pda_small_spacing"
+        android:paddingEnd="@dimen/pda_screen_padding"
+        android:paddingBottom="@dimen/pda_small_spacing">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/PdaTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/inbound_remark">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inboundRemarkInput"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pda_input_min_height"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences"
+                android:maxLength="500"
+                android:maxLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/inboundClearButton"
+                style="@style/PdaOutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/pda_small_spacing"
+                android:layout_weight="1"
+                android:text="@string/inbound_clear" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/inboundConfirmButton"
+                style="@style/PdaPrimaryButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/inbound_confirm" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

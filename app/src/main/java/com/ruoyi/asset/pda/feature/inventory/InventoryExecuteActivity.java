@@ -126,18 +126,6 @@ public final class InventoryExecuteActivity extends SessionAwareActivity {
             Long nextId = state.getWarehouses().get(position).getId();
             runAfterBatchConfirmation(() -> viewModel.changeWarehouse(nextId));
         });
-        binding.inventoryLocationInput.setOnItemClickListener((parent, view, position, id) -> {
-            if (!selectorCallbackReady || viewModel == null) {
-                return;
-            }
-            InventoryExecuteUiState state = viewModel.getUiState().getValue();
-            if (state == null) {
-                return;
-            }
-            Long nextId = position == 0 || position - 1 >= state.getLocations().size()
-                    ? null : state.getLocations().get(position - 1).getId();
-            runAfterBatchConfirmation(() -> viewModel.changeLocation(nextId));
-        });
         selectorCallbackReady = true;
     }
 
@@ -241,21 +229,8 @@ public final class InventoryExecuteActivity extends SessionAwareActivity {
                 android.R.layout.simple_dropdown_item_1line, warehouseNames));
         binding.inventoryWarehouseInput.setText(findOptionLabel(state.getWarehouses(),
                 state.getSelectedWarehouseId()), false);
-
-        List<String> locationNames = new ArrayList<>();
-        locationNames.add(getString(R.string.inventory_execute_select_location));
-        for (PdaMasterDataDto value : state.getLocations()) {
-            locationNames.add(optionLabel(value));
-        }
-        binding.inventoryLocationInput.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_dropdown_item_1line, locationNames));
-        String locationLabel = state.getSelectedLocationId() == null
-                ? getString(R.string.inventory_execute_select_location)
-                : findOptionLabel(state.getLocations(), state.getSelectedLocationId());
-        binding.inventoryLocationInput.setText(locationLabel, false);
         boolean enabled = state.getTask() != null && !state.isReadOnly() && !state.isWriting();
         binding.inventoryWarehouseInput.setEnabled(enabled);
-        binding.inventoryLocationInput.setEnabled(enabled);
     }
 
     private void renderBatch(InventoryExecuteUiState state) {

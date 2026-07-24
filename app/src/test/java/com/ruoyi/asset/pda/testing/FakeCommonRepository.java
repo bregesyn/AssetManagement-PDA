@@ -12,7 +12,12 @@ import java.util.List;
 
 public final class FakeCommonRepository implements CommonRepository {
     private RepositoryCallback<PdaBootstrapDto> bootstrapCallback;
+    private RepositoryCallback<List<PdaMasterDataDto>> warehousesCallback;
+    private RepositoryCallback<List<PdaMasterDataDto>> locationsCallback;
     private int bootstrapCount;
+    private int warehousesCount;
+    private int locationsCount;
+    private Long lastWarehouseId;
     private RecordingHandle lastHandle;
 
     @Override
@@ -31,12 +36,17 @@ public final class FakeCommonRepository implements CommonRepository {
 
     @Override
     public RequestHandle warehouses(RepositoryCallback<List<PdaMasterDataDto>> callback) {
+        warehousesCount++;
+        warehousesCallback = callback;
         return RequestHandle.NONE;
     }
 
     @Override
     public RequestHandle locations(Long warehouseId,
             RepositoryCallback<List<PdaMasterDataDto>> callback) {
+        locationsCount++;
+        lastWarehouseId = warehouseId;
+        locationsCallback = callback;
         return RequestHandle.NONE;
     }
 
@@ -53,8 +63,36 @@ public final class FakeCommonRepository implements CommonRepository {
         bootstrapCallback.onError(error);
     }
 
+    public void completeWarehouses(List<PdaMasterDataDto> data) {
+        warehousesCallback.onSuccess(data);
+    }
+
+    public void failWarehouses(ApiErrorMapper.ApiError error) {
+        warehousesCallback.onError(error);
+    }
+
+    public void completeLocations(List<PdaMasterDataDto> data) {
+        locationsCallback.onSuccess(data);
+    }
+
+    public void failLocations(ApiErrorMapper.ApiError error) {
+        locationsCallback.onError(error);
+    }
+
     public int getBootstrapCount() {
         return bootstrapCount;
+    }
+
+    public int getWarehousesCount() {
+        return warehousesCount;
+    }
+
+    public int getLocationsCount() {
+        return locationsCount;
+    }
+
+    public Long getLastWarehouseId() {
+        return lastWarehouseId;
     }
 
     public boolean isLastRequestCanceled() {

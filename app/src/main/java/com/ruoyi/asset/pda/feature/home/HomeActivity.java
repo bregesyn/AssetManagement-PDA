@@ -14,6 +14,7 @@ import com.ruoyi.asset.pda.app.AppContainer;
 import com.ruoyi.asset.pda.core.session.SessionManager;
 import com.ruoyi.asset.pda.databinding.ActivityHomeBinding;
 import com.ruoyi.asset.pda.feature.identify.AssetIdentifyActivity;
+import com.ruoyi.asset.pda.feature.inbound.InboundActivity;
 import com.ruoyi.asset.pda.feature.inventory.InventoryTaskListActivity;
 import com.ruoyi.asset.pda.feature.login.LoginActivity;
 import com.ruoyi.asset.pda.feature.rfid.RfidBindActivity;
@@ -50,6 +51,7 @@ public final class HomeActivity extends AppCompatActivity {
                 view -> openOperation(RfidBindActivity.class));
         binding.rfidUnbindCard.setOnClickListener(
                 view -> openOperation(RfidUnbindActivity.class));
+        binding.inboundCard.setOnClickListener(view -> openInbound());
         binding.inventoryCard.setOnClickListener(view -> openInventoryTasks(false));
         viewModel.getUiState().observe(this, this::render);
         if (sessionManager.getState() != SessionManager.State.VALID) {
@@ -116,6 +118,7 @@ public final class HomeActivity extends AppCompatActivity {
         setVisible(binding.tagCreateCard, state.isShowTagCreate());
         setVisible(binding.rfidBindCard, state.isShowRfidBind());
         setVisible(binding.rfidUnbindCard, state.isShowRfidUnbind());
+        setVisible(binding.inboundCard, state.isShowInbound());
         setVisible(binding.inventoryCard, state.isShowInventory());
         binding.inventoryCard.setAlpha(state.isShowInventory() ? 1.0f : 0.72f);
         binding.inventoryCard.setEnabled(state.isShowInventory());
@@ -167,6 +170,17 @@ public final class HomeActivity extends AppCompatActivity {
         HomeUiState state = viewModel.getUiState().getValue();
         intent.putExtra(InventoryTaskListActivity.EXTRA_CAN_SUBMIT,
                 state != null && state.isShowInventorySubmit());
+        startActivity(intent);
+    }
+
+    private void openInbound() {
+        if (sessionManager.getState() != SessionManager.State.VALID) {
+            return;
+        }
+        Intent intent = new Intent(this, InboundActivity.class);
+        HomeUiState state = viewModel.getUiState().getValue();
+        intent.putExtra(InboundActivity.EXTRA_CAN_CONFIRM,
+                state != null && state.isShowInboundConfirm());
         startActivity(intent);
     }
 

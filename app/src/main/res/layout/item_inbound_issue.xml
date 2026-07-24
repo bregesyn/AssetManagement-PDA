@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/pda_touch_height"
+    android:orientation="vertical"
+    android:padding="@dimen/pda_item_spacing">
+
+    <TextView
+        android:id="@+id/inboundIssueEpc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="middle"
+        android:fontFamily="monospace"
+        android:maxLines="1"
+        android:textColor="@color/pda_text_primary"
+        android:textSize="@dimen/pda_caption_size"
+        android:textStyle="bold"
+        tools:text="E2000017221101441890ABCD" />
+
+    <TextView
+        android:id="@+id/inboundIssueAsset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/pda_text_secondary"
+        android:textSize="@dimen/pda_utility_size"
+        tools:text="ZC202600001 · 手持终端" />
+
+    <TextView
+        android:id="@+id/inboundIssueReason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/pda_error"
+        android:textSize="@dimen/pda_utility_size"
+        tools:text="EPC 未绑定资产，请先完成 RFID 绑定" />
+</LinearLayout>

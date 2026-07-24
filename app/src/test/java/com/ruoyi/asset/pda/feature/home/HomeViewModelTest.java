@@ -66,6 +66,8 @@ public class HomeViewModelTest {
         features.put(PdaPermissions.RFID_TAG_ADD, true);
         features.put(PdaPermissions.RFID_BIND, false);
         features.put(PdaPermissions.RFID_UNBIND, true);
+        features.put(PdaPermissions.INBOUND_SCAN, true);
+        features.put(PdaPermissions.INBOUND_CONFIRM, false);
         features.put(PdaPermissions.INVENTORY_LIST, true);
         features.put(PdaPermissions.INVENTORY_SUBMIT, true);
         viewModel.initialize();
@@ -77,6 +79,8 @@ public class HomeViewModelTest {
         assertTrue(state().isShowTagCreate());
         assertFalse(state().isShowRfidBind());
         assertTrue(state().isShowRfidUnbind());
+        assertTrue(state().isShowInbound());
+        assertFalse(state().isShowInboundConfirm());
         assertTrue(state().isShowInventory());
     }
 
@@ -90,6 +94,18 @@ public class HomeViewModelTest {
 
         assertFalse(state().isShowInventory());
         assertFalse(state().isShowTagCreate());
+    }
+
+    @Test
+    public void inboundConfirmPermissionAloneDoesNotExposeInboundCard() {
+        Map<String, Boolean> features = new LinkedHashMap<>();
+        features.put(PdaPermissions.INBOUND_CONFIRM, true);
+        viewModel.initialize();
+
+        commonRepository.completeBootstrap(bootstrap(features));
+
+        assertFalse(state().isShowInbound());
+        assertTrue(state().isShowInboundConfirm());
     }
 
     @Test

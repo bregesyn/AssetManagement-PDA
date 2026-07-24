@@ -47,45 +47,21 @@
             android:textStyle="bold"
             tools:text="已盘 12 / 42" />
 
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inventoryWarehouseLayout"
+            style="@style/PdaTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/pda_item_spacing"
-            android:orientation="horizontal">
+            android:hint="@string/inventory_execute_actual_warehouse">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inventoryWarehouseLayout"
-                style="@style/PdaTextInputLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/pda_small_spacing"
-                android:layout_weight="1"
-                android:hint="@string/inventory_execute_actual_warehouse">
-
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/inventoryWarehouseInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/pda_input_min_height"
-                    android:inputType="none"
-                    android:textSize="@dimen/pda_caption_size" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inventoryLocationLayout"
-                style="@style/PdaTextInputLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/inventory_execute_actual_location">
-
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/inventoryLocationInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/pda_input_min_height"
-                    android:inputType="none"
-                    android:textSize="@dimen/pda_caption_size" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/inventoryWarehouseInput"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pda_input_min_height"
+                android:inputType="none"
+                android:textSize="@dimen/pda_caption_size" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
