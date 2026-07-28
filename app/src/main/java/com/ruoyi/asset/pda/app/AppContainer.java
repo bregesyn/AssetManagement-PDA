@@ -20,9 +20,11 @@ import com.ruoyi.asset.pda.data.repository.DefaultAuthRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultCommonRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultInboundRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultInventoryRepository;
+import com.ruoyi.asset.pda.data.repository.DefaultReceiveRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultRfidRepository;
 import com.ruoyi.asset.pda.data.repository.InboundRepository;
 import com.ruoyi.asset.pda.data.repository.InventoryRepository;
+import com.ruoyi.asset.pda.data.repository.ReceiveRepository;
 import com.ruoyi.asset.pda.data.repository.RfidRepository;
 
 /**
@@ -39,6 +41,7 @@ public final class AppContainer {
     private final RfidRepository rfidRepository;
     private final InboundRepository inboundRepository;
     private final InventoryRepository inventoryRepository;
+    private final ReceiveRepository receiveRepository;
 
     public AppContainer(Context context) {
         Context applicationContext = context.getApplicationContext();
@@ -57,6 +60,7 @@ public final class AppContainer {
         rfidRepository = new DefaultRfidRepository(pdaApiService, callExecutor);
         inboundRepository = new DefaultInboundRepository(pdaApiService, callExecutor);
         inventoryRepository = new DefaultInventoryRepository(pdaApiService, callExecutor);
+        receiveRepository = new DefaultReceiveRepository(pdaApiService, callExecutor);
     }
 
     AppContainer(SessionCookieJar sessionCookieJar, SessionManager sessionManager,
@@ -74,6 +78,7 @@ public final class AppContainer {
         rfidRepository = new DefaultRfidRepository(pdaApiService, callExecutor);
         inboundRepository = new DefaultInboundRepository(pdaApiService, callExecutor);
         inventoryRepository = new DefaultInventoryRepository(pdaApiService, callExecutor);
+        receiveRepository = new DefaultReceiveRepository(pdaApiService, callExecutor);
     }
 
     public SessionCookieJar getSessionCookieJar() {
@@ -114,6 +119,10 @@ public final class AppContainer {
 
     public InventoryRepository getInventoryRepository() {
         return inventoryRepository;
+    }
+
+    public ReceiveRepository getReceiveRepository() {
+        return receiveRepository;
     }
 
     private static <T> T requireNonNull(T value, String name) {

@@ -24,6 +24,10 @@ import com.ruoyi.asset.pda.data.dto.PdaInboundBatchConfirmDto;
 import com.ruoyi.asset.pda.data.dto.PdaInboundBatchConfirmRequestDto;
 import com.ruoyi.asset.pda.data.dto.PdaInboundEligibilityDto;
 import com.ruoyi.asset.pda.data.dto.PdaPageResultDto;
+import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchCheckDto;
+import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchCheckRequestDto;
+import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchConfirmDto;
+import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchConfirmRequestDto;
 import com.ruoyi.asset.pda.data.dto.PdaLoginRequest;
 import com.ruoyi.asset.pda.data.dto.PdaMasterDataDto;
 import com.ruoyi.asset.pda.data.dto.PdaRfidBindRequest;
@@ -101,6 +105,18 @@ public interface PdaApiService {
     @POST("asset/pda/inbound/batch-confirm")
     Call<ApiResponse<PdaInboundBatchConfirmDto>> inboundBatchConfirm(
             @Body PdaInboundBatchConfirmRequestDto request);
+
+    @GET("asset/pda/receive/recipients")
+    Call<ApiResponse<List<PdaMasterDataDto>>> receiveRecipients(
+            @Query("keyword") String keyword);
+
+    @POST("asset/pda/receive/batch-check")
+    Call<ApiResponse<PdaReceiveBatchCheckDto>> receiveBatchCheck(
+            @Body PdaReceiveBatchCheckRequestDto request);
+
+    @POST("asset/pda/receive/batch-confirm")
+    Call<ApiResponse<PdaReceiveBatchConfirmDto>> receiveBatchConfirm(
+            @Body PdaReceiveBatchConfirmRequestDto request);
 
     @GET("asset/pda/inventory/tasks")
     Call<ApiResponse<PdaPageResultDto<PdaInventoryTaskDto>>> inventoryTasks(

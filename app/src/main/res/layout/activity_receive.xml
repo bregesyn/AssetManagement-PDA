@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".feature.receive.ReceiveActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/receiveToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/pda_primary"
+        android:elevation="1dp"
+        app:navigationContentDescription="@string/common_back"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/receive_title"
+        app:titleTextColor="@color/pda_card_background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pda_card_background"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingTop="@dimen/pda_item_spacing"
+        android:paddingEnd="@dimen/pda_screen_padding"
+        android:paddingBottom="@dimen/pda_item_spacing">
+
+        <TextView
+            android:id="@+id/receiveSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/receive_subtitle"
+            android:textColor="@color/pda_primary"
+            android:textSize="@dimen/pda_caption_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/receiveOperatorTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/pda_text_secondary"
+            android:textSize="@dimen/pda_utility_size"
+            tools:text="操作人：管理员 · 服务时间：2026-07-24 09:30:00" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/receiveRecipientCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/pda_card_background"
+            app:cardCornerRadius="@dimen/pda_control_radius"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/pda_card_stroke"
+            app:strokeWidth="@dimen/pda_stroke_width">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="@dimen/pda_status_rail_width"
+                    android:layout_height="match_parent"
+                    android:background="@color/pda_primary" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/pda_item_spacing">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/receive_recipient_section"
+                        android:textColor="@color/pda_text_secondary"
+                        android:textSize="@dimen/pda_utility_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/receiveRecipientName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/pda_text_primary"
+                        android:textSize="@dimen/pda_body_size"
+                        android:textStyle="bold"
+                        tools:text="张三（zhangsan）" />
+
+                    <TextView
+                        android:id="@+id/receiveRecipientDept"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/pda_text_secondary"
+                        android:textSize="@dimen/pda_caption_size"
+                        tools:text="领用部门：设备管理部" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/receiveRecipientAction"
+                        style="@style/PdaOutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:text="@string/receive_select_recipient" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/receiveScanButton"
+            style="@style/PdaOutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:text="@string/receive_scan_start" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/PdaTextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/pda_small_spacing"
+                android:layout_weight="1"
+                android:hint="@string/receive_asset_code">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/receiveAssetCodeInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pda_input_min_height"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="64"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/receiveAssetCodeButton"
+                style="@style/PdaPrimaryButton"
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:text="@string/receive_add_asset" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/receiveWorkSummary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/pda_primary_dark"
+                android:textSize="@dimen/pda_caption_size"
+                android:textStyle="bold"
+                tools:text="已加入 8 · 本轮 EPC 0" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/receiveIssueButton"
+                style="@style/PdaTextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/receive_issues"
+                android:textColor="@color/pda_error"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/receiveClearButton"
+                style="@style/PdaTextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/receive_clear" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/receiveLatestEpc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:fontFamily="monospace"
+            android:maxLines="1"
+            android:textColor="@color/pda_text_secondary"
+            android:textSize="@dimen/pda_utility_size"
+            android:visibility="gone"
+            tools:text="最近 EPC：E2000017221101441890ABCD"
+            tools:visibility="visible" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/receiveProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:indeterminate="true"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/receiveInfoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:background="@color/pda_success_soft"
+            android:padding="@dimen/pda_small_spacing"
+            android:textColor="@color/pda_success"
+            android:textSize="@dimen/pda_utility_size"
+            android:visibility="gone"
+            tools:text="预检完成：加入 8 件，异常 2 件"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/receiveErrorText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:accessibilityLiveRegion="assertive"
+            android:background="@color/pda_error_soft"
+            android:padding="@dimen/pda_small_spacing"
+            android:textColor="@color/pda_error"
+            android:textSize="@dimen/pda_utility_size"
+            android:visibility="gone"
+            tools:text="请先选择领用人"
+            tools:visibility="visible" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/receiveRetryButton"
+            style="@style/PdaTextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/common_retry"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/receivePermissionHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:background="@color/pda_pending_soft"
+            android:padding="@dimen/pda_small_spacing"
+            android:text="@string/receive_no_confirm_permission"
+            android:textColor="@color/pda_pending"
+            android:textSize="@dimen/pda_utility_size"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/receiveResultText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:background="@color/pda_success_soft"
+            android:padding="@dimen/pda_small_spacing"
+            android:textColor="@color/pda_success"
+            android:textSize="@dimen/pda_caption_size"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:text="LY202607240001 · 张三 / 设备管理部 · 8 件 · 管理员 · 09:32"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingTop="@dimen/pda_small_spacing"
+        android:paddingEnd="@dimen/pda_screen_padding"
+        android:paddingBottom="@dimen/pda_small_spacing">
+
+        <TextView
+            android:id="@+id/receiveListTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receive_asset_list"
+            android:textColor="@color/pda_text_primary"
+            android:textSize="@dimen/pda_caption_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingEnd="@dimen/pda_screen_padding">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/receiveAssetList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/pda_small_spacing"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_receive_asset" />
+
+        <TextView
+            android:id="@+id/receiveEmptyText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="@dimen/pda_screen_padding"
+            android:text="@string/receive_empty"
+            android:textColor="@color/pda_text_secondary"
+            android:textSize="@dimen/pda_caption_size" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/receiveActionDock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pda_card_background"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingTop="@dimen/pda_small_spacing"
+        android:paddingEnd="@dimen/pda_screen_padding"
+        android:paddingBottom="@dimen/pda_small_spacing">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/PdaTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/receive_remark">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/receiveRemarkInput"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pda_input_min_height"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences"
+                android:maxLength="500"
+                android:maxLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/receiveConfirmButton"
+            style="@style/PdaPrimaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:text="@string/receive_confirm" />
+    </LinearLayout>
+</LinearLayout>

@@ -9,6 +9,8 @@ public final class PdaPermissions {
     public static final String RFID_UNBIND = "asset:pda:rfid:unbind";
     public static final String INBOUND_SCAN = "asset:pda:inbound:scan";
     public static final String INBOUND_CONFIRM = "asset:pda:inbound:confirm";
+    public static final String RECEIVE_SCAN = "asset:pda:receive:scan";
+    public static final String RECEIVE_CONFIRM = "asset:pda:receive:confirm";
     public static final String INVENTORY_LIST = "asset:pda:inventory:list";
     public static final String INVENTORY_SUBMIT = "asset:pda:inventory:submit";
 

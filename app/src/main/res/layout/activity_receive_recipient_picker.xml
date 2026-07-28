@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".feature.receive.ReceiveRecipientPickerActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/recipientPickerToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/pda_primary"
+        android:elevation="1dp"
+        app:navigationContentDescription="@string/common_back"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/receive_recipient_picker_title"
+        app:titleTextColor="@color/pda_card_background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pda_card_background"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingTop="@dimen/pda_item_spacing"
+        android:paddingEnd="@dimen/pda_screen_padding"
+        android:paddingBottom="@dimen/pda_item_spacing">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/receive_recipient_picker_hint"
+            android:textColor="@color/pda_text_secondary"
+            android:textSize="@dimen/pda_caption_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/PdaTextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/pda_small_spacing"
+                android:layout_weight="1"
+                android:hint="@string/receive_recipient_keyword">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/recipientPickerKeywordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pda_input_min_height"
+                    android:imeOptions="actionSearch"
+                    android:inputType="textCapSentences"
+                    android:maxLength="30"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/recipientPickerSearchButton"
+                style="@style/PdaPrimaryButton"
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:text="@string/receive_recipient_search" />
+        </LinearLayout>
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/recipientPickerProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:indeterminate="true"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/recipientPickerMessageText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:accessibilityLiveRegion="polite"
+            android:background="@color/pda_error_soft"
+            android:padding="@dimen/pda_small_spacing"
+            android:textColor="@color/pda_error"
+            android:textSize="@dimen/pda_utility_size"
+            android:visibility="gone"
+            tools:text="请输入姓名、登录名或部门后搜索"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/recipientPickerEmptyText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingTop="@dimen/pda_section_spacing"
+        android:paddingEnd="@dimen/pda_screen_padding"
+        android:paddingBottom="@dimen/pda_item_spacing"
+        android:text="@string/receive_recipient_picker_empty"
+        android:textColor="@color/pda_text_secondary"
+        android:textSize="@dimen/pda_caption_size" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recipientPickerList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingEnd="@dimen/pda_screen_padding"
+        android:paddingBottom="@dimen/pda_screen_bottom_padding"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/item_receive_recipient" />
+</LinearLayout>

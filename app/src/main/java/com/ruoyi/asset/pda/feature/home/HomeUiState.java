@@ -20,6 +20,8 @@ public final class HomeUiState {
     private final boolean showRfidUnbind;
     private final boolean showInbound;
     private final boolean showInboundConfirm;
+    private final boolean showReceive;
+    private final boolean showReceiveConfirm;
     private final boolean showInventory;
     private final boolean showInventorySubmit;
     private final int errorTextResId;
@@ -28,8 +30,8 @@ public final class HomeUiState {
     private HomeUiState(Mode mode, String loginName, String userName, String deptName,
             String serverTime, boolean showTagCreate, boolean showRfidBind,
             boolean showRfidUnbind, boolean showInbound, boolean showInboundConfirm,
-            boolean showInventory, boolean showInventorySubmit, int errorTextResId,
-            String errorMessage) {
+            boolean showReceive, boolean showReceiveConfirm, boolean showInventory,
+            boolean showInventorySubmit, int errorTextResId, String errorMessage) {
         this.mode = mode;
         this.loginName = loginName;
         this.userName = userName;
@@ -40,6 +42,8 @@ public final class HomeUiState {
         this.showRfidUnbind = showRfidUnbind;
         this.showInbound = showInbound;
         this.showInboundConfirm = showInboundConfirm;
+        this.showReceive = showReceive;
+        this.showReceiveConfirm = showReceiveConfirm;
         this.showInventory = showInventory;
         this.showInventorySubmit = showInventorySubmit;
         this.errorTextResId = errorTextResId;
@@ -48,14 +52,16 @@ public final class HomeUiState {
 
     public static HomeUiState loading() {
         return new HomeUiState(Mode.LOADING, null, null, null, null,
-                false, false, false, false, false, false, false, 0, null);
+                false, false, false, false, false, false, false, false, false,
+                0, null);
     }
 
     public static HomeUiState content(String loginName, String userName, String deptName,
             String serverTime, boolean showTagCreate, boolean showRfidBind,
             boolean showRfidUnbind, boolean showInventory) {
         return content(loginName, userName, deptName, serverTime, showTagCreate,
-                showRfidBind, showRfidUnbind, false, false, showInventory, false);
+                showRfidBind, showRfidUnbind, false, false, false, false,
+                showInventory, false);
     }
 
     public static HomeUiState content(String loginName, String userName, String deptName,
@@ -63,33 +69,37 @@ public final class HomeUiState {
             boolean showRfidUnbind, boolean showInventory, boolean showInventorySubmit) {
         return new HomeUiState(Mode.CONTENT, loginName, userName, deptName, serverTime,
                 showTagCreate, showRfidBind, showRfidUnbind, false, false,
-                showInventory, showInventorySubmit, 0, null);
+                false, false, showInventory, showInventorySubmit, 0, null);
     }
 
     public static HomeUiState content(String loginName, String userName, String deptName,
             String serverTime, boolean showTagCreate, boolean showRfidBind,
             boolean showRfidUnbind, boolean showInbound, boolean showInboundConfirm,
-            boolean showInventory, boolean showInventorySubmit) {
+            boolean showReceive, boolean showReceiveConfirm, boolean showInventory,
+            boolean showInventorySubmit) {
         return new HomeUiState(Mode.CONTENT, loginName, userName, deptName, serverTime,
                 showTagCreate, showRfidBind, showRfidUnbind, showInbound,
-                showInboundConfirm, showInventory, showInventorySubmit, 0, null);
+                showInboundConfirm, showReceive, showReceiveConfirm, showInventory,
+                showInventorySubmit, 0, null);
     }
 
     public static HomeUiState error(@StringRes int errorTextResId) {
         return new HomeUiState(Mode.ERROR, null, null, null, null,
-                false, false, false, false, false, false, false,
+                false, false, false, false, false, false, false, false, false,
                 errorTextResId, null);
     }
 
     public static HomeUiState error(String errorMessage) {
         return new HomeUiState(Mode.ERROR, null, null, null, null,
-                false, false, false, false, false, false, false, 0, errorMessage);
+                false, false, false, false, false, false, false, false, false,
+                0, errorMessage);
     }
 
     public HomeUiState asLoggingOut() {
         return new HomeUiState(Mode.LOGGING_OUT, loginName, userName, deptName, serverTime,
                 showTagCreate, showRfidBind, showRfidUnbind, showInbound,
-                showInboundConfirm, showInventory, showInventorySubmit, 0, null);
+                showInboundConfirm, showReceive, showReceiveConfirm, showInventory,
+                showInventorySubmit, 0, null);
     }
 
     public Mode getMode() {
@@ -130,6 +140,14 @@ public final class HomeUiState {
 
     public boolean isShowInboundConfirm() {
         return showInboundConfirm;
+    }
+
+    public boolean isShowReceive() {
+        return showReceive;
+    }
+
+    public boolean isShowReceiveConfirm() {
+        return showReceiveConfirm;
     }
 
     public boolean isShowInventory() {
