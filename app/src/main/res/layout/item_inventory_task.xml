@@ -48,7 +48,7 @@
                 android:layout_marginTop="@dimen/pda_small_spacing"
                 android:textColor="@color/pda_text_secondary"
                 android:textSize="@dimen/pda_caption_size"
-                tools:text="一号仓 · 全部资产" />
+                tools:text="一号仓 · 全部在库资产" />
 
             <LinearLayout
                 android:layout_width="match_parent"

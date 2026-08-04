@@ -71,6 +71,7 @@ public class InventoryActivitiesInstrumentedTest {
                         .putExtra(InventoryExecuteActivity.EXTRA_SKIP_INITIAL_LOAD, true))) {
             onView(withId(R.id.inventoryProgress)).check(matches(isDisplayed()));
             onView(withId(R.id.inventoryExpectedList)).check(matches(isDisplayed()));
+            onView(withId(R.id.inventoryLocationInput)).check(matches(isDisplayed()));
             onView(withId(R.id.inventoryPrimaryAction)).check(matches(isDisplayed()));
         }
     }

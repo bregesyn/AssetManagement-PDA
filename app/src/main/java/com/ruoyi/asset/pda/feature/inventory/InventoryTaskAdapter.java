@@ -88,7 +88,7 @@ public final class InventoryTaskAdapter
         if (hasText(task.getCategoryName())) {
             builder.append(" · ").append(task.getCategoryName());
         } else if ("ALL_ASSET".equals(task.getScopeType())) {
-            builder.append(" · 全部资产");
+            builder.append(" · 全部在库资产");
         }
         return builder.toString();
     }

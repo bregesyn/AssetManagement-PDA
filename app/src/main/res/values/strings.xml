@@ -24,7 +24,7 @@
     <string name="inventory_execute_confirm_step">03 确认本轮</string>
     <string name="inventory_execute_actual_warehouse">实际仓库 *</string>
     <string name="inventory_execute_actual_location">实际位置</string>
-    <string name="inventory_execute_location_optional">不指定位置 = 本轮只确认到仓库；不会用 RSSI 推断库位。</string>
+    <string name="inventory_execute_location_optional">不指定位置 = 本轮只确认到仓库；不会用 RSSI 推断库位，审批通过后也不会自动纠偏或恢复盘亏资产。</string>
     <string name="inventory_execute_select_warehouse">选择实际仓库</string>
     <string name="inventory_execute_select_location">不指定位置</string>
     <string name="inventory_execute_scan_ready">等待采集</string>
@@ -40,7 +40,7 @@
     <string name="inventory_execute_surplus">盘盈登记 / 明细</string>
     <string name="inventory_execute_mark_loss">全部未盘标记为盘亏</string>
     <string name="inventory_execute_submit">最终提交任务</string>
-    <string name="inventory_execute_readonly_banner">任务已进入待结果确认，只读查看；不执行 Web 结果确认、不调账。</string>
+    <string name="inventory_execute_readonly_banner">任务已进入待结果确认，只读查看；Android 不直接调账，审批通过后由后端按盘点结果自动处理。</string>
     <string name="inventory_execute_preview_summary">预判：可确认 %1$d · 未解析 %2$d · 盘盈 %3$d</string>
     <string name="inventory_execute_confirm_summary">本轮成功 %1$d · 失败 %2$d · 盘盈新增 %3$d</string>
     <string name="inventory_execute_pending_title">未盘明细</string>
@@ -59,7 +59,7 @@
     <string name="inventory_execute_mark_loss_title">确认批量盘亏？</string>
     <string name="inventory_execute_mark_loss_message">任务 %1$s 仍有 %2$d 条未盘明细。确认后只将当前未盘项标记为盘亏，不覆盖已有结果。</string>
     <string name="inventory_execute_submit_title">确认最终提交？</string>
-    <string name="inventory_execute_submit_message">任务 %1$s：已盘 %2$d / %3$d，正常 %4$d，盘盈 %5$d。提交后 PDA 页面切换为只读。</string>
+    <string name="inventory_execute_submit_message">任务 %1$s：已盘 %2$d / %3$d，正常 %4$d，盘盈 %5$d。提交后页面切换为只读；审批通过后后端可能自动纠偏、确认盘亏或恢复盘亏资产。</string>
     <string name="inventory_execute_confirm_title">确认本轮盘点？</string>
     <string name="inventory_execute_remark_hint">本轮备注（可选）</string>
     <string name="inventory_execute_identify_type">识别方式</string>

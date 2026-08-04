@@ -126,6 +126,21 @@ public final class InventoryExecuteActivity extends SessionAwareActivity {
             Long nextId = state.getWarehouses().get(position).getId();
             runAfterBatchConfirmation(() -> viewModel.changeWarehouse(nextId));
         });
+        binding.inventoryLocationInput.setOnItemClickListener((parent, view, position, id) -> {
+            if (!selectorCallbackReady || viewModel == null) {
+                return;
+            }
+            InventoryExecuteUiState state = viewModel.getUiState().getValue();
+            if (state == null) {
+                return;
+            }
+            // 位置是可选事实；显式的“不指定位置”会传 null，不能把仓库级盘点伪造成具体库位。
+            Long nextId = position == 0 ? null : locationIdAt(state, position - 1);
+            if (position > 0 && nextId == null) {
+                return;
+            }
+            runAfterBatchConfirmation(() -> viewModel.changeLocation(nextId));
+        });
         selectorCallbackReady = true;
     }
 
@@ -229,8 +244,28 @@ public final class InventoryExecuteActivity extends SessionAwareActivity {
                 android.R.layout.simple_dropdown_item_1line, warehouseNames));
         binding.inventoryWarehouseInput.setText(findOptionLabel(state.getWarehouses(),
                 state.getSelectedWarehouseId()), false);
+        List<String> locationNames = new ArrayList<>();
+        locationNames.add(getString(R.string.inventory_execute_select_location));
+        for (PdaMasterDataDto value : state.getLocations()) {
+            locationNames.add(optionLabel(value));
+        }
+        binding.inventoryLocationInput.setAdapter(new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line, locationNames));
+        String selectedLocation = findOptionLabel(state.getLocations(),
+                state.getSelectedLocationId());
+        binding.inventoryLocationInput.setText(hasText(selectedLocation)
+                ? selectedLocation : getString(R.string.inventory_execute_select_location), false);
         boolean enabled = state.getTask() != null && !state.isReadOnly() && !state.isWriting();
-        binding.inventoryWarehouseInput.setEnabled(enabled);
+        binding.inventoryWarehouseLayout.setEnabled(enabled);
+        binding.inventoryLocationLayout.setEnabled(enabled && state.getSelectedWarehouseId() != null);
+    }
+
+    private Long locationIdAt(InventoryExecuteUiState state, int index) {
+        if (index < 0 || index >= state.getLocations().size()) {
+            return null;
+        }
+        PdaMasterDataDto value = state.getLocations().get(index);
+        return value == null ? null : value.getId();
     }
 
     private void renderBatch(InventoryExecuteUiState state) {
@@ -625,7 +660,7 @@ public final class InventoryExecuteActivity extends SessionAwareActivity {
 
     private String formatScope(PdaInventoryTaskDto task) {
         StringBuilder value = new StringBuilder(hasText(task.getWarehouseName())
-                ? task.getWarehouseName() : "全部资产");
+                ? task.getWarehouseName() : "全部在库资产");
         if (hasText(task.getLocationName())) {
             value.append(" · ").append(task.getLocationName());
         }
