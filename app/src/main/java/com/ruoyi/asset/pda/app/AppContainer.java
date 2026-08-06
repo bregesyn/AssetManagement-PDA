@@ -14,9 +14,11 @@ import com.ruoyi.asset.pda.data.api.PdaApiService;
 import com.ruoyi.asset.pda.data.repository.ApiCallExecutor;
 import com.ruoyi.asset.pda.data.repository.AssetRepository;
 import com.ruoyi.asset.pda.data.repository.AuthRepository;
+import com.ruoyi.asset.pda.data.repository.BorrowRepository;
 import com.ruoyi.asset.pda.data.repository.CommonRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultAssetRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultAuthRepository;
+import com.ruoyi.asset.pda.data.repository.DefaultBorrowRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultCommonRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultInboundRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultInventoryRepository;
@@ -42,6 +44,7 @@ public final class AppContainer {
     private final InboundRepository inboundRepository;
     private final InventoryRepository inventoryRepository;
     private final ReceiveRepository receiveRepository;
+    private final BorrowRepository borrowRepository;
 
     public AppContainer(Context context) {
         Context applicationContext = context.getApplicationContext();
@@ -61,6 +64,7 @@ public final class AppContainer {
         inboundRepository = new DefaultInboundRepository(pdaApiService, callExecutor);
         inventoryRepository = new DefaultInventoryRepository(pdaApiService, callExecutor);
         receiveRepository = new DefaultReceiveRepository(pdaApiService, callExecutor);
+        borrowRepository = new DefaultBorrowRepository(pdaApiService, callExecutor);
     }
 
     AppContainer(SessionCookieJar sessionCookieJar, SessionManager sessionManager,
@@ -79,6 +83,7 @@ public final class AppContainer {
         inboundRepository = new DefaultInboundRepository(pdaApiService, callExecutor);
         inventoryRepository = new DefaultInventoryRepository(pdaApiService, callExecutor);
         receiveRepository = new DefaultReceiveRepository(pdaApiService, callExecutor);
+        borrowRepository = new DefaultBorrowRepository(pdaApiService, callExecutor);
     }
 
     public SessionCookieJar getSessionCookieJar() {
@@ -123,6 +128,10 @@ public final class AppContainer {
 
     public ReceiveRepository getReceiveRepository() {
         return receiveRepository;
+    }
+
+    public BorrowRepository getBorrowRepository() {
+        return borrowRepository;
     }
 
     private static <T> T requireNonNull(T value, String name) {

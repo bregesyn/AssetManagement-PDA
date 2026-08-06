@@ -3,6 +3,13 @@ package com.ruoyi.asset.pda.data.api;
 import com.ruoyi.asset.pda.core.network.ApiResponse;
 import com.ruoyi.asset.pda.data.dto.PdaAssetIdentifyDto;
 import com.ruoyi.asset.pda.data.dto.PdaAssetIdentifyRequest;
+import com.ruoyi.asset.pda.data.dto.PdaBorrowBatchCheckDto;
+import com.ruoyi.asset.pda.data.dto.PdaBorrowIssueBatchCheckRequestDto;
+import com.ruoyi.asset.pda.data.dto.PdaBorrowIssueBatchSubmitDto;
+import com.ruoyi.asset.pda.data.dto.PdaBorrowIssueBatchSubmitRequestDto;
+import com.ruoyi.asset.pda.data.dto.PdaBorrowReturnBatchCheckRequestDto;
+import com.ruoyi.asset.pda.data.dto.PdaBorrowReturnBatchSubmitDto;
+import com.ruoyi.asset.pda.data.dto.PdaBorrowReturnBatchSubmitRequestDto;
 import com.ruoyi.asset.pda.data.dto.PdaBootstrapDto;
 import com.ruoyi.asset.pda.data.dto.PdaDictItemDto;
 import com.ruoyi.asset.pda.data.dto.PdaInventoryBatchConfirmDto;
@@ -26,8 +33,8 @@ import com.ruoyi.asset.pda.data.dto.PdaInboundEligibilityDto;
 import com.ruoyi.asset.pda.data.dto.PdaPageResultDto;
 import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchCheckDto;
 import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchCheckRequestDto;
-import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchConfirmDto;
-import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchConfirmRequestDto;
+import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchSubmitDto;
+import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchSubmitRequestDto;
 import com.ruoyi.asset.pda.data.dto.PdaLoginRequest;
 import com.ruoyi.asset.pda.data.dto.PdaMasterDataDto;
 import com.ruoyi.asset.pda.data.dto.PdaRfidBindRequest;
@@ -114,9 +121,29 @@ public interface PdaApiService {
     Call<ApiResponse<PdaReceiveBatchCheckDto>> receiveBatchCheck(
             @Body PdaReceiveBatchCheckRequestDto request);
 
-    @POST("asset/pda/receive/batch-confirm")
-    Call<ApiResponse<PdaReceiveBatchConfirmDto>> receiveBatchConfirm(
-            @Body PdaReceiveBatchConfirmRequestDto request);
+    @POST("asset/pda/receive/batch-submit")
+    Call<ApiResponse<PdaReceiveBatchSubmitDto>> receiveBatchSubmit(
+            @Body PdaReceiveBatchSubmitRequestDto request);
+
+    @GET("asset/pda/borrow/borrowers")
+    Call<ApiResponse<List<PdaMasterDataDto>>> borrowBorrowers(
+            @Query("keyword") String keyword);
+
+    @POST("asset/pda/borrow/issue/batch-check")
+    Call<ApiResponse<PdaBorrowBatchCheckDto>> borrowIssueBatchCheck(
+            @Body PdaBorrowIssueBatchCheckRequestDto request);
+
+    @POST("asset/pda/borrow/issue/batch-submit")
+    Call<ApiResponse<PdaBorrowIssueBatchSubmitDto>> borrowIssueBatchSubmit(
+            @Body PdaBorrowIssueBatchSubmitRequestDto request);
+
+    @POST("asset/pda/borrow/return/batch-check")
+    Call<ApiResponse<PdaBorrowBatchCheckDto>> borrowReturnBatchCheck(
+            @Body PdaBorrowReturnBatchCheckRequestDto request);
+
+    @POST("asset/pda/borrow/return/batch-submit")
+    Call<ApiResponse<PdaBorrowReturnBatchSubmitDto>> borrowReturnBatchSubmit(
+            @Body PdaBorrowReturnBatchSubmitRequestDto request);
 
     @GET("asset/pda/inventory/tasks")
     Call<ApiResponse<PdaPageResultDto<PdaInventoryTaskDto>>> inventoryTasks(

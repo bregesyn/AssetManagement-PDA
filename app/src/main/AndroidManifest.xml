@@ -16,6 +16,14 @@
         android:theme="@style/Theme.Assetmanagementpda"
         tools:targetApi="31">
         <activity
+            android:name=".feature.borrow.BorrowerPickerActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".feature.borrow.BorrowReturnActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".feature.receive.ReceiveRecipientPickerActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />

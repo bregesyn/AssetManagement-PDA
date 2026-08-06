@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".feature.borrow.BorrowReturnActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/borrowToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/pda_primary"
+        android:elevation="1dp"
+        app:navigationContentDescription="@string/common_back"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/borrow_title"
+        app:titleTextColor="@color/pda_card_background" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:fillViewport="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/pda_screen_padding"
+            android:paddingTop="@dimen/pda_item_spacing"
+            android:paddingEnd="@dimen/pda_screen_padding"
+            android:paddingBottom="@dimen/pda_section_spacing">
+
+            <TextView
+                android:id="@+id/borrowOperatorTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_utility_size"
+                tools:text="操作人：管理员 · 服务时间：2026-08-05 09:30:00" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/borrowModeGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_small_spacing"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/borrowIssueModeButton"
+                    style="@style/PdaOutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checkable="true"
+                    android:text="@string/borrow_issue_mode" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/borrowReturnModeButton"
+                    style="@style/PdaOutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checkable="true"
+                    android:text="@string/borrow_return_mode" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <LinearLayout
+                android:id="@+id/borrowIssueForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/pda_section_spacing"
+                    android:text="@string/borrow_type_label"
+                    android:textColor="@color/pda_text_secondary"
+                    android:textSize="@dimen/pda_caption_size"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/borrowerTypeGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/pda_small_spacing"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/borrowInternalButton"
+                        style="@style/PdaOutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checkable="true"
+                        tools:text="内部借用" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/borrowExternalButton"
+                        style="@style/PdaOutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checkable="true"
+                        tools:text="外部借用" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/borrowerCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/pda_small_spacing"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/pda_card_background"
+                    app:cardCornerRadius="@dimen/pda_control_radius"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/pda_card_stroke"
+                    app:strokeWidth="@dimen/pda_stroke_width">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="@dimen/pda_status_rail_width"
+                            android:layout_height="match_parent"
+                            android:background="@color/pda_primary" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="@dimen/pda_item_spacing">
+
+                            <TextView
+                                android:id="@+id/borrowerRoleLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/borrow_borrower_label"
+                                android:textColor="@color/pda_text_secondary"
+                                android:textSize="@dimen/pda_utility_size"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/borrowerName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="@string/borrow_borrower_unselected"
+                                android:textColor="@color/pda_text_primary"
+                                android:textSize="@dimen/pda_body_size"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/borrowerDept"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="@string/borrow_borrower_dept_unselected"
+                                android:textColor="@color/pda_text_secondary"
+                                android:textSize="@dimen/pda_caption_size" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/borrowerAction"
+                                style="@style/PdaOutlinedButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/pda_small_spacing"
+                                android:text="@string/borrow_select_borrower" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:id="@+id/borrowExternalForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/PdaTextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:hint="@string/borrow_external_org_hint">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/borrowExternalOrgInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/pda_input_min_height"
+                            android:inputType="textCapSentences"
+                            android:maxLength="100"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/PdaTextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:hint="@string/borrow_external_phone_hint">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/borrowExternalPhoneInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/pda_input_min_height"
+                            android:inputType="phone"
+                            android:maxLength="30"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/borrowExpectedDateButton"
+                    style="@style/PdaOutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/pda_small_spacing"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/borrow_expected_date_unselected" />
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/borrowScanCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_section_spacing"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="@dimen/pda_stroke_width">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="@dimen/pda_status_rail_width"
+                        android:layout_height="match_parent"
+                        android:background="@color/pda_primary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="@dimen/pda_card_padding">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/borrowScanCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="monospace"
+                                android:text="00"
+                                android:textColor="@color/pda_primary_dark"
+                                android:textSize="@dimen/pda_scan_count_size"
+                                android:textStyle="bold"
+                                tools:text="08" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/pda_item_spacing"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/borrowScanStatus"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/borrow_scan_waiting"
+                                    android:textColor="@color/pda_text_primary"
+                                    android:textSize="@dimen/pda_body_size"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/borrowLatestEpc"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:ellipsize="middle"
+                                    android:fontFamily="monospace"
+                                    android:maxLines="1"
+                                    android:text="@string/borrow_latest_empty"
+                                    android:textColor="@color/pda_text_secondary"
+                                    android:textSize="@dimen/pda_utility_size" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/borrowScanButton"
+                            style="@style/PdaPrimaryButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_item_spacing"
+                            android:text="@string/borrow_scan_start" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_small_spacing"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/PdaTextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/pda_small_spacing"
+                    android:layout_weight="1"
+                    android:hint="@string/borrow_asset_code">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/borrowAssetCodeInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/pda_input_min_height"
+                        android:fontFamily="monospace"
+                        android:imeOptions="actionDone"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="64"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/borrowAssetCodeButton"
+                    style="@style/PdaOutlinedButton"
+                    android:layout_width="104dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/borrow_add_asset" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_small_spacing"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/borrowWorkSummary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/pda_primary_dark"
+                    android:textSize="@dimen/pda_caption_size"
+                    android:textStyle="bold"
+                    tools:text="已加入 8 · 本轮 EPC 0 · 重复 1" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/borrowIssueButton"
+                    style="@style/PdaTextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/borrow_issues"
+                    android:textColor="@color/pda_error"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/borrowClearButton"
+                    style="@style/PdaTextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/borrow_clear" />
+            </LinearLayout>
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/borrowProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_small_spacing"
+                android:indeterminate="true"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/borrowInfoText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_small_spacing"
+                android:background="@color/pda_primary_soft"
+                android:padding="@dimen/pda_small_spacing"
+                android:textColor="@color/pda_primary_dark"
+                android:textSize="@dimen/pda_utility_size"
+                android:visibility="gone"
+                tools:text="预检完成：加入 8 件，异常 1 件"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/borrowErrorText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_small_spacing"
+                android:accessibilityLiveRegion="assertive"
+                android:background="@color/pda_error_soft"
+                android:padding="@dimen/pda_small_spacing"
+                android:textColor="@color/pda_error"
+                android:textSize="@dimen/pda_utility_size"
+                android:visibility="gone"
+                tools:text="请先选择借用人"
+                tools:visibility="visible" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/borrowRetryButton"
+                style="@style/PdaTextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="@string/common_retry"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/borrowPermissionHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_small_spacing"
+                android:background="@color/pda_primary_soft"
+                android:padding="@dimen/pda_small_spacing"
+                android:textColor="@color/pda_primary_dark"
+                android:textSize="@dimen/pda_utility_size"
+                android:visibility="gone"
+                tools:text="当前账号可扫描和预检，但没有提交权限"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/borrowResultText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_small_spacing"
+                android:background="@color/pda_primary_soft"
+                android:padding="@dimen/pda_small_spacing"
+                android:textColor="@color/pda_primary_dark"
+                android:textSize="@dimen/pda_caption_size"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="借用单 LY202608050001 · 审批任务 1201 · 等待审批"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/borrowListTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_section_spacing"
+                android:text="@string/borrow_asset_list"
+                android:textColor="@color/pda_text_primary"
+                android:textSize="@dimen/pda_caption_size"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="120dp"
+                android:layout_marginTop="@dimen/pda_small_spacing">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/borrowAssetList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:scrollbars="vertical"
+                    tools:listitem="@layout/item_borrow_asset" />
+
+                <TextView
+                    android:id="@+id/borrowEmptyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:gravity="center"
+                    android:padding="@dimen/pda_screen_padding"
+                    android:text="@string/borrow_empty"
+                    android:textColor="@color/pda_text_secondary"
+                    android:textSize="@dimen/pda_caption_size" />
+            </FrameLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/borrowActionDock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pda_card_background"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingTop="@dimen/pda_small_spacing"
+        android:paddingEnd="@dimen/pda_screen_padding"
+        android:paddingBottom="@dimen/pda_small_spacing">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/borrowRemarkLayout"
+            style="@style/PdaTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/borrow_remark">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/borrowRemarkInput"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pda_input_min_height"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences"
+                android:maxLength="500"
+                android:maxLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/borrowSubmitButton"
+            style="@style/PdaPrimaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pda_small_spacing"
+            android:text="@string/borrow_submit" />
+    </LinearLayout>
+</LinearLayout>

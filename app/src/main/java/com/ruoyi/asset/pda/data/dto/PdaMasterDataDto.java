@@ -21,16 +21,26 @@ public final class PdaMasterDataDto {
     @SerializedName("parentName")
     private String parentName;
 
+    /** 外部借用选择内部联系人时回填的系统用户联系电话。 */
+    @SerializedName("phonenumber")
+    private String phoneNumber;
+
     public PdaMasterDataDto() {
     }
 
     public PdaMasterDataDto(Long id, String code, String name, Long parentId,
             String parentName) {
+        this(id, code, name, parentId, parentName, null);
+    }
+
+    public PdaMasterDataDto(Long id, String code, String name, Long parentId,
+            String parentName, String phoneNumber) {
         this.id = id;
         this.code = code;
         this.name = name;
         this.parentId = parentId;
         this.parentName = parentName;
+        this.phoneNumber = phoneNumber;
     }
 
     public Long getId() {
@@ -51,5 +61,9 @@ public final class PdaMasterDataDto {
 
     public String getParentName() {
         return parentName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="1dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/pda_card_background"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/pda_card_stroke"
+    app:strokeWidth="@dimen/pda_stroke_width">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/pda_touch_height"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="@dimen/pda_status_rail_width"
+            android:layout_height="match_parent"
+            android:background="@color/pda_primary" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/pda_item_spacing"
+            android:paddingTop="@dimen/pda_small_spacing"
+            android:paddingEnd="@dimen/pda_item_spacing"
+            android:paddingBottom="@dimen/pda_small_spacing">
+
+            <TextView
+                android:id="@+id/borrowerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/pda_text_primary"
+                android:textSize="@dimen/pda_body_size"
+                android:textStyle="bold"
+                tools:text="张三" />
+
+            <TextView
+                android:id="@+id/borrowerLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_utility_size"
+                tools:text="账号：zhangsan" />
+
+            <TextView
+                android:id="@+id/borrowerDept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_caption_size"
+                tools:text="部门：设备管理部" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

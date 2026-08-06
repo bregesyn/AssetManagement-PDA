@@ -21,17 +21,23 @@ public final class HomeUiState {
     private final boolean showInbound;
     private final boolean showInboundConfirm;
     private final boolean showReceive;
-    private final boolean showReceiveConfirm;
+    private final boolean showReceiveSubmit;
     private final boolean showInventory;
     private final boolean showInventorySubmit;
+    private final boolean showBorrowIssue;
+    private final boolean showBorrowIssueSubmit;
+    private final boolean showBorrowReturn;
+    private final boolean showBorrowReturnSubmit;
     private final int errorTextResId;
     private final String errorMessage;
 
     private HomeUiState(Mode mode, String loginName, String userName, String deptName,
             String serverTime, boolean showTagCreate, boolean showRfidBind,
             boolean showRfidUnbind, boolean showInbound, boolean showInboundConfirm,
-            boolean showReceive, boolean showReceiveConfirm, boolean showInventory,
-            boolean showInventorySubmit, int errorTextResId, String errorMessage) {
+            boolean showReceive, boolean showReceiveSubmit, boolean showInventory,
+            boolean showInventorySubmit, boolean showBorrowIssue,
+            boolean showBorrowIssueSubmit, boolean showBorrowReturn,
+            boolean showBorrowReturnSubmit, int errorTextResId, String errorMessage) {
         this.mode = mode;
         this.loginName = loginName;
         this.userName = userName;
@@ -43,9 +49,13 @@ public final class HomeUiState {
         this.showInbound = showInbound;
         this.showInboundConfirm = showInboundConfirm;
         this.showReceive = showReceive;
-        this.showReceiveConfirm = showReceiveConfirm;
+        this.showReceiveSubmit = showReceiveSubmit;
         this.showInventory = showInventory;
         this.showInventorySubmit = showInventorySubmit;
+        this.showBorrowIssue = showBorrowIssue;
+        this.showBorrowIssueSubmit = showBorrowIssueSubmit;
+        this.showBorrowReturn = showBorrowReturn;
+        this.showBorrowReturnSubmit = showBorrowReturnSubmit;
         this.errorTextResId = errorTextResId;
         this.errorMessage = errorMessage;
     }
@@ -53,6 +63,7 @@ public final class HomeUiState {
     public static HomeUiState loading() {
         return new HomeUiState(Mode.LOADING, null, null, null, null,
                 false, false, false, false, false, false, false, false, false,
+                false, false, false, false,
                 0, null);
     }
 
@@ -69,37 +80,55 @@ public final class HomeUiState {
             boolean showRfidUnbind, boolean showInventory, boolean showInventorySubmit) {
         return new HomeUiState(Mode.CONTENT, loginName, userName, deptName, serverTime,
                 showTagCreate, showRfidBind, showRfidUnbind, false, false,
-                false, false, showInventory, showInventorySubmit, 0, null);
+                false, false, showInventory, showInventorySubmit,
+                false, false, false, false, 0, null);
     }
 
     public static HomeUiState content(String loginName, String userName, String deptName,
             String serverTime, boolean showTagCreate, boolean showRfidBind,
             boolean showRfidUnbind, boolean showInbound, boolean showInboundConfirm,
-            boolean showReceive, boolean showReceiveConfirm, boolean showInventory,
+            boolean showReceive, boolean showReceiveSubmit, boolean showInventory,
             boolean showInventorySubmit) {
+        return content(loginName, userName, deptName, serverTime, showTagCreate,
+                showRfidBind, showRfidUnbind, showInbound, showInboundConfirm,
+                showReceive, showReceiveSubmit, showInventory, showInventorySubmit,
+                false, false, false, false);
+    }
+
+    public static HomeUiState content(String loginName, String userName, String deptName,
+            String serverTime, boolean showTagCreate, boolean showRfidBind,
+            boolean showRfidUnbind, boolean showInbound, boolean showInboundConfirm,
+            boolean showReceive, boolean showReceiveSubmit, boolean showInventory,
+            boolean showInventorySubmit, boolean showBorrowIssue,
+            boolean showBorrowIssueSubmit, boolean showBorrowReturn,
+            boolean showBorrowReturnSubmit) {
         return new HomeUiState(Mode.CONTENT, loginName, userName, deptName, serverTime,
                 showTagCreate, showRfidBind, showRfidUnbind, showInbound,
-                showInboundConfirm, showReceive, showReceiveConfirm, showInventory,
-                showInventorySubmit, 0, null);
+                showInboundConfirm, showReceive, showReceiveSubmit, showInventory,
+                showInventorySubmit, showBorrowIssue, showBorrowIssueSubmit,
+                showBorrowReturn, showBorrowReturnSubmit, 0, null);
     }
 
     public static HomeUiState error(@StringRes int errorTextResId) {
         return new HomeUiState(Mode.ERROR, null, null, null, null,
                 false, false, false, false, false, false, false, false, false,
+                false, false, false, false,
                 errorTextResId, null);
     }
 
     public static HomeUiState error(String errorMessage) {
         return new HomeUiState(Mode.ERROR, null, null, null, null,
                 false, false, false, false, false, false, false, false, false,
+                false, false, false, false,
                 0, errorMessage);
     }
 
     public HomeUiState asLoggingOut() {
         return new HomeUiState(Mode.LOGGING_OUT, loginName, userName, deptName, serverTime,
                 showTagCreate, showRfidBind, showRfidUnbind, showInbound,
-                showInboundConfirm, showReceive, showReceiveConfirm, showInventory,
-                showInventorySubmit, 0, null);
+                showInboundConfirm, showReceive, showReceiveSubmit, showInventory,
+                showInventorySubmit, showBorrowIssue, showBorrowIssueSubmit,
+                showBorrowReturn, showBorrowReturnSubmit, 0, null);
     }
 
     public Mode getMode() {
@@ -146,8 +175,8 @@ public final class HomeUiState {
         return showReceive;
     }
 
-    public boolean isShowReceiveConfirm() {
-        return showReceiveConfirm;
+    public boolean isShowReceiveSubmit() {
+        return showReceiveSubmit;
     }
 
     public boolean isShowInventory() {
@@ -156,6 +185,26 @@ public final class HomeUiState {
 
     public boolean isShowInventorySubmit() {
         return showInventorySubmit;
+    }
+
+    public boolean isShowBorrowIssue() {
+        return showBorrowIssue;
+    }
+
+    public boolean isShowBorrowIssueSubmit() {
+        return showBorrowIssueSubmit;
+    }
+
+    public boolean isShowBorrowReturn() {
+        return showBorrowReturn;
+    }
+
+    public boolean isShowBorrowReturnSubmit() {
+        return showBorrowReturnSubmit;
+    }
+
+    public boolean isShowBorrow() {
+        return showBorrowIssue || showBorrowReturn;
     }
 
     public int getErrorTextResId() {

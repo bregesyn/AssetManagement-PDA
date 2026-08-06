@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/pda_small_spacing"
+    app:cardBackgroundColor="@color/pda_card_background"
+    app:cardCornerRadius="@dimen/pda_control_radius"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/pda_card_stroke"
+    app:strokeWidth="@dimen/pda_stroke_width">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/pda_item_spacing">
+
+        <TextView
+            android:id="@+id/borrowIssueIdentifier"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:textColor="@color/pda_text_primary"
+            android:textSize="@dimen/pda_caption_size"
+            tools:text="E2000017221101441890ABCD" />
+
+        <TextView
+            android:id="@+id/borrowIssueAsset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/pda_text_secondary"
+            android:textSize="@dimen/pda_caption_size"
+            tools:text="ZC-0001 · 示范资产" />
+
+        <TextView
+            android:id="@+id/borrowIssueReason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/pda_error"
+            android:textSize="@dimen/pda_utility_size"
+            tools:text="资产当前不可借出" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

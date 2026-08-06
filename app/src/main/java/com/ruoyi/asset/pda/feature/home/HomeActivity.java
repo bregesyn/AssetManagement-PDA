@@ -18,6 +18,7 @@ import com.ruoyi.asset.pda.feature.inbound.InboundActivity;
 import com.ruoyi.asset.pda.feature.inventory.InventoryTaskListActivity;
 import com.ruoyi.asset.pda.feature.login.LoginActivity;
 import com.ruoyi.asset.pda.feature.receive.ReceiveActivity;
+import com.ruoyi.asset.pda.feature.borrow.BorrowReturnActivity;
 import com.ruoyi.asset.pda.feature.rfid.RfidBindActivity;
 import com.ruoyi.asset.pda.feature.rfid.RfidTagBatchActivity;
 import com.ruoyi.asset.pda.feature.rfid.RfidUnbindActivity;
@@ -54,6 +55,7 @@ public final class HomeActivity extends AppCompatActivity {
                 view -> openOperation(RfidUnbindActivity.class));
         binding.inboundCard.setOnClickListener(view -> openInbound());
         binding.receiveCard.setOnClickListener(view -> openReceive());
+        binding.borrowCard.setOnClickListener(view -> openBorrow());
         binding.inventoryCard.setOnClickListener(view -> openInventoryTasks(false));
         viewModel.getUiState().observe(this, this::render);
         if (sessionManager.getState() != SessionManager.State.VALID) {
@@ -122,6 +124,7 @@ public final class HomeActivity extends AppCompatActivity {
         setVisible(binding.rfidUnbindCard, state.isShowRfidUnbind());
         setVisible(binding.inboundCard, state.isShowInbound());
         setVisible(binding.receiveCard, state.isShowReceive());
+        setVisible(binding.borrowCard, state.isShowBorrow());
         setVisible(binding.inventoryCard, state.isShowInventory());
         binding.inventoryCard.setAlpha(state.isShowInventory() ? 1.0f : 0.72f);
         binding.inventoryCard.setEnabled(state.isShowInventory());
@@ -193,8 +196,25 @@ public final class HomeActivity extends AppCompatActivity {
         }
         Intent intent = new Intent(this, ReceiveActivity.class);
         HomeUiState state = viewModel.getUiState().getValue();
-        intent.putExtra(ReceiveActivity.EXTRA_CAN_CONFIRM,
-                state != null && state.isShowReceiveConfirm());
+        intent.putExtra(ReceiveActivity.EXTRA_CAN_SUBMIT,
+                state != null && state.isShowReceiveSubmit());
+        startActivity(intent);
+    }
+
+    private void openBorrow() {
+        if (sessionManager.getState() != SessionManager.State.VALID) {
+            return;
+        }
+        Intent intent = new Intent(this, BorrowReturnActivity.class);
+        HomeUiState state = viewModel.getUiState().getValue();
+        intent.putExtra(BorrowReturnActivity.EXTRA_CAN_ISSUE_SCAN,
+                state != null && state.isShowBorrowIssue());
+        intent.putExtra(BorrowReturnActivity.EXTRA_CAN_ISSUE_SUBMIT,
+                state != null && state.isShowBorrowIssueSubmit());
+        intent.putExtra(BorrowReturnActivity.EXTRA_CAN_RETURN_SCAN,
+                state != null && state.isShowBorrowReturn());
+        intent.putExtra(BorrowReturnActivity.EXTRA_CAN_RETURN_SUBMIT,
+                state != null && state.isShowBorrowReturnSubmit());
         startActivity(intent);
     }
 

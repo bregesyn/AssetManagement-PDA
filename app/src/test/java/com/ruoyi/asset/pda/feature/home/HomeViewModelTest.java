@@ -69,7 +69,7 @@ public class HomeViewModelTest {
         features.put(PdaPermissions.INBOUND_SCAN, true);
         features.put(PdaPermissions.INBOUND_CONFIRM, false);
         features.put(PdaPermissions.RECEIVE_SCAN, true);
-        features.put(PdaPermissions.RECEIVE_CONFIRM, false);
+        features.put(PdaPermissions.RECEIVE_SUBMIT, false);
         features.put(PdaPermissions.INVENTORY_LIST, true);
         features.put(PdaPermissions.INVENTORY_SUBMIT, true);
         viewModel.initialize();
@@ -84,7 +84,7 @@ public class HomeViewModelTest {
         assertTrue(state().isShowInbound());
         assertFalse(state().isShowInboundConfirm());
         assertTrue(state().isShowReceive());
-        assertFalse(state().isShowReceiveConfirm());
+        assertFalse(state().isShowReceiveSubmit());
         assertTrue(state().isShowInventory());
     }
 
@@ -115,13 +115,13 @@ public class HomeViewModelTest {
     @Test
     public void receiveConfirmPermissionAloneDoesNotExposeReceiveCard() {
         Map<String, Boolean> features = new LinkedHashMap<>();
-        features.put(PdaPermissions.RECEIVE_CONFIRM, true);
+        features.put(PdaPermissions.RECEIVE_SUBMIT, true);
         viewModel.initialize();
 
         commonRepository.completeBootstrap(bootstrap(features));
 
         assertFalse(state().isShowReceive());
-        assertTrue(state().isShowReceiveConfirm());
+        assertTrue(state().isShowReceiveSubmit());
     }
 
     @Test

@@ -266,7 +266,9 @@
     <string name="home_inbound">资产入库</string>
     <string name="home_inbound_desc">扫描或输入资产编码，批量确认入库</string>
     <string name="home_receive">资产领用</string>
-    <string name="home_receive_desc">核对领用人后扫描资产，批量确认交接</string>
+    <string name="home_receive_desc">核对领用人后扫描资产，批量提交领用申请</string>
+    <string name="home_borrow">资产借还</string>
+    <string name="home_borrow_desc">登记临时借用或扫描归还资产，提交审批申请</string>
     <string name="home_rfid_section">标签关系</string>
 
     <string name="inbound_title">资产入库</string>
@@ -302,7 +304,6 @@
     <string name="inbound_result_format">%1$s · %2$s / %3$s · %4$d 件 · %5$s · %6$s</string>
 
     <string name="receive_title">资产领用</string>
-    <string name="receive_subtitle">一批资产·一位领用人</string>
     <string name="receive_recipient_section">领用对象</string>
     <string name="receive_recipient_unselected">请先选择领用人</string>
     <string name="receive_recipient_name_format">%1$s（%2$s）</string>
@@ -319,23 +320,23 @@
     <string name="receive_asset_list">待领用资产</string>
     <string name="receive_empty">先选择领用人，再扫描 RFID 或输入资产编码</string>
     <string name="receive_remark">交接备注（可选）</string>
-    <string name="receive_confirm">确认交接</string>
+    <string name="receive_submit">提交领用申请</string>
     <string name="receive_remove">移除</string>
     <string name="receive_source_rfid">RFID</string>
     <string name="receive_source_asset_code">资产编码</string>
-    <string name="receive_no_confirm_permission">当前账号可扫描和预检，但没有领用确认权限。</string>
+    <string name="receive_no_submit_permission">当前账号可扫描和预检，但没有提交领用申请权限。</string>
     <string name="receive_list_count">待领用资产 · %1$d</string>
     <string name="receive_operator_time_format">操作人：%1$s · 服务时间：%2$s</string>
-    <string name="receive_operator_confirmed_time_format">确认人：%1$s · 后台确认时间：%2$s</string>
+    <string name="receive_operator_submitted_time_format">申请人：%1$s · 提交时间：%2$s</string>
     <string name="receive_work_summary_format">已加入 %1$d · 本轮 EPC %2$d · 重复 %3$d</string>
     <string name="receive_latest_epc_format">最近 EPC：%1$s</string>
     <string name="receive_precheck_retry">预检本轮 %1$d 个 EPC</string>
     <string name="receive_prechecking">正在预检…</string>
     <string name="receive_asset_querying">预检中…</string>
-    <string name="receive_confirming">确认中…</string>
-    <string name="receive_confirm_count">确认交接 %1$d</string>
+    <string name="receive_submitting">提交中…</string>
+    <string name="receive_submit_count">提交领用申请 %1$d</string>
     <string name="receive_issue_count">异常 %1$d</string>
-    <string name="receive_result_format">%1$s · %2$s / %3$s · %4$d 件 · %5$s · %6$s</string>
+    <string name="receive_submit_result_format">申请单 %1$s · %2$s / %3$s · %4$d 件 · 申请人 %5$s · %6$s · 审批任务 %7$s</string>
     <string name="receive_detail_title">资产明细</string>
     <string name="receive_detail_asset_code">资产编码</string>
     <string name="receive_detail_asset_name">资产名称</string>
@@ -348,9 +349,9 @@
     <string name="receive_remove_title">移除资产？</string>
     <string name="receive_remove_message">%1$s · %2$s</string>
     <string name="receive_issues_title">本批次异常 %1$d 项</string>
-    <string name="receive_issues_hint">异常资产不会进入确认清单</string>
-    <string name="receive_confirm_title">确认整批交接？</string>
-    <string name="receive_confirm_message">领用人：%1$s\n领用部门：%2$s\n资产：%3$d 件</string>
+    <string name="receive_issues_hint">异常资产不会进入提交清单</string>
+    <string name="receive_submit_title">提交整批领用申请？</string>
+    <string name="receive_submit_message">领用人：%1$s\n领用部门：%2$s\n资产：%3$d 件\n提交后资产仍在库，审批通过后才完成领用。</string>
     <string name="receive_clear_title">清空当前批次？</string>
     <string name="receive_clear_message">确认清空当前领用批次？</string>
     <string name="receive_clear_and_continue">清空并继续</string>
@@ -368,6 +369,105 @@
     <string name="receive_recipient_picker_empty">请先输入关键词搜索领用人</string>
     <string name="receive_recipient_no_results">未找到可领用人员，请调整关键词</string>
     <string name="receive_recipient_login_format">登录名：%1$s</string>
+
+    <string name="borrow_title">资产借还</string>
+    <string name="borrow_issue_mode">借出登记</string>
+    <string name="borrow_return_mode">归还登记</string>
+    <string name="borrow_type_label">借用类型</string>
+    <string name="borrow_type_internal">内部借用</string>
+    <string name="borrow_type_external">外部借用</string>
+    <string name="borrow_borrower_label">借用人</string>
+    <string name="borrow_contact_label">内部联系人</string>
+    <string name="borrow_borrower_unselected">请先选择借用人</string>
+    <string name="borrow_borrower_dept_unselected">借用部门将在选择人员后自动带出</string>
+    <string name="borrow_borrower_name_format">%1$s（%2$s）</string>
+    <string name="borrow_borrower_dept_format">部门：%1$s</string>
+    <string name="borrow_select_borrower">选择借用人</string>
+    <string name="borrow_change_borrower">更换借用人</string>
+    <string name="borrow_external_org_hint">外部公司名称 *</string>
+    <string name="borrow_external_phone_hint">联系电话 *</string>
+    <string name="borrow_expected_date_unselected">选择预计归还日期 *</string>
+    <string name="borrow_expected_date_format">预计归还日期：%1$s</string>
+    <string name="borrow_return_policy_hint">归还不选择借用单、仓库或位置。服务端会按资产定位当前借用明细，并恢复借用前仓位；实际归还日期将在审批通过后由后台记录。</string>
+    <string name="borrow_scan_waiting">等待扫描</string>
+    <string name="borrow_scan_ready">已完成预检</string>
+    <string name="borrow_scan_active">正在读取 RFID</string>
+    <string name="borrow_prechecking">正在批量预检…</string>
+    <string name="borrow_scan_start">开始扫描</string>
+    <string name="borrow_scan_stop">停止并预检</string>
+    <string name="borrow_precheck_retry">重试预检 %1$d</string>
+    <string name="borrow_asset_querying">预检中…</string>
+    <string name="borrow_latest_empty">最近 EPC：—</string>
+    <string name="borrow_latest_epc_format">最近 EPC：%1$s</string>
+    <string name="borrow_asset_code">资产编码</string>
+    <string name="borrow_add_asset">加入</string>
+    <string name="borrow_issues">查看异常</string>
+    <string name="borrow_clear">清空</string>
+    <string name="borrow_asset_list">当前提交清单</string>
+    <string name="borrow_list_count">当前提交清单 · %1$d</string>
+    <string name="borrow_empty">先完成借用资料，再扫描 RFID 或输入资产编码</string>
+    <string name="borrow_return_empty">扫描 RFID 或输入资产编码，服务端会定位活动借用明细</string>
+    <string name="borrow_work_summary_format">已加入 %1$d · 本轮 EPC %2$d · 重复 %3$d</string>
+    <string name="borrow_return_work_summary_format">可归还 %1$d · 本轮 EPC %2$d · 重复 %3$d</string>
+    <string name="borrow_source_rfid">RFID</string>
+    <string name="borrow_source_asset_code">资产编码</string>
+    <string name="borrow_asset_ready">可提交</string>
+    <string name="borrow_asset_return_status_format">归还状态：%1$s</string>
+    <string name="borrow_asset_context_format">借用单 %1$s · 原仓位：%2$s / %3$s</string>
+    <string name="borrow_remove">移除</string>
+    <string name="borrow_issue_count">异常 %1$d</string>
+    <string name="borrow_no_scan_permission">当前账号没有本模式扫描权限</string>
+    <string name="borrow_no_submit_permission">当前账号可扫描和预检，但没有本模式提交权限。</string>
+    <string name="borrow_remark">借出备注（可选）</string>
+    <string name="borrow_submit">提交申请</string>
+    <string name="borrow_submit_issue_count">提交借出申请 %1$d</string>
+    <string name="borrow_submit_return_count">提交归还申请 %1$d</string>
+    <string name="borrow_submitting">提交中…</string>
+    <string name="borrow_issue_result_format">借用单 %1$s · 借用人 %2$s / %3$s · %4$d 件 · 审批任务 %5$s · 等待审批</string>
+    <string name="borrow_return_result_format">已创建 %1$d 条归还审批任务；审批前资产仍为借用中</string>
+    <string name="borrow_detail_title">借还资产明细</string>
+    <string name="borrow_detail_asset_code">资产编码</string>
+    <string name="borrow_detail_asset_name">资产名称</string>
+    <string name="borrow_detail_category">资产类别</string>
+    <string name="borrow_detail_model">规格型号</string>
+    <string name="borrow_detail_brand">品牌</string>
+    <string name="borrow_detail_status">当前状态</string>
+    <string name="borrow_detail_source">加入方式</string>
+    <string name="borrow_detail_identifier">EPC 或资产编码</string>
+    <string name="borrow_detail_order">借用单号</string>
+    <string name="borrow_detail_before_location">借用前仓位</string>
+    <string name="borrow_issues_title">本批次异常 %1$d 项</string>
+    <string name="borrow_issues_hint">异常资产不会进入提交清单</string>
+    <string name="borrow_submit_issue_title">确认提交借出申请？</string>
+    <string name="borrow_submit_issue_message">借用人：%1$s
+部门：%2$s
+借用类型：%3$s
+预计归还：%4$s
+资产：%5$d 件
+提交后资产仍在库，审批通过后才变为借用中。</string>
+    <string name="borrow_submit_return_title">确认提交归还申请？</string>
+    <string name="borrow_submit_return_message">当前可归还资产：%1$d 件
+服务端将按每条借用明细创建归还审批任务；审批通过前资产仍为借用中。</string>
+    <string name="borrow_clear_title">清空当前批次？</string>
+    <string name="borrow_clear_message">扫描结果、预检异常和当前表单只保存在本页，确认清空吗？</string>
+    <string name="borrow_clear_and_continue">清空并继续</string>
+    <string name="borrow_change_mode_title">切换借还模式？</string>
+    <string name="borrow_change_mode_message">切换模式会停止扫描并清空当前借用表单、扫描、预检和提交清单。</string>
+    <string name="borrow_change_mode_confirm">清空并切换</string>
+    <string name="borrow_leave_title">离开资产借还页？</string>
+    <string name="borrow_leave_message">当前借用表单、扫描、预检异常和提交清单只保存在本页，离开后将丢失。</string>
+    <string name="borrow_leave_confirm">丢弃并离开</string>
+    <string name="borrow_date_picker_title">选择预计归还日期</string>
+
+    <string name="borrower_picker_title">选择借用人</string>
+    <string name="borrower_picker_hint">输入姓名、账号或部门，搜索启用人员</string>
+    <string name="borrower_keyword">姓名、账号或部门</string>
+    <string name="borrower_search">搜索</string>
+    <string name="borrower_searching">搜索中…</string>
+    <string name="borrower_picker_empty">请先输入关键词搜索人员</string>
+    <string name="borrower_no_results">未找到可用人员，请调整关键词</string>
+    <string name="borrower_login_format">账号：%1$s</string>
+    <string name="borrower_dept_format">部门：%1$s</string>
 
     <string name="logout_action">退出登录</string>
     <string name="logout_confirm_title">确认退出登录？</string>
