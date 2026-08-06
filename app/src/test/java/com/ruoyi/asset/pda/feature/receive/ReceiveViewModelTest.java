@@ -14,7 +14,7 @@ import com.ruoyi.asset.pda.data.dto.PdaAssetIdentifyRequest;
 import com.ruoyi.asset.pda.data.dto.PdaBootstrapDto;
 import com.ruoyi.asset.pda.data.dto.PdaMasterDataDto;
 import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchCheckDto;
-import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchConfirmDto;
+import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchSubmitDto;
 import com.ruoyi.asset.pda.data.dto.PdaUserDto;
 import com.ruoyi.asset.pda.testing.FakeCommonRepository;
 import com.ruoyi.asset.pda.testing.FakeReceiveRepository;
@@ -113,50 +113,50 @@ public class ReceiveViewModelTest {
     }
 
     @Test
-    public void confirmPermissionIsCheckedBeforeNetwork() {
+    public void submitPermissionIsCheckedBeforeNetwork() {
         ReceiveViewModel noPermissionViewModel = new ReceiveViewModel(receiveRepository,
                 commonRepository, scanner, false);
         viewModel = noPermissionViewModel;
         readyWithRecipient();
         addAsset(12L, "ZC-002");
 
-        viewModel.confirm(null);
+        viewModel.submit(null);
 
-        assertEquals(0, receiveRepository.getConfirmCount());
-        assertTrue(state().getErrorMessage().contains("确认权限"));
+        assertEquals(0, receiveRepository.getSubmitCount());
+        assertTrue(state().getErrorMessage().contains("提交领用申请权限"));
     }
 
     @Test
-    public void confirmationUsesServerTimeAndClearsWorkingBatch() {
+    public void submissionUsesServerTimeAndClearsWorkingBatch() {
         readyWithRecipient();
         addAsset(12L, "ZC-002");
 
-        viewModel.confirm(" 现场交接 ");
+        viewModel.submit(" 现场交接 ");
 
         assertEquals(7L, receiveRepository.getLastReceiveUserId().longValue());
         assertEquals(9L, receiveRepository.getLastReceiveDeptId().longValue());
         assertEquals("现场交接", receiveRepository.getLastRemark());
         assertEquals(1, receiveRepository.getLastIdentifiers().size());
-        receiveRepository.completeConfirm(confirmation(12L));
+        receiveRepository.completeSubmit(submission(12L));
 
         assertTrue(state().getAssets().isEmpty());
-        assertNotNull(state().getLastConfirmation());
-        assertEquals("LY-001", state().getLastConfirmation().getReceiveNo());
+        assertNotNull(state().getLastSubmission());
+        assertEquals("LY-001", state().getLastSubmission().getReceiveNo());
         assertEquals("管理员", state().getOperatorName());
         assertEquals("2026-07-24 10:20:30", state().getServerTime());
     }
 
     @Test
-    public void unknownConfirmationResultPreservesBatchAndWarnsAgainstRetry() {
+    public void unknownSubmissionResultPreservesBatchAndWarnsAgainstRetry() {
         readyWithRecipient();
         addAsset(12L, "ZC-002");
 
-        viewModel.confirm(null);
-        receiveRepository.failConfirm(TestErrors.network());
+        viewModel.submit(null);
+        receiveRepository.failSubmit(TestErrors.network());
 
         assertEquals(1, state().getAssets().size());
         assertTrue(state().getErrorMessage().contains("勿直接重复提交"));
-        assertNull(state().getLastConfirmation());
+        assertNull(state().getLastSubmission());
     }
 
     @Test
@@ -217,12 +217,19 @@ public class ReceiveViewModelTest {
                         "IN_STOCK", "在库", "ELIGIBLE", null)));
     }
 
-    private PdaReceiveBatchConfirmDto confirmation(Long assetId) {
-        PdaReceiveBatchConfirmDto.Row row = new PdaReceiveBatchConfirmDto.Row(assetId,
-                "ZC-002", "手持终端", "SUCCESS");
-        return new PdaReceiveBatchConfirmDto(91L, "LY-001", 7L, "张三", 9L,
-                "资产部", "管理员", "2026-07-24 10:20:30", "COMPLETED",
-                1, 1, Collections.singletonList(row));
+    private PdaReceiveBatchSubmitDto submission(Long assetId) {
+        com.google.gson.Gson gson = new com.google.gson.Gson();
+        return gson.fromJson("{\"orderId\":91,\"receiveNo\":\"LY-001\","
+                + "\"receiveUserId\":7,\"receiveUserName\":\"张三\","
+                + "\"receiveDeptId\":9,\"receiveDeptName\":\"资产部\","
+                + "\"applicantUserId\":7,\"applicantUserName\":\"管理员\","
+                + "\"submitTime\":\"2026-07-24 10:20:30\","
+                + "\"orderStatus\":\"PENDING_CONFIRM\",\"taskId\":701,"
+                + "\"taskRound\":1,\"taskStatus\":\"PENDING\","
+                + "\"totalCount\":1,\"successCount\":1,\"rows\":[{"
+                + "\"assetId\":" + assetId + ",\"assetCode\":\"ZC-002\","
+                + "\"assetName\":\"手持终端\",\"status\":\"SUCCESS\"}]}",
+                PdaReceiveBatchSubmitDto.class);
     }
 
     private ReceiveUiState state() {

@@ -3,7 +3,7 @@ package com.ruoyi.asset.pda.data.repository;
 import com.ruoyi.asset.pda.data.dto.PdaAssetIdentifyRequest;
 import com.ruoyi.asset.pda.data.dto.PdaMasterDataDto;
 import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchCheckDto;
-import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchConfirmDto;
+import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchSubmitDto;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface ReceiveRepository {
             List<PdaAssetIdentifyRequest> identifiers,
             RepositoryCallback<PdaReceiveBatchCheckDto> callback);
 
-    RequestHandle batchConfirm(Long receiveUserId, Long receiveDeptId,
+    RequestHandle batchSubmit(Long receiveUserId, Long receiveDeptId,
             List<PdaAssetIdentifyRequest> identifiers, String remark,
-            RepositoryCallback<PdaReceiveBatchConfirmDto> callback);
+            RepositoryCallback<PdaReceiveBatchSubmitDto> callback);
 }

@@ -3,7 +3,7 @@ package com.ruoyi.asset.pda.feature.receive;
 import com.ruoyi.asset.pda.data.dto.PdaAssetIdentifyRequest;
 import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchCheckDto;
 
-/** 领用页的已预检资产；保留原标识，确认时不依赖客户端推断的资产主键。 */
+/** 领用页的已预检资产；保留原标识，提交时不依赖客户端推断的资产主键。 */
 public final class ReceiveAssetItem {
     public enum Source {
         RFID,

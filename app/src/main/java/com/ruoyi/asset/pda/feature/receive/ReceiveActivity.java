@@ -20,12 +20,12 @@ import com.ruoyi.asset.pda.app.AppContainer;
 import com.ruoyi.asset.pda.core.uhf.ScanKeyDispatcher;
 import com.ruoyi.asset.pda.core.ui.SessionAwareActivity;
 import com.ruoyi.asset.pda.data.dto.PdaMasterDataDto;
-import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchConfirmDto;
+import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchSubmitDto;
 import com.ruoyi.asset.pda.databinding.ActivityReceiveBinding;
 
-/** 工业 PDA 领用页：一位领用人对应一批资产，最终由服务端事务确认。 */
+/** 工业 PDA 领用页：一位领用人对应一批资产，最终由服务端审批通过后确认。 */
 public final class ReceiveActivity extends SessionAwareActivity {
-    public static final String EXTRA_CAN_CONFIRM = "receive_can_confirm";
+    public static final String EXTRA_CAN_SUBMIT = "receive_can_submit";
     static final String EXTRA_SKIP_INITIAL_LOAD = "receive_skip_initial_load";
 
     private ActivityReceiveBinding binding;
@@ -49,11 +49,11 @@ public final class ReceiveActivity extends SessionAwareActivity {
         if (!initializeSessionGuard(container.getSessionManager())) {
             return;
         }
-        boolean canConfirm = getIntent().getBooleanExtra(EXTRA_CAN_CONFIRM, false);
+        boolean canSubmit = getIntent().getBooleanExtra(EXTRA_CAN_SUBMIT, false);
         viewModel = new ViewModelProvider(this,
                 new ReceiveViewModel.Factory(container.getReceiveRepository(),
                         container.getCommonRepository(), container.getUhfScanner(),
-                        canConfirm))
+                        canSubmit))
                 .get(ReceiveViewModel.class);
         assetAdapter = new ReceiveAssetAdapter(new ReceiveAssetAdapter.Listener() {
             @Override
@@ -96,7 +96,7 @@ public final class ReceiveActivity extends SessionAwareActivity {
                 view -> viewModel.retryInitialization());
         binding.receiveClearButton.setOnClickListener(view -> runAfterClearConfirmation(
                 getString(R.string.receive_clear_message), viewModel::clearBatch));
-        binding.receiveConfirmButton.setOnClickListener(view -> showConfirmDialog());
+        binding.receiveSubmitButton.setOnClickListener(view -> showSubmitDialog());
         getOnBackPressedDispatcher().addCallback(this,
                 new OnBackPressedCallback(true) {
                     @Override
@@ -159,9 +159,9 @@ public final class ReceiveActivity extends SessionAwareActivity {
         setVisible(binding.receiveEmptyText, state.getAssets().isEmpty());
         binding.receiveListTitle.setText(getString(
                 R.string.receive_list_count, state.getAssets().size()));
-        int operatorTimeFormat = state.getLastConfirmation() == null
+        int operatorTimeFormat = state.getLastSubmission() == null
                 ? R.string.receive_operator_time_format
-                : R.string.receive_operator_confirmed_time_format;
+                : R.string.receive_operator_submitted_time_format;
         binding.receiveOperatorTime.setText(getString(operatorTimeFormat,
                 value(state.getOperatorName()), value(state.getServerTime())));
         binding.receiveWorkSummary.setText(getString(
@@ -187,13 +187,13 @@ public final class ReceiveActivity extends SessionAwareActivity {
                 && !busy && !state.isScanning());
         binding.receiveClearButton.setEnabled(state.hasPendingWork()
                 && !busy && !state.isScanning());
-        binding.receiveConfirmButton.setEnabled(state.isCanConfirm()
+        binding.receiveSubmitButton.setEnabled(state.isCanSubmit()
                 && recipientSelected && !state.getAssets().isEmpty()
                 && !busy && !state.isScanning());
-        binding.receiveConfirmButton.setText(
-                state.getOperation() == ReceiveUiState.Operation.CONFIRM
-                        ? getString(R.string.receive_confirming)
-                        : getString(R.string.receive_confirm_count,
+        binding.receiveSubmitButton.setText(
+                state.getOperation() == ReceiveUiState.Operation.SUBMIT
+                        ? getString(R.string.receive_submitting)
+                        : getString(R.string.receive_submit_count,
                                 state.getAssets().size()));
 
         setVisible(binding.receiveProgress, state.isInitialLoading() || busy);
@@ -206,8 +206,8 @@ public final class ReceiveActivity extends SessionAwareActivity {
         setVisible(binding.receiveIssueButton, !state.getIssues().isEmpty());
         binding.receiveIssueButton.setText(getString(
                 R.string.receive_issue_count, state.getIssues().size()));
-        setVisible(binding.receivePermissionHint, !state.isCanConfirm());
-        renderConfirmation(state.getLastConfirmation());
+        setVisible(binding.receivePermissionHint, !state.isCanSubmit());
+        renderSubmission(state.getLastSubmission());
     }
 
     private void renderRecipient(PdaMasterDataDto recipient) {
@@ -258,15 +258,16 @@ public final class ReceiveActivity extends SessionAwareActivity {
         return getString(R.string.receive_scan_start);
     }
 
-    private void renderConfirmation(PdaReceiveBatchConfirmDto result) {
+    private void renderSubmission(PdaReceiveBatchSubmitDto result) {
         setVisible(binding.receiveResultText, result != null);
         if (result == null) {
             return;
         }
-        binding.receiveResultText.setText(getString(R.string.receive_result_format,
+        binding.receiveResultText.setText(getString(R.string.receive_submit_result_format,
                 value(result.getReceiveNo()), value(result.getReceiveUserName()),
                 value(result.getReceiveDeptName()), result.getSuccessCount(),
-                value(result.getConfirmUserName()), value(result.getConfirmTime())));
+                value(result.getApplicantUserName()), value(result.getSubmitTime()),
+                value(result.getTaskId() == null ? null : String.valueOf(result.getTaskId()))));
     }
 
     private void showAssetDetails(ReceiveAssetItem item) {
@@ -329,20 +330,20 @@ public final class ReceiveActivity extends SessionAwareActivity {
                 .show();
     }
 
-    private void showConfirmDialog() {
+    private void showSubmitDialog() {
         ReceiveUiState state = currentState();
         PdaMasterDataDto recipient = state == null ? null : state.getSelectedRecipient();
         if (state == null || recipient == null || state.getAssets().isEmpty()) {
             return;
         }
         new AlertDialog.Builder(this)
-                .setTitle(R.string.receive_confirm_title)
-                .setMessage(getString(R.string.receive_confirm_message,
+                .setTitle(R.string.receive_submit_title)
+                .setMessage(getString(R.string.receive_submit_message,
                         value(recipient.getName()), value(recipient.getParentName()),
                         state.getAssets().size()))
                 .setNegativeButton(R.string.common_cancel, null)
-                .setPositiveButton(R.string.receive_confirm,
-                        (dialog, which) -> viewModel.confirm(textOfRemark()))
+                .setPositiveButton(R.string.receive_submit,
+                        (dialog, which) -> viewModel.submit(textOfRemark()))
                 .show();
     }
 

@@ -6,8 +6,8 @@ import com.ruoyi.asset.pda.data.dto.PdaAssetIdentifyRequest;
 import com.ruoyi.asset.pda.data.dto.PdaMasterDataDto;
 import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchCheckDto;
 import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchCheckRequestDto;
-import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchConfirmDto;
-import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchConfirmRequestDto;
+import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchSubmitDto;
+import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchSubmitRequestDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,9 +64,9 @@ public final class DefaultReceiveRepository implements ReceiveRepository {
     }
 
     @Override
-    public RequestHandle batchConfirm(Long receiveUserId, Long receiveDeptId,
+    public RequestHandle batchSubmit(Long receiveUserId, Long receiveDeptId,
             List<PdaAssetIdentifyRequest> identifiers, String remark,
-            RepositoryCallback<PdaReceiveBatchConfirmDto> callback) {
+            RepositoryCallback<PdaReceiveBatchSubmitDto> callback) {
         List<PdaAssetIdentifyRequest> checkedIdentifiers = normalizeIdentifiers(identifiers);
         String checkedRemark = trim(remark);
         if (!check(callback, validRecipient(receiveUserId, receiveDeptId)
@@ -75,8 +75,8 @@ public final class DefaultReceiveRepository implements ReceiveRepository {
                 || checkedRemark.length() <= MAX_REMARK_LENGTH))) {
             return RequestHandle.NONE;
         }
-        return callExecutor.execute(apiService.receiveBatchConfirm(
-                new PdaReceiveBatchConfirmRequestDto(receiveUserId, receiveDeptId,
+        return callExecutor.execute(apiService.receiveBatchSubmit(
+                new PdaReceiveBatchSubmitRequestDto(receiveUserId, receiveDeptId,
                         checkedIdentifiers, checkedRemark)), true, callback);
     }
 

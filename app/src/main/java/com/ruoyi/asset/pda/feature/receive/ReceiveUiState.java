@@ -2,7 +2,7 @@ package com.ruoyi.asset.pda.feature.receive;
 
 import com.ruoyi.asset.pda.core.uhf.UhfScanState;
 import com.ruoyi.asset.pda.data.dto.PdaMasterDataDto;
-import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchConfirmDto;
+import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchSubmitDto;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,13 +14,13 @@ public final class ReceiveUiState {
         NONE,
         PRECHECK,
         ASSET_CODE,
-        CONFIRM
+        SUBMIT
     }
 
     private final boolean initialLoading;
     private final boolean initialReady;
     private final boolean initialLoadFailed;
-    private final boolean canConfirm;
+    private final boolean canSubmit;
     private final Operation operation;
     private final UhfScanState scanState;
     private final String operatorName;
@@ -33,22 +33,22 @@ public final class ReceiveUiState {
     private final String latestEpc;
     private final String infoMessage;
     private final String errorMessage;
-    private final PdaReceiveBatchConfirmDto lastConfirmation;
+    private final PdaReceiveBatchSubmitDto lastSubmission;
     private final int assetCodeClearVersion;
     private final int batchResetVersion;
 
     public ReceiveUiState(boolean initialLoading, boolean initialReady,
-            boolean initialLoadFailed, boolean canConfirm, Operation operation,
+            boolean initialLoadFailed, boolean canSubmit, Operation operation,
             UhfScanState scanState, String operatorName, String serverTime,
             PdaMasterDataDto selectedRecipient, List<ReceiveAssetItem> assets,
             List<ReceiveIssueItem> issues, int rawEpcCount,
             int duplicateReadCount, String latestEpc, String infoMessage,
-            String errorMessage, PdaReceiveBatchConfirmDto lastConfirmation,
+            String errorMessage, PdaReceiveBatchSubmitDto lastSubmission,
             int assetCodeClearVersion, int batchResetVersion) {
         this.initialLoading = initialLoading;
         this.initialReady = initialReady;
         this.initialLoadFailed = initialLoadFailed;
-        this.canConfirm = canConfirm;
+        this.canSubmit = canSubmit;
         this.operation = operation == null ? Operation.NONE : operation;
         this.scanState = scanState == null ? UhfScanState.IDLE : scanState;
         this.operatorName = operatorName;
@@ -61,7 +61,7 @@ public final class ReceiveUiState {
         this.latestEpc = latestEpc;
         this.infoMessage = infoMessage;
         this.errorMessage = errorMessage;
-        this.lastConfirmation = lastConfirmation;
+        this.lastSubmission = lastSubmission;
         this.assetCodeClearVersion = assetCodeClearVersion;
         this.batchResetVersion = batchResetVersion;
     }
@@ -83,8 +83,8 @@ public final class ReceiveUiState {
         return initialLoadFailed;
     }
 
-    public boolean isCanConfirm() {
-        return canConfirm;
+    public boolean isCanSubmit() {
+        return canSubmit;
     }
 
     public Operation getOperation() {
@@ -144,8 +144,8 @@ public final class ReceiveUiState {
         return errorMessage;
     }
 
-    public PdaReceiveBatchConfirmDto getLastConfirmation() {
-        return lastConfirmation;
+    public PdaReceiveBatchSubmitDto getLastSubmission() {
+        return lastSubmission;
     }
 
     public int getAssetCodeClearVersion() {

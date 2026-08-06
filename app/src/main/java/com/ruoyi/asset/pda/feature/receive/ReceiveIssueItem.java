@@ -2,7 +2,7 @@ package com.ruoyi.asset.pda.feature.receive;
 
 import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchCheckDto;
 
-/** 现场必须可追溯的预检异常；不把异常标识带入最终确认请求。 */
+/** 现场必须可追溯的预检异常；不把异常标识带入最终审批提交请求。 */
 public final class ReceiveIssueItem {
     private final String identifyType;
     private final String identifyValue;

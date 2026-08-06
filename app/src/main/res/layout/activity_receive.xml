@@ -29,19 +29,9 @@
         android:paddingBottom="@dimen/pda_item_spacing">
 
         <TextView
-            android:id="@+id/receiveSubtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/receive_subtitle"
-            android:textColor="@color/pda_primary"
-            android:textSize="@dimen/pda_caption_size"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/receiveOperatorTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/pda_text_secondary"
@@ -263,7 +253,7 @@
             android:layout_marginTop="@dimen/pda_small_spacing"
             android:background="@color/pda_pending_soft"
             android:padding="@dimen/pda_small_spacing"
-            android:text="@string/receive_no_confirm_permission"
+            android:text="@string/receive_no_submit_permission"
             android:textColor="@color/pda_pending"
             android:textSize="@dimen/pda_utility_size"
             android:visibility="gone" />
@@ -360,11 +350,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/receiveConfirmButton"
+            android:id="@+id/receiveSubmitButton"
             style="@style/PdaPrimaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/pda_small_spacing"
-            android:text="@string/receive_confirm" />
+            android:text="@string/receive_submit" />
     </LinearLayout>
 </LinearLayout>

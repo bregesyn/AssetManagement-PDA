@@ -4,7 +4,7 @@ import com.ruoyi.asset.pda.core.network.ApiErrorMapper;
 import com.ruoyi.asset.pda.data.dto.PdaAssetIdentifyRequest;
 import com.ruoyi.asset.pda.data.dto.PdaMasterDataDto;
 import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchCheckDto;
-import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchConfirmDto;
+import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchSubmitDto;
 import com.ruoyi.asset.pda.data.repository.ReceiveRepository;
 import com.ruoyi.asset.pda.data.repository.RepositoryCallback;
 import com.ruoyi.asset.pda.data.repository.RequestHandle;
@@ -16,7 +16,7 @@ import java.util.List;
 public final class FakeReceiveRepository implements ReceiveRepository {
     private RepositoryCallback<List<PdaMasterDataDto>> recipientsCallback;
     private RepositoryCallback<PdaReceiveBatchCheckDto> batchCheckCallback;
-    private RepositoryCallback<PdaReceiveBatchConfirmDto> confirmCallback;
+    private RepositoryCallback<PdaReceiveBatchSubmitDto> submitCallback;
     private String lastKeyword;
     private Long lastReceiveUserId;
     private Long lastReceiveDeptId;
@@ -24,7 +24,7 @@ public final class FakeReceiveRepository implements ReceiveRepository {
     private String lastRemark;
     private int recipientsCount;
     private int batchCheckCount;
-    private int confirmCount;
+    private int submitCount;
 
     @Override
     public RequestHandle searchRecipients(String keyword,
@@ -48,15 +48,15 @@ public final class FakeReceiveRepository implements ReceiveRepository {
     }
 
     @Override
-    public RequestHandle batchConfirm(Long receiveUserId, Long receiveDeptId,
+    public RequestHandle batchSubmit(Long receiveUserId, Long receiveDeptId,
             List<PdaAssetIdentifyRequest> identifiers, String remark,
-            RepositoryCallback<PdaReceiveBatchConfirmDto> callback) {
-        confirmCount++;
+            RepositoryCallback<PdaReceiveBatchSubmitDto> callback) {
+        submitCount++;
         lastReceiveUserId = receiveUserId;
         lastReceiveDeptId = receiveDeptId;
         lastIdentifiers = copy(identifiers);
         lastRemark = remark;
-        confirmCallback = callback;
+        submitCallback = callback;
         return RequestHandle.NONE;
     }
 
@@ -76,12 +76,12 @@ public final class FakeReceiveRepository implements ReceiveRepository {
         batchCheckCallback.onError(error);
     }
 
-    public void completeConfirm(PdaReceiveBatchConfirmDto value) {
-        confirmCallback.onSuccess(value);
+    public void completeSubmit(PdaReceiveBatchSubmitDto value) {
+        submitCallback.onSuccess(value);
     }
 
-    public void failConfirm(ApiErrorMapper.ApiError error) {
-        confirmCallback.onError(error);
+    public void failSubmit(ApiErrorMapper.ApiError error) {
+        submitCallback.onError(error);
     }
 
     public String getLastKeyword() {
@@ -112,8 +112,8 @@ public final class FakeReceiveRepository implements ReceiveRepository {
         return batchCheckCount;
     }
 
-    public int getConfirmCount() {
-        return confirmCount;
+    public int getSubmitCount() {
+        return submitCount;
     }
 
     private List<PdaAssetIdentifyRequest> copy(

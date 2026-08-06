@@ -16,7 +16,7 @@ import com.ruoyi.asset.pda.data.dto.PdaAssetIdentifyRequest;
 import com.ruoyi.asset.pda.data.dto.PdaBootstrapDto;
 import com.ruoyi.asset.pda.data.dto.PdaMasterDataDto;
 import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchCheckDto;
-import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchConfirmDto;
+import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchSubmitDto;
 import com.ruoyi.asset.pda.data.dto.PdaUserDto;
 import com.ruoyi.asset.pda.data.repository.CommonRepository;
 import com.ruoyi.asset.pda.data.repository.DefaultReceiveRepository;
@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * C6200 现场领用的唯一业务状态持有者：先选人，后采集，停止后预检，再整批确认。
+ * C6200 现场领用的唯一业务状态持有者：先选人，后采集，停止后预检，再整批提交审批。
  */
 public final class ReceiveViewModel extends BaseUhfViewModel {
     private static final String IDENTIFY_TYPE_EPC = "EPC";
@@ -41,7 +41,7 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
 
     private final ReceiveRepository receiveRepository;
     private final CommonRepository commonRepository;
-    private final boolean canConfirm;
+    private final boolean canSubmit;
     private final MutableLiveData<ReceiveUiState> uiState = new MutableLiveData<>();
     private final Map<String, UhfTagReading> readingsByEpc = new LinkedHashMap<>();
     private final Map<Long, ReceiveAssetItem> assetsById = new LinkedHashMap<>();
@@ -63,21 +63,21 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
     private String latestEpc;
     private String infoMessage;
     private String errorMessage;
-    private PdaReceiveBatchConfirmDto lastConfirmation;
+    private PdaReceiveBatchSubmitDto lastSubmission;
     private int assetCodeClearVersion;
     private int batchResetVersion;
     private long lastTagPublishedAt;
 
     public ReceiveViewModel(ReceiveRepository receiveRepository,
             CommonRepository commonRepository, UhfScanner scanner,
-            boolean canConfirm) {
+            boolean canSubmit) {
         super(scanner);
         if (receiveRepository == null || commonRepository == null) {
             throw new IllegalArgumentException("领用 Repository 不能为空");
         }
         this.receiveRepository = receiveRepository;
         this.commonRepository = commonRepository;
-        this.canConfirm = canConfirm;
+        this.canSubmit = canSubmit;
         publish();
     }
 
@@ -186,7 +186,7 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
             setError("当前批次已达到 100 件上限");
             return;
         }
-        lastConfirmation = null;
+        lastSubmission = null;
         clearMessages();
         startScanning(UhfScanMode.BATCH);
     }
@@ -236,7 +236,7 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
                     "该资产编码已在当前领用清单中");
             return;
         }
-        lastConfirmation = null;
+        lastSubmission = null;
         precheck(singleIdentifier(IDENTIFY_TYPE_ASSET_CODE, checkedCode),
                 ReceiveUiState.Operation.ASSET_CODE);
     }
@@ -310,7 +310,7 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
         PdaAssetIdentifyRequest identifier = removed.getIdentifier();
         acceptedIdentifierKeys.remove(identifierKey(identifier.getIdentifyType(),
                 identifier.getIdentifyValue()));
-        lastConfirmation = null;
+        lastSubmission = null;
         infoMessage = "已从本批次移除 " + removed.getAssetCode();
         errorMessage = null;
         publish();
@@ -327,13 +327,13 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
         publish();
     }
 
-    public void confirm(String remark) {
+    public void submit(String remark) {
         if (!readyForInput() || operation != ReceiveUiState.Operation.NONE
                 || isScanning()) {
             return;
         }
-        if (!canConfirm) {
-            setError("当前账号没有领用确认权限");
+        if (!canSubmit) {
+            setError("当前账号没有提交领用申请权限");
             return;
         }
         if (!hasRecipient()) {
@@ -356,33 +356,33 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
         }
         cancelOperationRequest();
         int version = ++operationVersion;
-        operation = ReceiveUiState.Operation.CONFIRM;
+        operation = ReceiveUiState.Operation.SUBMIT;
         clearMessages();
         publish();
-        RequestHandle request = receiveRepository.batchConfirm(selectedRecipient.getId(),
+        RequestHandle request = receiveRepository.batchSubmit(selectedRecipient.getId(),
                 selectedRecipient.getParentId(), submitted, checkedRemark,
-                new RepositoryCallback<PdaReceiveBatchConfirmDto>() {
+                new RepositoryCallback<PdaReceiveBatchSubmitDto>() {
                     @Override
-                    public void onSuccess(PdaReceiveBatchConfirmDto data) {
+                    public void onSuccess(PdaReceiveBatchSubmitDto data) {
                         if (version != operationVersion) {
                             return;
                         }
-                        if (!validConfirmation(data, submitted)) {
+                        if (!validSubmission(data, submitted)) {
                             operation = ReceiveUiState.Operation.NONE;
-                            errorMessage = "确认响应与提交资产不一致，请到后台核对领用单";
+                            errorMessage = "提交响应与资产清单不一致，请到后台核对领用单";
                             publish();
                             return;
                         }
                         clearWorkingBatch(false);
                         operation = ReceiveUiState.Operation.NONE;
-                        lastConfirmation = data;
-                        if (hasText(data.getConfirmUserName())) {
-                            operatorName = data.getConfirmUserName().trim();
+                        lastSubmission = data;
+                        if (hasText(data.getApplicantUserName())) {
+                            operatorName = data.getApplicantUserName().trim();
                         }
-                        if (hasText(data.getConfirmTime())) {
-                            serverTime = data.getConfirmTime().trim();
+                        if (hasText(data.getSubmitTime())) {
+                            serverTime = data.getSubmitTime().trim();
                         }
-                        infoMessage = "领用成功：" + data.getReceiveNo();
+                        infoMessage = "申请已提交，等待审批：" + data.getReceiveNo();
                         errorMessage = null;
                         publish();
                     }
@@ -391,7 +391,7 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
                     public void onError(ApiErrorMapper.ApiError error) {
                         if (version == operationVersion) {
                             operation = ReceiveUiState.Operation.NONE;
-                            String base = messageOf(error, "领用确认失败");
+                            String base = messageOf(error, "领用申请提交失败");
                             if (error != null && (error.getKind() == ApiErrorMapper.Kind.NETWORK
                                     || error.getKind() == ApiErrorMapper.Kind.TIMEOUT
                                     || error.getKind() == ApiErrorMapper.Kind.PROTOCOL
@@ -404,7 +404,7 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
                     }
                 });
         if (version == operationVersion
-                && operation == ReceiveUiState.Operation.CONFIRM) {
+                && operation == ReceiveUiState.Operation.SUBMIT) {
             operationRequest = request;
         }
     }
@@ -436,7 +436,7 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
                 issuesByKey.put(issueKey(row), new ReceiveIssueItem(row));
             }
         }
-        lastConfirmation = null;
+        lastSubmission = null;
         return addedCount;
     }
 
@@ -490,14 +490,18 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
                 && hasText(row.getAssetCode()) && hasText(row.getAssetName());
     }
 
-    private boolean validConfirmation(PdaReceiveBatchConfirmDto data,
+    private boolean validSubmission(PdaReceiveBatchSubmitDto data,
             List<PdaAssetIdentifyRequest> submitted) {
         if (data == null || data.getOrderId() == null || data.getOrderId() < 1L
                 || !hasText(data.getReceiveNo())
                 || !hasText(data.getReceiveUserName())
                 || !hasText(data.getReceiveDeptName())
-                || !hasText(data.getConfirmUserName())
-                || !hasText(data.getConfirmTime())
+                || !hasText(data.getApplicantUserName())
+                || !hasText(data.getSubmitTime())
+                || data.getTaskId() == null || data.getTaskId() < 1L
+                || data.getTaskRound() == null || data.getTaskRound() < 1
+                || !"PENDING".equals(data.getTaskStatus())
+                || !"PENDING_CONFIRM".equals(data.getOrderStatus())
                 || data.getReceiveUserId() == null
                 || !data.getReceiveUserId().equals(selectedRecipient.getId())
                 || data.getReceiveDeptId() == null
@@ -510,7 +514,7 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
         }
         Set<Long> expected = new LinkedHashSet<>(assetsById.keySet());
         Set<Long> returned = new HashSet<>();
-        for (PdaReceiveBatchConfirmDto.Row row : data.getRows()) {
+        for (PdaReceiveBatchSubmitDto.Row row : data.getRows()) {
             if (row == null || row.getAssetId() == null
                     || !"SUCCESS".equals(row.getStatus())
                     || !expected.contains(row.getAssetId())
@@ -521,7 +525,7 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
         return returned.equals(expected);
     }
 
-    private void clearWorkingBatch(boolean clearConfirmation) {
+    private void clearWorkingBatch(boolean clearSubmission) {
         readingsByEpc.clear();
         assetsById.clear();
         acceptedIdentifierKeys.clear();
@@ -530,8 +534,8 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
         latestEpc = null;
         lastTagPublishedAt = 0L;
         batchResetVersion++;
-        if (clearConfirmation) {
-            lastConfirmation = null;
+        if (clearSubmission) {
+            lastSubmission = null;
         }
     }
 
@@ -603,12 +607,12 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
     private void publish() {
         boolean initialLoading = !initialFailed && !bootstrapLoaded;
         uiState.setValue(new ReceiveUiState(initialLoading,
-                !initialFailed && bootstrapLoaded, initialFailed, canConfirm,
+                !initialFailed && bootstrapLoaded, initialFailed, canSubmit,
                 operation, getCurrentScanState(), operatorName, serverTime,
                 selectedRecipient, new ArrayList<>(assetsById.values()),
                 new ArrayList<>(issuesByKey.values()), readingsByEpc.size(),
                 duplicateReadCount, latestEpc, infoMessage, errorMessage,
-                lastConfirmation, assetCodeClearVersion, batchResetVersion));
+                lastSubmission, assetCodeClearVersion, batchResetVersion));
     }
 
     @Override
@@ -669,15 +673,15 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
         private final ReceiveRepository receiveRepository;
         private final CommonRepository commonRepository;
         private final UhfScanner scanner;
-        private final boolean canConfirm;
+        private final boolean canSubmit;
 
         public Factory(ReceiveRepository receiveRepository,
                 CommonRepository commonRepository, UhfScanner scanner,
-                boolean canConfirm) {
+                boolean canSubmit) {
             this.receiveRepository = receiveRepository;
             this.commonRepository = commonRepository;
             this.scanner = scanner;
-            this.canConfirm = canConfirm;
+            this.canSubmit = canSubmit;
         }
 
         @NonNull
@@ -688,7 +692,7 @@ public final class ReceiveViewModel extends BaseUhfViewModel {
                 throw new IllegalArgumentException("不支持的 ViewModel 类型");
             }
             return (T) new ReceiveViewModel(receiveRepository, commonRepository,
-                    scanner, canConfirm);
+                    scanner, canSubmit);
         }
     }
 }

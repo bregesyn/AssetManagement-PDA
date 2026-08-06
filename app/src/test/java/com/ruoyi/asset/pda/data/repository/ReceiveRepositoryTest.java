@@ -16,7 +16,7 @@ import com.ruoyi.asset.pda.data.api.PdaApiService;
 import com.ruoyi.asset.pda.data.dto.PdaAssetIdentifyRequest;
 import com.ruoyi.asset.pda.data.dto.PdaMasterDataDto;
 import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchCheckDto;
-import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchConfirmDto;
+import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchSubmitDto;
 
 import org.junit.After;
 import org.junit.Before;
@@ -102,25 +102,28 @@ public class ReceiveRepositoryTest {
     }
 
     @Test
-    public void confirmSendsOnlyEligibleIdentifiersAndRemark() throws Exception {
+    public void submitSendsOnlyEligibleIdentifiersAndRemark() throws Exception {
         server.enqueue(json("{\"code\":0,\"data\":{\"orderId\":91,"
                 + "\"receiveNo\":\"LY-001\",\"receiveUserId\":7,"
                 + "\"receiveUserName\":\"张三\",\"receiveDeptId\":9,"
-                + "\"receiveDeptName\":\"资产部\",\"confirmUserName\":\"管理员\","
-                + "\"confirmTime\":\"2026-07-24 10:20:30\","
-                + "\"orderStatus\":\"COMPLETED\",\"totalCount\":1,"
+                + "\"receiveDeptName\":\"资产部\",\"applicantUserId\":7,"
+                + "\"applicantUserName\":\"管理员\","
+                + "\"submitTime\":\"2026-07-24 10:20:30\","
+                + "\"orderStatus\":\"PENDING_CONFIRM\",\"taskId\":7001,"
+                + "\"taskRound\":1,\"taskStatus\":\"PENDING\",\"totalCount\":1,"
                 + "\"successCount\":1,\"rows\":[{\"assetId\":11,"
                 + "\"assetCode\":\"ZC-001\",\"assetName\":\"手持终端\","
                 + "\"status\":\"SUCCESS\"}]}}"));
 
-        Awaited<PdaReceiveBatchConfirmDto> result = await(callback ->
-                repository.batchConfirm(7L, 9L, Collections.singletonList(
+        Awaited<PdaReceiveBatchSubmitDto> result = await(callback ->
+                repository.batchSubmit(7L, 9L, Collections.singletonList(
                         new PdaAssetIdentifyRequest("ASSET_CODE", " ZC-001 ")),
                         " 现场交接 ", callback));
 
         assertNull(result.error);
-        assertEquals("2026-07-24 10:20:30", result.data.getConfirmTime());
-        RecordedRequest request = takeRequest("POST", "/asset/pda/receive/batch-confirm");
+        assertEquals("2026-07-24 10:20:30", result.data.getSubmitTime());
+        assertEquals("PENDING", result.data.getTaskStatus());
+        RecordedRequest request = takeRequest("POST", "/asset/pda/receive/batch-submit");
         JsonObject body = body(request);
         assertEquals(7L, body.get("receiveUserId").getAsLong());
         assertEquals(9L, body.get("receiveDeptId").getAsLong());
@@ -144,8 +147,8 @@ public class ReceiveRepositoryTest {
                         new PdaAssetIdentifyRequest("EPC", "E2000G")), callback));
         assertNotNull(invalidEpc.error);
 
-        Awaited<PdaReceiveBatchConfirmDto> remarkTooLong = await(callback ->
-                repository.batchConfirm(7L, 9L, Collections.singletonList(
+        Awaited<PdaReceiveBatchSubmitDto> remarkTooLong = await(callback ->
+                repository.batchSubmit(7L, 9L, Collections.singletonList(
                         new PdaAssetIdentifyRequest("ASSET_CODE", "ZC-001")),
                         String.join("", Collections.nCopies(501, "备")), callback));
         assertNotNull(remarkTooLong.error);
