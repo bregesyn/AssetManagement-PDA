@@ -16,6 +16,28 @@
         android:theme="@style/Theme.Assetmanagementpda"
         tools:targetApi="31">
         <activity
+            android:name=".feature.repair.RepairerPickerActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".feature.repair.RepairFinishActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".feature.repair.RepairStartActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".feature.repair.RepairDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".feature.repair.RepairSubmitActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".feature.repair.RepairWorkbenchActivity"
+            android:exported="false" />
+        <activity
             android:name=".feature.borrow.BorrowerPickerActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />

@@ -15,6 +15,10 @@ public final class PdaPermissions {
     public static final String BORROW_ISSUE_SUBMIT = "asset:pda:borrow:issue:submit";
     public static final String BORROW_RETURN_SCAN = "asset:pda:borrow:return:scan";
     public static final String BORROW_RETURN_SUBMIT = "asset:pda:borrow:return:submit";
+    public static final String REPAIR_LIST = "asset:pda:repair:list";
+    public static final String REPAIR_SUBMIT = "asset:pda:repair:submit";
+    public static final String REPAIR_START = "asset:pda:repair:start";
+    public static final String REPAIR_FINISH = "asset:pda:repair:finish";
     public static final String INVENTORY_LIST = "asset:pda:inventory:list";
     public static final String INVENTORY_SUBMIT = "asset:pda:inventory:submit";
 

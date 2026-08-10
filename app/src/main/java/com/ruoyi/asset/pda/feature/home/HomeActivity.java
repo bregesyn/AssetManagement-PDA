@@ -18,6 +18,7 @@ import com.ruoyi.asset.pda.feature.inbound.InboundActivity;
 import com.ruoyi.asset.pda.feature.inventory.InventoryTaskListActivity;
 import com.ruoyi.asset.pda.feature.login.LoginActivity;
 import com.ruoyi.asset.pda.feature.receive.ReceiveActivity;
+import com.ruoyi.asset.pda.feature.repair.RepairWorkbenchActivity;
 import com.ruoyi.asset.pda.feature.borrow.BorrowReturnActivity;
 import com.ruoyi.asset.pda.feature.rfid.RfidBindActivity;
 import com.ruoyi.asset.pda.feature.rfid.RfidTagBatchActivity;
@@ -56,6 +57,7 @@ public final class HomeActivity extends AppCompatActivity {
         binding.inboundCard.setOnClickListener(view -> openInbound());
         binding.receiveCard.setOnClickListener(view -> openReceive());
         binding.borrowCard.setOnClickListener(view -> openBorrow());
+        binding.repairCard.setOnClickListener(view -> openRepair());
         binding.inventoryCard.setOnClickListener(view -> openInventoryTasks(false));
         viewModel.getUiState().observe(this, this::render);
         if (sessionManager.getState() != SessionManager.State.VALID) {
@@ -125,6 +127,7 @@ public final class HomeActivity extends AppCompatActivity {
         setVisible(binding.inboundCard, state.isShowInbound());
         setVisible(binding.receiveCard, state.isShowReceive());
         setVisible(binding.borrowCard, state.isShowBorrow());
+        setVisible(binding.repairCard, state.isShowRepair());
         setVisible(binding.inventoryCard, state.isShowInventory());
         binding.inventoryCard.setAlpha(state.isShowInventory() ? 1.0f : 0.72f);
         binding.inventoryCard.setEnabled(state.isShowInventory());
@@ -215,6 +218,23 @@ public final class HomeActivity extends AppCompatActivity {
                 state != null && state.isShowBorrowReturn());
         intent.putExtra(BorrowReturnActivity.EXTRA_CAN_RETURN_SUBMIT,
                 state != null && state.isShowBorrowReturnSubmit());
+        startActivity(intent);
+    }
+
+    private void openRepair() {
+        if (sessionManager.getState() != SessionManager.State.VALID) {
+            return;
+        }
+        Intent intent = new Intent(this, RepairWorkbenchActivity.class);
+        HomeUiState state = viewModel.getUiState().getValue();
+        intent.putExtra(RepairWorkbenchActivity.EXTRA_CAN_LIST,
+                state != null && state.isShowRepairList());
+        intent.putExtra(RepairWorkbenchActivity.EXTRA_CAN_SUBMIT,
+                state != null && state.isShowRepairSubmit());
+        intent.putExtra(RepairWorkbenchActivity.EXTRA_CAN_START,
+                state != null && state.isShowRepairStart());
+        intent.putExtra(RepairWorkbenchActivity.EXTRA_CAN_FINISH,
+                state != null && state.isShowRepairFinish());
         startActivity(intent);
     }
 

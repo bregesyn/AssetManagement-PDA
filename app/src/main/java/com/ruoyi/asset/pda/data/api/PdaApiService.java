@@ -35,6 +35,12 @@ import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchCheckDto;
 import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchCheckRequestDto;
 import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchSubmitDto;
 import com.ruoyi.asset.pda.data.dto.PdaReceiveBatchSubmitRequestDto;
+import com.ruoyi.asset.pda.data.dto.PdaRepairFinishRequestDto;
+import com.ruoyi.asset.pda.data.dto.PdaRepairOrderDto;
+import com.ruoyi.asset.pda.data.dto.PdaRepairStartRequestDto;
+import com.ruoyi.asset.pda.data.dto.PdaRepairSubmitRequestDto;
+import com.ruoyi.asset.pda.data.dto.PdaRepairSubmitResultDto;
+import com.ruoyi.asset.pda.data.dto.PdaRepairerDto;
 import com.ruoyi.asset.pda.data.dto.PdaLoginRequest;
 import com.ruoyi.asset.pda.data.dto.PdaMasterDataDto;
 import com.ruoyi.asset.pda.data.dto.PdaRfidBindRequest;
@@ -144,6 +150,34 @@ public interface PdaApiService {
     @POST("asset/pda/borrow/return/batch-submit")
     Call<ApiResponse<PdaBorrowReturnBatchSubmitDto>> borrowReturnBatchSubmit(
             @Body PdaBorrowReturnBatchSubmitRequestDto request);
+
+    @GET("asset/pda/repair/repairers")
+    Call<ApiResponse<List<PdaRepairerDto>>> repairers(@Query("keyword") String keyword);
+
+    @GET("asset/pda/repair/orders/mine")
+    Call<ApiResponse<PdaPageResultDto<PdaRepairOrderDto>>> repairMyOrders(
+            @Query("orderStatus") String orderStatus, @Query("keyword") String keyword,
+            @Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
+
+    @GET("asset/pda/repair/orders/work")
+    Call<ApiResponse<PdaPageResultDto<PdaRepairOrderDto>>> repairWorkOrders(
+            @Query("keyword") String keyword, @Query("pageNum") int pageNum,
+            @Query("pageSize") int pageSize);
+
+    @GET("asset/pda/repair/orders/{repairId}")
+    Call<ApiResponse<PdaRepairOrderDto>> repairOrder(@Path("repairId") Long repairId);
+
+    @POST("asset/pda/repair/orders/submit")
+    Call<ApiResponse<PdaRepairSubmitResultDto>> repairSubmit(
+            @Body PdaRepairSubmitRequestDto request);
+
+    @POST("asset/pda/repair/orders/{repairId}/start")
+    Call<ApiResponse<PdaRepairOrderDto>> repairStart(@Path("repairId") Long repairId,
+            @Body PdaRepairStartRequestDto request);
+
+    @POST("asset/pda/repair/orders/{repairId}/finish")
+    Call<ApiResponse<PdaRepairOrderDto>> repairFinish(@Path("repairId") Long repairId,
+            @Body PdaRepairFinishRequestDto request);
 
     @GET("asset/pda/inventory/tasks")
     Call<ApiResponse<PdaPageResultDto<PdaInventoryTaskDto>>> inventoryTasks(

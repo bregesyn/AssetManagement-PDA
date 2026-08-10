@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pda_background"
+    android:orientation="vertical"
+    tools:context=".feature.repair.RepairDetailActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/repairDetailToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/pda_primary"
+        app:navigationContentDescription="@string/common_back"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/repair_detail_title"
+        app:titleTextColor="@color/pda_card_background" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/repairDetailProgress"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/pda_section_spacing"
+        android:contentDescription="@string/repair_detail_loading" />
+
+    <TextView
+        android:id="@+id/repairDetailError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/pda_screen_padding"
+        android:background="@color/pda_error_soft"
+        android:padding="@dimen/pda_card_padding"
+        android:textColor="@color/pda_error"
+        android:textSize="@dimen/pda_caption_size"
+        android:visibility="gone" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/repairDetailRetry"
+        style="@style/PdaPrimaryButton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pda_touch_height"
+        android:layout_marginStart="@dimen/pda_screen_padding"
+        android:layout_marginEnd="@dimen/pda_screen_padding"
+        android:text="@string/common_retry"
+        android:visibility="gone" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/repairDetailContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/pda_screen_padding">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="@dimen/pda_stroke_width">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/repairDetailRail"
+                        android:layout_width="@dimen/pda_status_rail_width"
+                        android:layout_height="match_parent"
+                        android:background="@color/pda_pending" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="@dimen/pda_card_padding">
+
+                        <TextView
+                            android:id="@+id/repairDetailNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:textColor="@color/pda_text_primary"
+                            android:textSize="@dimen/pda_body_size"
+                            android:textStyle="bold"
+                            tools:text="报修单号：BX2026...001" />
+
+                        <TextView
+                            android:id="@+id/repairDetailStatus"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/pda_small_spacing"
+                            android:textColor="@color/pda_pending"
+                            android:textSize="@dimen/pda_caption_size"
+                            android:textStyle="bold"
+                            tools:text="状态：待维修" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView style="@style/PdaSectionTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/pda_section_spacing" android:text="@string/repair_asset_section" />
+            <com.google.android.material.card.MaterialCardView style="@style/PdaInfoCard" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="@dimen/pda_card_padding">
+                    <TextView android:id="@+id/repairDetailAssetName" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/pda_text_primary" android:textSize="@dimen/pda_body_size" />
+                    <TextView android:id="@+id/repairDetailAssetCode" android:layout_width="match_parent" android:layout_height="wrap_content" android:fontFamily="monospace" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                    <TextView android:id="@+id/repairDetailAssetCategory" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                    <TextView android:id="@+id/repairDetailAssetModel" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView style="@style/PdaSectionTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/pda_section_spacing" android:text="@string/repair_report_section" />
+            <com.google.android.material.card.MaterialCardView style="@style/PdaInfoCard" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="@dimen/pda_card_padding">
+                    <TextView android:id="@+id/repairDetailReporter" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                    <TextView android:id="@+id/repairDetailFault" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/pda_small_spacing" android:textColor="@color/pda_text_primary" android:textSize="@dimen/pda_body_size" />
+                    <TextView android:id="@+id/repairDetailReportTime" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/pda_small_spacing" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                    <TextView android:id="@+id/repairDetailExpected" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                    <TextView android:id="@+id/repairDetailReject" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/pda_small_spacing" android:textColor="@color/pda_error" android:textSize="@dimen/pda_caption_size" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView style="@style/PdaSectionTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/pda_section_spacing" android:text="@string/repair_repairer_section" />
+            <com.google.android.material.card.MaterialCardView style="@style/PdaInfoCard" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="@dimen/pda_card_padding">
+                    <TextView android:id="@+id/repairDetailRepairerType" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                    <TextView android:id="@+id/repairDetailRepairer" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/pda_small_spacing" android:textColor="@color/pda_text_primary" android:textSize="@dimen/pda_body_size" />
+                    <TextView android:id="@+id/repairDetailContact" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                    <TextView android:id="@+id/repairDetailPhone" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView style="@style/PdaSectionTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/pda_section_spacing" android:text="@string/repair_process_section" />
+            <com.google.android.material.card.MaterialCardView style="@style/PdaInfoCard" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="@dimen/pda_card_padding">
+                    <TextView android:id="@+id/repairDetailStart" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                    <TextView android:id="@+id/repairDetailFinish" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                    <TextView android:id="@+id/repairDetailResult" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/pda_small_spacing" android:textColor="@color/pda_text_primary" android:textSize="@dimen/pda_body_size" />
+                    <TextView android:id="@+id/repairDetailCost" android:layout_width="match_parent" android:layout_height="wrap_content" android:fontFamily="monospace" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                    <TextView android:id="@+id/repairDetailRemark" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/pda_small_spacing" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/repairDetailAction"
+        style="@style/PdaPrimaryButton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pda_touch_height"
+        android:layout_marginStart="@dimen/pda_screen_padding"
+        android:layout_marginTop="@dimen/pda_item_spacing"
+        android:layout_marginEnd="@dimen/pda_screen_padding"
+        android:layout_marginBottom="@dimen/pda_screen_padding"
+        android:visibility="gone" />
+</LinearLayout>

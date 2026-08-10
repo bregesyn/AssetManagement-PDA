@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pda_background"
+    android:orientation="vertical"
+    tools:context=".feature.repair.RepairSubmitActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/repairSubmitToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/pda_primary"
+        app:navigationContentDescription="@string/common_back"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/repair_submit_title"
+        app:titleTextColor="@color/pda_card_background" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/pda_screen_padding">
+
+            <RadioGroup
+                android:id="@+id/repairSubmitTypeGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/pda_primary_soft"
+                android:checkedButton="@id/repairSubmitEpcRadio"
+                android:orientation="horizontal"
+                android:padding="@dimen/pda_segmented_padding">
+
+                <RadioButton
+                    android:id="@+id/repairSubmitEpcRadio"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/pda_touch_height"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/repair_identify_epc"
+                    android:textColor="@color/pda_primary_dark"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/repairSubmitAssetCodeRadio"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/pda_touch_height"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/repair_identify_asset_code"
+                    android:textColor="@color/pda_primary_dark"
+                    android:textStyle="bold" />
+            </RadioGroup>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/repairSubmitEpcContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="@dimen/pda_stroke_width">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/pda_card_padding">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/repair_single_scan_title"
+                        android:textColor="@color/pda_text_primary"
+                        android:textSize="@dimen/pda_body_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/repairSubmitScanState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:text="@string/repair_single_scan_hint"
+                        android:textColor="@color/pda_text_secondary"
+                        android:textSize="@dimen/pda_caption_size" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/repairSubmitScanButton"
+                        style="@style/PdaOutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/pda_touch_height"
+                        android:layout_marginTop="@dimen/pda_item_spacing"
+                        android:text="@string/repair_scan_start" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:id="@+id/repairSubmitAssetCodeContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:boxBackgroundMode="outline">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/repairSubmitAssetCodeInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/pda_touch_height"
+                        android:fontFamily="monospace"
+                        android:hint="@string/repair_asset_code_hint"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:maxLength="64"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/repairSubmitAssetCodeButton"
+                    style="@style/PdaPrimaryButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/pda_touch_height"
+                    android:layout_marginStart="@dimen/pda_small_spacing"
+                    android:text="@string/repair_identify_action" />
+            </LinearLayout>
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/repairSubmitProgress"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/repairSubmitMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:background="@color/pda_error_soft"
+                android:padding="@dimen/pda_card_padding"
+                android:textColor="@color/pda_error"
+                android:textSize="@dimen/pda_caption_size"
+                android:visibility="gone" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/repairSubmitAssetCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/pda_card_background"
+                app:cardCornerRadius="@dimen/pda_card_radius"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/pda_card_stroke"
+                app:strokeWidth="@dimen/pda_stroke_width">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/pda_card_padding">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/repair_asset_preview"
+                        android:textColor="@color/pda_primary_dark"
+                        android:textSize="@dimen/pda_caption_size"
+                        android:textStyle="bold" />
+
+                    <TextView android:id="@+id/repairSubmitAssetName" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/pda_small_spacing" android:textColor="@color/pda_text_primary" android:textSize="@dimen/pda_body_size" />
+                    <TextView android:id="@+id/repairSubmitAssetCode" android:layout_width="match_parent" android:layout_height="wrap_content" android:fontFamily="monospace" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                    <TextView android:id="@+id/repairSubmitAssetCategory" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                    <TextView android:id="@+id/repairSubmitAssetModel" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/pda_text_secondary" android:textSize="@dimen/pda_caption_size" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/repairSubmitReporter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_section_spacing"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_caption_size" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_section_spacing"
+                app:boxBackgroundMode="outline">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/repairSubmitFaultInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:hint="@string/repair_fault_hint"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:maxLength="500"
+                    android:minHeight="104dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/repairSubmitExpectedButton"
+                style="@style/PdaOutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pda_touch_height"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:text="@string/repair_expected_finish_empty" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                app:boxBackgroundMode="outline">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/repairSubmitRemarkInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:hint="@string/repair_remark_hint"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:maxLength="500"
+                    android:minHeight="88dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/repairSubmitResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_section_spacing"
+                android:background="@color/pda_success_soft"
+                android:padding="@dimen/pda_card_padding"
+                android:textColor="@color/pda_success"
+                android:textSize="@dimen/pda_caption_size"
+                android:visibility="gone"
+                tools:text="报修单 BX2026...\n审批任务 12 · 待审批" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/repairSubmitAction"
+        style="@style/PdaPrimaryButton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pda_touch_height"
+        android:layout_marginStart="@dimen/pda_screen_padding"
+        android:layout_marginTop="@dimen/pda_item_spacing"
+        android:layout_marginEnd="@dimen/pda_screen_padding"
+        android:layout_marginBottom="@dimen/pda_screen_padding"
+        android:text="@string/repair_submit_action" />
+</LinearLayout>

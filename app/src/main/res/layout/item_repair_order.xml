@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/pda_item_spacing"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/pda_card_background"
+    app:cardCornerRadius="@dimen/pda_card_radius"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/pda_card_stroke"
+    app:strokeWidth="@dimen/pda_stroke_width">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/repairOrderRail"
+            android:layout_width="@dimen/pda_status_rail_width"
+            android:layout_height="match_parent"
+            android:background="@color/pda_pending" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/pda_card_padding">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/repairOrderNo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="monospace"
+                    android:textColor="@color/pda_text_primary"
+                    android:textSize="@dimen/pda_body_size"
+                    android:textStyle="bold"
+                    tools:text="BX2026...0001" />
+
+                <TextView
+                    android:id="@+id/repairOrderStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/pda_pending_soft"
+                    android:paddingStart="@dimen/pda_item_spacing"
+                    android:paddingTop="@dimen/pda_small_spacing"
+                    android:paddingEnd="@dimen/pda_item_spacing"
+                    android:paddingBottom="@dimen/pda_small_spacing"
+                    android:textColor="@color/pda_pending"
+                    android:textSize="@dimen/pda_utility_size"
+                    android:textStyle="bold"
+                    tools:text="待维修" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/repairOrderAsset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:textColor="@color/pda_text_primary"
+                android:textSize="@dimen/pda_body_size"
+                tools:text="手持终端" />
+
+            <TextView
+                android:id="@+id/repairOrderAssetCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_caption_size"
+                tools:text="ASSET-001" />
+
+            <TextView
+                android:id="@+id/repairOrderFault"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:maxLines="2"
+                android:textColor="@color/pda_text_secondary"
+                android:textSize="@dimen/pda_caption_size"
+                tools:text="按键无响应，需要检测。" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pda_item_spacing"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/repairOrderReportTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/pda_text_secondary"
+                    android:textSize="@dimen/pda_utility_size"
+                    tools:text="2026-08-06 09:20" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/repairOrderDetailButton"
+                    style="@style/PdaTextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/pda_touch_height"
+                    android:text="@string/repair_view_detail" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

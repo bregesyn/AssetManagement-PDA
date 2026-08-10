@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pda_background"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/repairerToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/pda_primary"
+        app:navigationContentDescription="@string/common_back"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/repairer_picker_title"
+        app:titleTextColor="@color/pda_card_background" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pda_screen_padding"
+        android:layout_marginTop="@dimen/pda_item_spacing"
+        android:layout_marginEnd="@dimen/pda_screen_padding"
+        android:text="@string/repairer_picker_hint"
+        android:textColor="@color/pda_text_secondary"
+        android:textSize="@dimen/pda_caption_size" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pda_screen_padding"
+        android:layout_marginTop="@dimen/pda_small_spacing"
+        android:layout_marginEnd="@dimen/pda_screen_padding"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:boxBackgroundMode="outline">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/repairerKeywordInput"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pda_touch_height"
+                android:hint="@string/repairer_keyword"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLength="30"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/repairerSearchButton"
+            style="@style/PdaPrimaryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/pda_touch_height"
+            android:layout_marginStart="@dimen/pda_small_spacing"
+            android:text="@string/repairer_search" />
+    </LinearLayout>
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/repairerProgress"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/pda_section_spacing"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/repairerMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/pda_screen_padding"
+        android:background="@color/pda_error_soft"
+        android:padding="@dimen/pda_card_padding"
+        android:textColor="@color/pda_error"
+        android:textSize="@dimen/pda_caption_size"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/repairerList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/pda_screen_padding"
+        android:paddingTop="@dimen/pda_item_spacing"
+        android:paddingEnd="@dimen/pda_screen_padding" />
+
+    <TextView
+        android:id="@+id/repairerEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/pda_screen_padding"
+        android:gravity="center"
+        android:textColor="@color/pda_text_secondary"
+        android:textSize="@dimen/pda_body_size"
+        android:visibility="gone" />
+</LinearLayout>

@@ -1,5 +1,6 @@
 <resources>
     <string name="common_refresh">刷新</string>
+    <string name="common_search">搜索</string>
 
     <string name="inventory_task_list_title">任务列表</string>
     <string name="inventory_task_list_subtitle">共 03 个任务 · 已按现场优先排序</string>
@@ -269,6 +270,8 @@
     <string name="home_receive_desc">核对领用人后扫描资产，批量提交领用申请</string>
     <string name="home_borrow">资产借还</string>
     <string name="home_borrow_desc">登记临时借用或扫描归还资产，提交审批申请</string>
+    <string name="home_repair">报修维修</string>
+    <string name="home_repair_desc">扫描故障资产提交报修，处理待维修工单</string>
     <string name="home_rfid_section">标签关系</string>
 
     <string name="inbound_title">资产入库</string>
@@ -468,6 +471,105 @@
     <string name="borrower_no_results">未找到可用人员，请调整关键词</string>
     <string name="borrower_login_format">账号：%1$s</string>
     <string name="borrower_dept_format">部门：%1$s</string>
+
+    <string name="repair_workbench_title">报修维修工作台</string>
+    <string name="repair_submit_entry">发起报修</string>
+    <string name="repair_mine_tab">我的报修</string>
+    <string name="repair_work_tab">维修任务</string>
+    <string name="repair_status_all">全部</string>
+    <string name="repair_status_filter">状态：%1$s</string>
+    <string name="repair_status_filter_all">状态：全部</string>
+    <string name="repair_keyword_hint">单号/资产搜索</string>
+    <string name="repair_order_empty">暂无符合条件的报修单</string>
+    <string name="repair_submit_only_hint">当前账号可发起报修；维修单列表和任务由对应权限开放。</string>
+    <string name="repair_load_more">加载更多</string>
+    <string name="repair_loading_more">加载中…</string>
+    <string name="repair_view_detail">查看详情</string>
+
+    <string name="repair_submit_title">提交报修</string>
+    <string name="repair_identify_epc">读取 EPC</string>
+    <string name="repair_identify_asset_code">输入资产编码</string>
+    <string name="repair_single_scan_title">单资产扫描</string>
+    <string name="repair_single_scan_hint">按 F6 或屏幕按钮读取；检测到多个标签时会拒绝本次识别。</string>
+    <string name="repair_scan_start">开始读取</string>
+    <string name="repair_scan_stop">停止读取</string>
+    <string name="repair_asset_code_hint">资产编码</string>
+    <string name="repair_identify_action">识别资产</string>
+    <string name="repair_asset_preview">资产信息</string>
+    <string name="repair_asset_name_format">资产名称：%1$s</string>
+    <string name="repair_asset_code_format">资产编码：%1$s</string>
+    <string name="repair_asset_category_format">资产类别：%1$s</string>
+    <string name="repair_asset_model_format">规格型号：%1$s</string>
+    <string name="repair_fault_hint">故障描述 *</string>
+    <string name="repair_expected_finish_empty">预计完成日期（可选）</string>
+    <string name="repair_expected_finish_format">预计完成日期：%1$s</string>
+    <string name="repair_remark_hint">备注（可选）</string>
+    <string name="repair_reporter_format">报修人：%1$s</string>
+    <string name="repair_submit_action">提交报修申请</string>
+    <string name="repair_submitting">提交中…</string>
+    <string name="repair_submit_result_format">报修单 %1$s\n审批任务 %2$s · %3$s\n已提交审批，审批通过后可开始维修。</string>
+    <string name="repair_back_to_workbench">返回报修维修</string>
+    <string name="repair_date_picker_title">选择期望完成日期</string>
+    <string name="repair_leave_title">离开报修页面？</string>
+    <string name="repair_leave_message">当前扫描结果和报修表单只保存在本页，离开后将丢失。</string>
+    <string name="repair_leave_confirm">丢弃并离开</string>
+
+    <string name="repair_detail_title">报修详情</string>
+    <string name="repair_asset_section">资产信息</string>
+    <string name="repair_report_section">报修信息</string>
+    <string name="repair_repairer_section">维修方及联系方式</string>
+    <string name="repair_process_section">维修处理</string>
+    <string name="repair_detail_no_format">报修单号：%1$s</string>
+    <string name="repair_detail_status_format">状态：%1$s</string>
+    <string name="repair_detail_reporter_format">报修人：%1$s</string>
+    <string name="repair_detail_fault_format">故障描述：%1$s</string>
+    <string name="repair_detail_report_time_format">报修时间：%1$s</string>
+    <string name="repair_detail_expected_format">期望完成：%1$s</string>
+    <string name="repair_detail_reject_format">驳回原因：%1$s</string>
+    <string name="repair_detail_repairer_type_format">维修方式：%1$s</string>
+    <string name="repair_detail_repairer_format">维修人/单位：%1$s</string>
+    <string name="repair_detail_contact_format">联系人：%1$s</string>
+    <string name="repair_detail_phone_format">联系电话：%1$s</string>
+    <string name="repair_detail_start_format">开始维修：%1$s</string>
+    <string name="repair_detail_finish_format">完成维修：%1$s</string>
+    <string name="repair_detail_result_format">维修结果：%1$s</string>
+    <string name="repair_detail_cost_format">维修费用：%1$s</string>
+    <string name="repair_detail_remark_format">备注：%1$s</string>
+    <string name="repair_start_action">开始维修</string>
+    <string name="repair_finish_action">提交维修结果</string>
+    <string name="repair_detail_loading">正在核对工单…</string>
+
+    <string name="repair_start_title">开始维修</string>
+    <string name="repair_repairer_internal">内部维修</string>
+    <string name="repair_repairer_external">外部维修</string>
+    <string name="repair_select_repairer">选择维修人</string>
+    <string name="repair_change_repairer">更换维修人</string>
+    <string name="repair_repairer_unselected">请选择启用的内部维修人</string>
+    <string name="repair_repairer_selected_format">维修人：%1$s（%2$s）</string>
+    <string name="repair_external_org_hint">外部维修单位 *</string>
+    <string name="repair_external_contact_hint">维修联系人（可选）</string>
+    <string name="repair_external_phone_hint">联系电话（可选）</string>
+    <string name="repair_start_submit">确认开始维修</string>
+    <string name="repair_start_submitting">登记中…</string>
+
+    <string name="repair_finish_title">完成维修</string>
+    <string name="repair_finish_date_empty">选择维修完成日期 *</string>
+    <string name="repair_finish_date_format">维修完成日期：%1$s</string>
+    <string name="repair_finish_result_hint">维修结果 *</string>
+    <string name="repair_finish_cost_hint">维修费用（元）</string>
+    <string name="repair_finish_submit">提交维修结果</string>
+    <string name="repair_finish_submitting">提交中…</string>
+    <string name="repair_finish_date_picker_title">选择维修完成日期</string>
+
+    <string name="repairer_picker_title">选择内部维修人</string>
+    <string name="repairer_picker_hint">输入姓名、账号或部门，搜索启用维修人员</string>
+    <string name="repairer_keyword">姓名、账号或部门</string>
+    <string name="repairer_search">搜索</string>
+    <string name="repairer_searching">搜索中…</string>
+    <string name="repairer_picker_empty">请先输入关键词搜索维修人员</string>
+    <string name="repairer_no_results">未找到启用的维修人员，请调整关键词</string>
+    <string name="repairer_login_format">账号：%1$s</string>
+    <string name="repairer_dept_format">部门：%1$s</string>
 
     <string name="logout_action">退出登录</string>
     <string name="logout_confirm_title">确认退出登录？</string>

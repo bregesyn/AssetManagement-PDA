@@ -75,4 +75,19 @@
         <item name="android:textSize">@dimen/pda_body_size</item>
     </style>
 
+    <!-- 工业工单详情共用的低对比信息卡，避免为每个区块引入装饰性色彩。 -->
+    <style name="PdaInfoCard">
+        <item name="cardBackgroundColor">@color/pda_card_background</item>
+        <item name="cardCornerRadius">@dimen/pda_card_radius</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeColor">@color/pda_card_stroke</item>
+        <item name="strokeWidth">@dimen/pda_stroke_width</item>
+    </style>
+
+    <style name="PdaSectionTitle">
+        <item name="android:textColor">@color/pda_primary_dark</item>
+        <item name="android:textSize">@dimen/pda_body_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

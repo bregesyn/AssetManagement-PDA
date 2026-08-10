@@ -125,7 +125,11 @@ public final class HomeViewModel extends ViewModel {
                                 isEnabled(features, PdaPermissions.BORROW_ISSUE_SCAN),
                                 isEnabled(features, PdaPermissions.BORROW_ISSUE_SUBMIT),
                                 isEnabled(features, PdaPermissions.BORROW_RETURN_SCAN),
-                                isEnabled(features, PdaPermissions.BORROW_RETURN_SUBMIT)));
+                                isEnabled(features, PdaPermissions.BORROW_RETURN_SUBMIT),
+                                isEnabled(features, PdaPermissions.REPAIR_LIST),
+                                isEnabled(features, PdaPermissions.REPAIR_SUBMIT),
+                                isEnabled(features, PdaPermissions.REPAIR_START),
+                                isEnabled(features, PdaPermissions.REPAIR_FINISH)));
                     }
 
                     @Override

@@ -2,7 +2,7 @@ package com.ruoyi.asset.pda.data.dto;
 
 import com.google.gson.annotations.SerializedName;
 
-/** PDA 借用审批任务的只读回执，客户端不据此推进资产状态。 */
+/** PDA 业务审批任务的只读回执，客户端不据此推进资产状态。 */
 public final class PdaApprovalTaskSnapshotDto {
     @SerializedName("taskId")
     private Long taskId;

@@ -72,6 +72,10 @@ public class HomeViewModelTest {
         features.put(PdaPermissions.RECEIVE_SUBMIT, false);
         features.put(PdaPermissions.INVENTORY_LIST, true);
         features.put(PdaPermissions.INVENTORY_SUBMIT, true);
+        features.put(PdaPermissions.REPAIR_LIST, true);
+        features.put(PdaPermissions.REPAIR_SUBMIT, false);
+        features.put(PdaPermissions.REPAIR_START, true);
+        features.put(PdaPermissions.REPAIR_FINISH, false);
         viewModel.initialize();
 
         commonRepository.completeBootstrap(bootstrap(features));
@@ -86,6 +90,11 @@ public class HomeViewModelTest {
         assertTrue(state().isShowReceive());
         assertFalse(state().isShowReceiveSubmit());
         assertTrue(state().isShowInventory());
+        assertTrue(state().isShowRepair());
+        assertTrue(state().isShowRepairList());
+        assertFalse(state().isShowRepairSubmit());
+        assertTrue(state().isShowRepairStart());
+        assertFalse(state().isShowRepairFinish());
     }
 
     @Test
@@ -122,6 +131,21 @@ public class HomeViewModelTest {
 
         assertFalse(state().isShowReceive());
         assertTrue(state().isShowReceiveSubmit());
+    }
+
+    @Test
+    public void repairSubmitPermissionAloneStillExposesRepairEntry() {
+        Map<String, Boolean> features = new LinkedHashMap<>();
+        features.put(PdaPermissions.REPAIR_SUBMIT, true);
+        viewModel.initialize();
+
+        commonRepository.completeBootstrap(bootstrap(features));
+
+        assertTrue(state().isShowRepair());
+        assertFalse(state().isShowRepairList());
+        assertTrue(state().isShowRepairSubmit());
+        assertFalse(state().isShowRepairStart());
+        assertFalse(state().isShowRepairFinish());
     }
 
     @Test
