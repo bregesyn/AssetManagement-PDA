@@ -231,14 +231,6 @@
                             android:textSize="@dimen/pda_caption_size"
                             tools:text="部门：资产管理部" />
 
-                        <TextView
-                            android:id="@+id/homeServerTimeText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/pda_small_spacing"
-                            android:textColor="@color/pda_text_secondary"
-                            android:textSize="@dimen/pda_utility_size"
-                            tools:text="服务时间：2026-07-17 18:30:00" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -251,14 +243,6 @@
                 android:textColor="@color/pda_text_primary"
                 android:textSize="@dimen/pda_section_title_size"
                 android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/pda_small_spacing"
-                android:text="@string/home_current_work_hint"
-                android:textColor="@color/pda_text_secondary"
-                android:textSize="@dimen/pda_utility_size" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/inboundCard"
@@ -608,14 +592,6 @@
                 android:textColor="@color/pda_text_primary"
                 android:textSize="@dimen/pda_section_title_size"
                 android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/pda_small_spacing"
-                android:text="@string/home_task_hint"
-                android:textColor="@color/pda_text_secondary"
-                android:textSize="@dimen/pda_utility_size" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/assetIdentifyCard"

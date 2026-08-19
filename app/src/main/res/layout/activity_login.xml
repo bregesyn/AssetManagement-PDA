@@ -18,14 +18,6 @@
         android:paddingEnd="@dimen/pda_screen_padding">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_eyebrow"
-            android:textColor="@color/pda_primary"
-            android:textSize="@dimen/pda_utility_size"
-            android:textStyle="bold" />
-
-        <TextView
             android:layout_width="@dimen/pda_login_mark_size"
             android:layout_height="@dimen/pda_login_mark_size"
             android:layout_marginTop="@dimen/pda_item_spacing"
@@ -44,14 +36,6 @@
             android:textColor="@color/pda_text_primary"
             android:textSize="@dimen/pda_title_size"
             android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/pda_small_spacing"
-            android:text="@string/login_subtitle"
-            android:textColor="@color/pda_text_secondary"
-            android:textSize="@dimen/pda_caption_size" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/loginFormContainer"
@@ -88,14 +72,6 @@
                         android:textColor="@color/pda_text_primary"
                         android:textSize="@dimen/pda_section_title_size"
                         android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/pda_small_spacing"
-                        android:text="@string/login_form_hint"
-                        android:textColor="@color/pda_text_secondary"
-                        android:textSize="@dimen/pda_caption_size" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/usernameInputLayout"
@@ -162,30 +138,15 @@
                         android:layout_marginTop="@dimen/pda_section_spacing"
                         android:text="@string/login_action" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/loginProgress"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/pda_item_spacing"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.progressindicator.CircularProgressIndicator
-                            android:id="@+id/loginProgress"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:indeterminate="true"
-                            android:visibility="gone"
-                            tools:visibility="visible" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/pda_small_spacing"
-                            android:layout_weight="1"
-                            android:text="@string/login_device_hint"
-                            android:textColor="@color/pda_text_secondary"
-                            android:textSize="@dimen/pda_utility_size" />
-                    </LinearLayout>
+                        android:indeterminate="true"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

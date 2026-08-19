@@ -118,8 +118,6 @@ public final class HomeActivity extends AppCompatActivity {
                 getString(R.string.home_user_format, userName, loginName));
         binding.homeDeptText.setText(
                 getString(R.string.home_dept_format, displayValue(state.getDeptName())));
-        binding.homeServerTimeText.setText(getString(
-                R.string.home_server_time_format, displayValue(state.getServerTime())));
 
         setVisible(binding.tagCreateCard, state.isShowTagCreate());
         setVisible(binding.rfidBindCard, state.isShowRfidBind());
