@@ -87,7 +87,11 @@ public final class AssetIdentifyActivity extends SessionAwareActivity {
                 ? R.string.identify_scan_stop : R.string.identify_scan_start);
         binding.identifyScanStatusText.setText(scanStateText(state.getScanState()));
         binding.identifyScanCountText.setText(scanCountText(state));
-        binding.identifyScanCaptionText.setText(scanCaptionText(state));
+        boolean showCaption = state.isScanning() || state.isLoading();
+        setVisible(binding.identifyScanCaptionText, showCaption);
+        if (showCaption) {
+            binding.identifyScanCaptionText.setText(R.string.identify_scan_caption_active);
+        }
         setVisible(binding.identifyProgress, state.isLoading());
 
         // 识别成功后 EPC 已在“最近一次识别”卡片中展示；仅在未匹配资产时保留，便于现场复核失败标签。
@@ -154,11 +158,6 @@ public final class AssetIdentifyActivity extends SessionAwareActivity {
     private int scanCountText(AssetIdentifyUiState state) {
         return state.isScanning() || state.isLoading() || hasText(state.getLastEpc())
                 ? R.string.identify_scan_count_one : R.string.identify_scan_count_zero;
-    }
-
-    private int scanCaptionText(AssetIdentifyUiState state) {
-        return state.isScanning() || state.isLoading()
-                ? R.string.identify_scan_caption_active : R.string.identify_scan_caption_idle;
     }
 
     private String display(String value) {

@@ -51,8 +51,6 @@ public final class RfidBindActivity extends SessionAwareActivity {
     private void configureUi() {
         binding.operationToolbar.setTitle(R.string.bind_title);
         binding.operationEyebrowText.setText(R.string.bind_eyebrow);
-        binding.operationSubtitleText.setText(R.string.bind_subtitle);
-        binding.operationFlowNoteText.setText(R.string.rfid_operation_flow_note);
         binding.operationScanHintText.setText(R.string.bind_scan_hint);
         binding.operationSubmitButton.setText(R.string.bind_action);
         setVisible(binding.operationAssetInputContainer, true);

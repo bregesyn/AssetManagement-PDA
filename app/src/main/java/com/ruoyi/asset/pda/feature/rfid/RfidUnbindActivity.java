@@ -46,8 +46,6 @@ public final class RfidUnbindActivity extends SessionAwareActivity {
     private void configureUi() {
         binding.operationToolbar.setTitle(R.string.unbind_title);
         binding.operationEyebrowText.setText(R.string.unbind_eyebrow);
-        binding.operationSubtitleText.setText(R.string.unbind_subtitle);
-        binding.operationFlowNoteText.setText(R.string.unbind_tag_note);
         binding.operationScanHintText.setText(R.string.unbind_scan_hint);
         binding.operationSubmitButton.setText(R.string.unbind_action);
         binding.operationSubmitButton.setBackgroundTintList(

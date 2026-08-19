@@ -83,15 +83,6 @@
                             android:textColor="@color/pda_primary"
                             android:textSize="@dimen/pda_body_size"
                             android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/pda_small_spacing"
-                            android:text="@string/batch_capture_note"
-                            android:textColor="@color/pda_text_secondary"
-                            android:textSize="@dimen/pda_caption_size" />
-
                         <TextView
                             android:id="@+id/batchScanStatusText"
                             android:layout_width="match_parent"

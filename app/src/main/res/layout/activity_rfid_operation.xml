@@ -42,24 +42,6 @@
                 android:textStyle="bold"
                 tools:text="关系建立" />
 
-            <TextView
-                android:id="@+id/operationSubtitleText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/pda_small_spacing"
-                android:textColor="@color/pda_text_secondary"
-                android:textSize="@dimen/pda_body_size"
-                tools:text="先核对资产，再扫描标签" />
-
-            <TextView
-                android:id="@+id/operationFlowNoteText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/pda_small_spacing"
-                android:textColor="@color/pda_text_secondary"
-                android:textSize="@dimen/pda_caption_size"
-                tools:text="扫描结果会在下方显示，写入操作需要再次确认。" />
-
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/operationAssetInputContainer"
                 android:layout_width="match_parent"

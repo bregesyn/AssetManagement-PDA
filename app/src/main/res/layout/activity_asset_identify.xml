@@ -151,9 +151,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@string/identify_scan_caption_idle"
                             android:textColor="@color/pda_text_secondary"
-                            android:textSize="@dimen/pda_caption_size" />
+                            android:textSize="@dimen/pda_caption_size"
+                            android:visibility="gone"
+                            tools:text="已读取 1 个标签 · 正在核对资产"
+                            tools:visibility="visible" />
 
                         <TextView
                             android:id="@+id/identifyLastEpcText"
