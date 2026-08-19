@@ -213,8 +213,8 @@ public final class BorrowReturnActivity extends SessionAwareActivity {
         renderBorrower(state, inputUnlocked);
         renderResetTokens(state);
 
-        binding.borrowOperatorTime.setText(getString(R.string.receive_operator_time_format,
-                value(state.getOperatorName()), value(state.getServerTime())));
+        binding.borrowOperatorTime.setText(getString(R.string.receive_operator_format,
+                value(state.getOperatorName())));
         assetAdapter.submit(state.getAssets());
         setVisible(binding.borrowEmptyText, state.getAssets().isEmpty());
         binding.borrowEmptyText.setText(issueMode ? R.string.borrow_empty
@@ -307,13 +307,14 @@ public final class BorrowReturnActivity extends SessionAwareActivity {
         binding.borrowerRoleLabel.setText("EXTERNAL".equalsIgnoreCase(state.getBorrowerType())
                 ? R.string.borrow_contact_label : R.string.borrow_borrower_label);
         if (selected) {
+            binding.borrowerDept.setVisibility(View.VISIBLE);
             binding.borrowerName.setText(getString(R.string.borrow_borrower_name_format,
                     value(borrower.getName()), value(borrower.getCode())));
             binding.borrowerDept.setText(getString(R.string.borrow_borrower_dept_format,
                     value(borrower.getParentName())));
         } else {
+            binding.borrowerDept.setVisibility(View.GONE);
             binding.borrowerName.setText(R.string.borrow_borrower_unselected);
-            binding.borrowerDept.setText(R.string.borrow_borrower_dept_unselected);
         }
         binding.borrowerAction.setText(selected ? R.string.borrow_change_borrower
                 : R.string.borrow_select_borrower);

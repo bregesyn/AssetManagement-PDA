@@ -174,11 +174,8 @@ public final class InboundActivity extends SessionAwareActivity {
         setVisible(binding.inboundEmptyText, state.getAssets().isEmpty());
         binding.inboundListTitle.setText(getString(
                 R.string.inbound_list_count, state.getAssets().size()));
-        int operatorTimeFormat = state.getLastConfirmation() == null
-                ? R.string.inbound_operator_time_format
-                : R.string.inbound_operator_confirmed_time_format;
-        binding.inboundOperatorTime.setText(getString(operatorTimeFormat,
-                value(state.getOperatorName()), value(state.getServerTime())));
+        binding.inboundOperatorTime.setText(getString(
+                R.string.inbound_operator_format, value(state.getOperatorName())));
         binding.inboundWorkSummary.setText(getString(
                 R.string.inbound_work_summary_format, state.getAssets().size(),
                 state.getRawEpcCount()));

@@ -36,7 +36,7 @@
             android:maxLines="1"
             android:textColor="@color/pda_text_secondary"
             android:textSize="@dimen/pda_utility_size"
-            tools:text="操作人：管理员 · 服务时间：2026-07-24 09:30:00" />
+            tools:text="操作人：管理员" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/receiveRecipientCard"
@@ -69,14 +69,6 @@
                     android:padding="@dimen/pda_item_spacing">
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/receive_recipient_section"
-                        android:textColor="@color/pda_text_secondary"
-                        android:textSize="@dimen/pda_utility_size"
-                        android:textStyle="bold" />
-
-                    <TextView
                         android:id="@+id/receiveRecipientName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -97,7 +89,9 @@
                         android:maxLines="1"
                         android:textColor="@color/pda_text_secondary"
                         android:textSize="@dimen/pda_caption_size"
-                        tools:text="领用部门：设备管理部" />
+                        android:visibility="gone"
+                        tools:text="领用部门：设备管理部"
+                        tools:visibility="visible" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/receiveRecipientAction"

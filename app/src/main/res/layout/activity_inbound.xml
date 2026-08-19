@@ -36,7 +36,7 @@
             android:maxLines="1"
             android:textColor="@color/pda_text_secondary"
             android:textSize="@dimen/pda_utility_size"
-            tools:text="操作人：管理员 · 服务时间：2026-07-24 09:30:00" />
+            tools:text="操作人：管理员" />
 
         <LinearLayout
             android:layout_width="match_parent"

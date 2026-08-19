@@ -159,11 +159,8 @@ public final class ReceiveActivity extends SessionAwareActivity {
         setVisible(binding.receiveEmptyText, state.getAssets().isEmpty());
         binding.receiveListTitle.setText(getString(
                 R.string.receive_list_count, state.getAssets().size()));
-        int operatorTimeFormat = state.getLastSubmission() == null
-                ? R.string.receive_operator_time_format
-                : R.string.receive_operator_submitted_time_format;
-        binding.receiveOperatorTime.setText(getString(operatorTimeFormat,
-                value(state.getOperatorName()), value(state.getServerTime())));
+        binding.receiveOperatorTime.setText(getString(
+                R.string.receive_operator_format, value(state.getOperatorName())));
         binding.receiveWorkSummary.setText(getString(
                 R.string.receive_work_summary_format, state.getAssets().size(),
                 state.getRawEpcCount(), state.getDuplicateReadCount()));
@@ -217,10 +214,12 @@ public final class ReceiveActivity extends SessionAwareActivity {
                 ? getString(R.string.receive_recipient_name_format,
                         value(recipient.getName()), value(recipient.getCode()))
                 : getString(R.string.receive_recipient_unselected));
-        binding.receiveRecipientDept.setText(selected
-                ? getString(R.string.receive_recipient_dept_format,
-                        value(recipient.getParentName()))
-                : getString(R.string.receive_recipient_dept_unselected));
+        setVisible(binding.receiveRecipientDept, selected);
+        if (selected) {
+            binding.receiveRecipientDept.setText(getString(
+                    R.string.receive_recipient_dept_format,
+                    value(recipient.getParentName())));
+        }
         binding.receiveRecipientAction.setText(selected
                 ? R.string.receive_change_recipient
                 : R.string.receive_select_recipient);

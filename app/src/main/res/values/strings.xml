@@ -5,7 +5,7 @@
     <string name="inventory_task_list_title">任务列表</string>
     <string name="inventory_task_list_subtitle">共 03 个任务 · 已按现场优先排序</string>
     <string name="inventory_task_actionable_tab">可处理</string>
-    <string name="inventory_task_readonly_tab">只读</string>
+    <string name="inventory_task_readonly_tab">待审核</string>
     <string name="inventory_task_actionable_count">可处理 %1$d</string>
     <string name="inventory_task_readonly_count">只读 %1$d</string>
     <string name="inventory_task_progress_format">已盘 %1$d / %2$d</string>
@@ -60,7 +60,7 @@
     <string name="inventory_execute_mark_loss_title">确认批量盘亏？</string>
     <string name="inventory_execute_mark_loss_message">任务 %1$s 仍有 %2$d 条未盘明细。确认后只将当前未盘项标记为盘亏，不覆盖已有结果。</string>
     <string name="inventory_execute_submit_title">确认最终提交？</string>
-    <string name="inventory_execute_submit_message">任务 %1$s：已盘 %2$d / %3$d，正常 %4$d，盘盈 %5$d。提交后页面切换为只读；审批通过后后端可能自动纠偏、确认盘亏或恢复盘亏资产。</string>
+    <string name="inventory_execute_submit_message">任务 %1$s：已盘 %2$d / %3$d，正常 %4$d，盘盈 %5$d。审批通过后自动调整资产台账。</string>
     <string name="inventory_execute_confirm_title">确认本轮盘点？</string>
     <string name="inventory_execute_remark_hint">本轮备注（可选）</string>
     <string name="inventory_execute_identify_type">识别方式</string>
@@ -124,7 +124,7 @@
     <string name="identify_asset_code_hint">资产编码</string>
     <string name="identify_asset_code_action">查询资产</string>
     <string name="identify_asset_code_section">人工补充</string>
-    <string name="identify_asset_code_note">输入资产编码后查询服务端事实，不会修改资产。</string>
+    <string name="identify_asset_code_note">输入资产编码后查询</string>
     <string name="identify_asset_code_required">请输入资产编码</string>
     <string name="identify_invalid_asset_response">服务响应缺少有效资产信息</string>
     <string name="identify_epc_too_long">EPC 长度不能超过 128 个字符</string>
@@ -210,7 +210,7 @@
     <string name="bind_asset_category_format">类别：%1$s</string>
     <string name="bind_asset_status_format">状态：%1$s</string>
     <string name="bind_asset_already_bound">该资产已经绑定 RFID，不能重复绑定</string>
-    <string name="bind_scan_hint">按下 F6 功能键或点击按钮开始；读到唯一 EPC 后自动停止，多标签会被明确阻断。</string>
+    <string name="bind_scan_hint">点击按钮开始，读到唯一 EPC 后自动停止。</string>
     <string name="bind_tag_unavailable">标签必须为正常且未绑定状态</string>
     <string name="bind_action">确认建立绑定</string>
     <string name="bind_confirm_title">确认建立 RFID 绑定？</string>
@@ -223,7 +223,7 @@
     <string name="unbind_eyebrow">关系解除</string>
     <string name="unbind_subtitle">扫描一个已建档标签，核对当前资产关系后解除绑定</string>
     <string name="unbind_tag_note">先查询当前绑定关系，再确认解除；不会自动换绑。</string>
-    <string name="unbind_scan_hint">按下 F6 功能键或点击按钮开始；读到唯一 EPC 后自动停止，多标签会被明确阻断。</string>
+    <string name="unbind_scan_hint">点击按钮开始，读到唯一 EPC 后自动停止。</string>
     <string name="unbind_not_bound">该标签当前未绑定资产，无需执行解绑</string>
     <string name="unbind_action">确认解除绑定</string>
     <string name="unbind_confirm_title">确认解除 RFID 绑定？</string>
@@ -292,6 +292,7 @@
     <string name="inbound_source_asset_code">资产编码</string>
     <string name="inbound_no_confirm_permission">当前账号可扫描和预检，但没有入库确认权限。</string>
     <string name="inbound_list_count">待入库资产 · %1$d</string>
+    <string name="inbound_operator_format">操作人：%1$s</string>
     <string name="inbound_operator_time_format">操作人：%1$s · 服务时间：%2$s</string>
     <string name="inbound_operator_confirmed_time_format">操作人：%1$s · 入库时间：%2$s</string>
     <string name="inbound_work_summary_format">已加入 %1$d · 本轮 EPC %2$d</string>
@@ -329,6 +330,7 @@
     <string name="receive_source_asset_code">资产编码</string>
     <string name="receive_no_submit_permission">当前账号可扫描和预检，但没有提交领用申请权限。</string>
     <string name="receive_list_count">待领用资产 · %1$d</string>
+    <string name="receive_operator_format">操作人：%1$s</string>
     <string name="receive_operator_time_format">操作人：%1$s · 服务时间：%2$s</string>
     <string name="receive_operator_submitted_time_format">申请人：%1$s · 提交时间：%2$s</string>
     <string name="receive_work_summary_format">已加入 %1$d · 本轮 EPC %2$d · 重复 %3$d</string>
@@ -365,7 +367,7 @@
     <string name="receive_leave_message">当前未提交资产和扫描异常只保存在本页，离开后将丢失。</string>
     <string name="receive_leave_confirm">丢弃并离开</string>
     <string name="receive_recipient_picker_title">选择领用人</string>
-    <string name="receive_recipient_picker_hint">输入姓名、登录名或部门，搜索全公司启用人员</string>
+    <string name="receive_recipient_picker_hint">输入姓名、登录名或部门</string>
     <string name="receive_recipient_keyword">姓名、登录名或部门</string>
     <string name="receive_recipient_search">搜索</string>
     <string name="receive_recipient_searching">搜索中…</string>
@@ -382,7 +384,6 @@
     <string name="borrow_borrower_label">借用人</string>
     <string name="borrow_contact_label">内部联系人</string>
     <string name="borrow_borrower_unselected">请先选择借用人</string>
-    <string name="borrow_borrower_dept_unselected">借用部门将在选择人员后自动带出</string>
     <string name="borrow_borrower_name_format">%1$s（%2$s）</string>
     <string name="borrow_borrower_dept_format">部门：%1$s</string>
     <string name="borrow_select_borrower">选择借用人</string>
@@ -409,7 +410,7 @@
     <string name="borrow_asset_list">当前提交清单</string>
     <string name="borrow_list_count">当前提交清单 · %1$d</string>
     <string name="borrow_empty">先完成借用资料，再扫描 RFID 或输入资产编码</string>
-    <string name="borrow_return_empty">扫描 RFID 或输入资产编码，服务端会定位活动借用明细</string>
+    <string name="borrow_return_empty">扫描 RFID 或输入资产编码</string>
     <string name="borrow_work_summary_format">已加入 %1$d · 本轮 EPC %2$d · 重复 %3$d</string>
     <string name="borrow_return_work_summary_format">可归还 %1$d · 本轮 EPC %2$d · 重复 %3$d</string>
     <string name="borrow_source_rfid">RFID</string>
@@ -463,7 +464,7 @@
     <string name="borrow_date_picker_title">选择预计归还日期</string>
 
     <string name="borrower_picker_title">选择借用人</string>
-    <string name="borrower_picker_hint">输入姓名、账号或部门，搜索启用人员</string>
+    <string name="borrower_picker_hint">输入姓名、账号或部门</string>
     <string name="borrower_keyword">姓名、账号或部门</string>
     <string name="borrower_search">搜索</string>
     <string name="borrower_searching">搜索中…</string>

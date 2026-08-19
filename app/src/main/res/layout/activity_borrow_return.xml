@@ -42,7 +42,7 @@
                 android:maxLines="1"
                 android:textColor="@color/pda_text_secondary"
                 android:textSize="@dimen/pda_utility_size"
-                tools:text="操作人：管理员 · 服务时间：2026-08-05 09:30:00" />
+                tools:text="操作人：管理员" />
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/borrowModeGroup"
@@ -167,9 +167,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="@string/borrow_borrower_dept_unselected"
                                 android:textColor="@color/pda_text_secondary"
-                                android:textSize="@dimen/pda_caption_size" />
+                                android:textSize="@dimen/pda_caption_size"
+                                android:visibility="gone" />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/borrowerAction"
