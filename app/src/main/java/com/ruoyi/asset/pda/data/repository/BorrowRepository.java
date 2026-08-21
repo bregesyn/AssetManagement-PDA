@@ -15,11 +15,13 @@ public interface BorrowRepository {
 
     RequestHandle batchCheckIssue(String borrowerType, Long borrowUserId,
             Long borrowDeptId, String borrowOrgName, String borrowContactPhone,
+            String borrowExternalContactName, String borrowExternalContactPhone,
             String expectedReturnDate, List<PdaAssetIdentifyRequest> identifiers,
             RepositoryCallback<PdaBorrowBatchCheckDto> callback);
 
     RequestHandle batchSubmitIssue(String borrowerType, Long borrowUserId,
             Long borrowDeptId, String borrowOrgName, String borrowContactPhone,
+            String borrowExternalContactName, String borrowExternalContactPhone,
             String expectedReturnDate, List<PdaAssetIdentifyRequest> identifiers,
             String remark, RepositoryCallback<PdaBorrowIssueBatchSubmitDto> callback);
 

@@ -96,6 +96,7 @@ public class BorrowReturnViewModelTest {
         readyIssue();
         viewModel.setBorrowerType("EXTERNAL");
         viewModel.setExternalOrgName("外部公司");
+        viewModel.setExternalContactName("王经理");
         viewModel.setExternalContactPhone("13800000000");
         viewModel.setBorrowerType("INTERNAL");
         viewModel.addByAssetCode("ZC-001");
@@ -103,17 +104,43 @@ public class BorrowReturnViewModelTest {
         assertEquals("INTERNAL", borrowRepository.getLastBorrowerType());
         assertNull(borrowRepository.getLastBorrowOrgName());
         assertNull(borrowRepository.getLastBorrowContactPhone());
+        assertNull(borrowRepository.getLastBorrowExternalContactName());
+        assertNull(borrowRepository.getLastBorrowExternalContactPhone());
     }
 
     @Test
-    public void selectingExternalContactAutofillsPhone() {
+    public void selectingInternalContactAutofillsInternalPhone() {
         initialize();
         viewModel.setBorrowerType("EXTERNAL");
 
         viewModel.selectBorrower(new PdaMasterDataDto(7L, "zhangsan", "张三",
                 9L, "资产部", "13800000000"));
 
-        assertEquals("13800000000", state().getExternalContactPhone());
+        assertEquals("13800000000", state().getInternalContactPhone());
+        assertNull(state().getExternalContactPhone());
+    }
+
+    @Test
+    public void externalIssueRequiresManualExternalContactFields() {
+        initialize();
+        viewModel.setBorrowerType("EXTERNAL");
+        viewModel.selectBorrower(new PdaMasterDataDto(7L, "zhangsan", "张三",
+                9L, "资产部", "13800000000"));
+        viewModel.setExternalOrgName("外部公司");
+        viewModel.setExpectedReturnDate("2026-08-06");
+
+        viewModel.addByAssetCode("ZC-001");
+
+        assertEquals(0, borrowRepository.getIssueCheckCount());
+        assertTrue(state().getErrorMessage().contains("外部联系人"));
+
+        viewModel.setExternalContactName("王经理");
+        viewModel.setExternalContactPhone("13900000000");
+        viewModel.addByAssetCode("ZC-001");
+
+        assertEquals(1, borrowRepository.getIssueCheckCount());
+        assertEquals("王经理", borrowRepository.getLastBorrowExternalContactName());
+        assertEquals("13900000000", borrowRepository.getLastBorrowExternalContactPhone());
     }
 
     @Test

@@ -84,6 +84,7 @@ public class BorrowRepositoryTest {
 
         Awaited<PdaBorrowBatchCheckDto> result = await(callback ->
                 repository.batchCheckIssue(" internal ", 7L, 9L, "旧公司", "13800000000",
+                        "旧外部联系人", "13900000000",
                         "2026-08-06", identifiers, callback));
 
         assertNull(result.error);
@@ -92,7 +93,9 @@ public class BorrowRepositoryTest {
         assertEquals(7L, body.get("borrowUserId").getAsLong());
         assertEquals(9L, body.get("borrowDeptId").getAsLong());
         assertEquals("2026-08-06", body.get("expectedReturnDate").getAsString());
-        assertTrue(!body.has("borrowOrgName") && !body.has("borrowContactPhone"));
+        assertTrue(!body.has("borrowOrgName") && !body.has("borrowContactPhone")
+                && !body.has("borrowExternalContactName")
+                && !body.has("borrowExternalContactPhone"));
         assertEquals("E20001", body.getAsJsonArray("identifiers").get(0)
                 .getAsJsonObject().get("identifyValue").getAsString());
         assertEquals("ZC-001", body.getAsJsonArray("identifiers").get(1)
@@ -106,6 +109,7 @@ public class BorrowRepositoryTest {
 
         Awaited<PdaBorrowIssueBatchSubmitDto> result = await(callback ->
                 repository.batchSubmitIssue("EXTERNAL", 7L, 9L, "外部公司", "13800000000",
+                        "王经理", "13900000000",
                         "2026-08-06", Collections.singletonList(
                                 new PdaAssetIdentifyRequest("ASSET_CODE", "ZC-001")),
                         "现场临时借用", callback));
@@ -115,6 +119,8 @@ public class BorrowRepositoryTest {
         assertEquals("EXTERNAL", body.get("borrowerType").getAsString());
         assertEquals("外部公司", body.get("borrowOrgName").getAsString());
         assertEquals("13800000000", body.get("borrowContactPhone").getAsString());
+        assertEquals("王经理", body.get("borrowExternalContactName").getAsString());
+        assertEquals("13900000000", body.get("borrowExternalContactPhone").getAsString());
         assertEquals("现场临时借用", body.get("remark").getAsString());
         assertTrue(!body.has("borrowTime") && !body.has("confirmTime")
                 && !body.has("assetStatus"));
@@ -151,10 +157,12 @@ public class BorrowRepositoryTest {
         Awaited<List<PdaMasterDataDto>> keyword = await(callback ->
                 repository.searchBorrowers(String.join("", Collections.nCopies(31, "A")), callback));
         Awaited<PdaBorrowBatchCheckDto> date = await(callback -> repository.batchCheckIssue(
-                "INTERNAL", 7L, 9L, null, null, "2026/08/06", Collections.singletonList(
+                "INTERNAL", 7L, 9L, null, null, null, null,
+                "2026/08/06", Collections.singletonList(
                         new PdaAssetIdentifyRequest("EPC", "E20001")), callback));
         Awaited<PdaBorrowBatchCheckDto> external = await(callback -> repository.batchCheckIssue(
-                "EXTERNAL", 7L, 9L, null, "13800000000", "2026-08-06",
+                "EXTERNAL", 7L, 9L, "外部公司", "13800000000", null, "13900000000",
+                "2026-08-06",
                 Collections.singletonList(new PdaAssetIdentifyRequest("EPC", "E20001")), callback));
 
         assertNotNull(keyword.error);

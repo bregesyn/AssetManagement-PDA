@@ -21,6 +21,12 @@ public class PdaBorrowIssueBatchCheckRequestDto {
     @SerializedName("borrowContactPhone")
     private final String borrowContactPhone;
 
+    @SerializedName("borrowExternalContactName")
+    private final String borrowExternalContactName;
+
+    @SerializedName("borrowExternalContactPhone")
+    private final String borrowExternalContactPhone;
+
     @SerializedName("expectedReturnDate")
     private final String expectedReturnDate;
 
@@ -29,12 +35,15 @@ public class PdaBorrowIssueBatchCheckRequestDto {
 
     public PdaBorrowIssueBatchCheckRequestDto(String borrowerType, Long borrowUserId,
             Long borrowDeptId, String borrowOrgName, String borrowContactPhone,
+            String borrowExternalContactName, String borrowExternalContactPhone,
             String expectedReturnDate, List<PdaAssetIdentifyRequest> identifiers) {
         this.borrowerType = borrowerType;
         this.borrowUserId = borrowUserId;
         this.borrowDeptId = borrowDeptId;
         this.borrowOrgName = borrowOrgName;
         this.borrowContactPhone = borrowContactPhone;
+        this.borrowExternalContactName = borrowExternalContactName;
+        this.borrowExternalContactPhone = borrowExternalContactPhone;
         this.expectedReturnDate = expectedReturnDate;
         this.identifiers = identifiers;
     }

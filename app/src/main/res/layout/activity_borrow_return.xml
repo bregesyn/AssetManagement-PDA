@@ -211,10 +211,42 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/pda_small_spacing"
-                        android:hint="@string/borrow_external_phone_hint">
+                        android:hint="@string/borrow_internal_contact_phone_hint">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/borrowExternalPhoneInput"
+                            android:id="@+id/borrowInternalContactPhoneInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/pda_input_min_height"
+                            android:inputType="phone"
+                            android:maxLength="30"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/PdaTextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:hint="@string/borrow_external_contact_name_hint">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/borrowExternalContactNameInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/pda_input_min_height"
+                            android:inputType="textPersonName"
+                            android:maxLength="100"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/PdaTextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pda_small_spacing"
+                        android:hint="@string/borrow_external_contact_phone_hint">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/borrowExternalContactPhoneInput"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/pda_input_min_height"
                             android:inputType="phone"

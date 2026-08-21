@@ -73,6 +73,8 @@ public final class BorrowReturnViewModel extends BaseUhfViewModel {
     private String borrowerType = DefaultBorrowRepository.BORROWER_TYPE_INTERNAL;
     private PdaMasterDataDto selectedBorrower;
     private String externalOrgName;
+    private String internalContactPhone;
+    private String externalContactName;
     private String externalContactPhone;
     private String expectedReturnDate;
     private int duplicateReadCount;
@@ -144,10 +146,12 @@ public final class BorrowReturnViewModel extends BaseUhfViewModel {
         borrowerType = checked.toUpperCase(Locale.ROOT);
         if (DefaultBorrowRepository.BORROWER_TYPE_INTERNAL.equals(borrowerType)) {
             externalOrgName = null;
+            internalContactPhone = null;
+            externalContactName = null;
             externalContactPhone = null;
         } else if (selectedBorrower != null) {
             // 外部借用仍以选中的启用人员作为内部联系人，手机号从服务端人员快照带出，避免现场重复录入或错填。
-            externalContactPhone = trim(selectedBorrower.getPhoneNumber());
+            internalContactPhone = trim(selectedBorrower.getPhoneNumber());
         }
         clearMessages();
         publish();
@@ -159,7 +163,7 @@ public final class BorrowReturnViewModel extends BaseUhfViewModel {
         }
         if (sameBorrower(selectedBorrower, value)) {
             if (DefaultBorrowRepository.BORROWER_TYPE_EXTERNAL.equals(borrowerType)) {
-                externalContactPhone = trim(value.getPhoneNumber());
+                internalContactPhone = trim(value.getPhoneNumber());
                 publish();
             }
             return;
@@ -168,7 +172,7 @@ public final class BorrowReturnViewModel extends BaseUhfViewModel {
         clearWorkingBatch(true);
         selectedBorrower = value;
         if (DefaultBorrowRepository.BORROWER_TYPE_EXTERNAL.equals(borrowerType)) {
-            externalContactPhone = trim(value.getPhoneNumber());
+            internalContactPhone = trim(value.getPhoneNumber());
         }
         clearMessages();
         infoMessage = "已选择" + borrowerLabel() + " " + value.getName();
@@ -177,6 +181,14 @@ public final class BorrowReturnViewModel extends BaseUhfViewModel {
 
     public void setExternalOrgName(String value) {
         externalOrgName = trim(value);
+    }
+
+    public void setInternalContactPhone(String value) {
+        internalContactPhone = trim(value);
+    }
+
+    public void setExternalContactName(String value) {
+        externalContactName = trim(value);
     }
 
     public void setExternalContactPhone(String value) {
@@ -378,8 +390,8 @@ public final class BorrowReturnViewModel extends BaseUhfViewModel {
         if (requestMode == BorrowReturnUiState.Mode.ISSUE) {
             request = borrowRepository.batchCheckIssue(borrowerType,
                     selectedBorrower.getId(), selectedBorrower.getParentId(),
-                    externalOrgName, externalContactPhone, expectedReturnDate,
-                    submitted, callback);
+                    externalOrgName, internalContactPhone, externalContactName,
+                    externalContactPhone, expectedReturnDate, submitted, callback);
         } else {
             request = borrowRepository.batchCheckReturn(submitted, callback);
         }
@@ -529,8 +541,9 @@ public final class BorrowReturnViewModel extends BaseUhfViewModel {
         if (requestMode == BorrowReturnUiState.Mode.ISSUE) {
             request = borrowRepository.batchSubmitIssue(borrowerType,
                     selectedBorrower.getId(), selectedBorrower.getParentId(),
-                    externalOrgName, externalContactPhone, expectedReturnDate,
-                    submitted, checkedRemark, issueCallback);
+                    externalOrgName, internalContactPhone, externalContactName,
+                    externalContactPhone, expectedReturnDate, submitted,
+                    checkedRemark, issueCallback);
         } else {
             request = borrowRepository.batchSubmitReturn(submitted, returnCallback);
         }
@@ -699,6 +712,8 @@ public final class BorrowReturnViewModel extends BaseUhfViewModel {
     private void clearIssueForm() {
         selectedBorrower = null;
         externalOrgName = null;
+        internalContactPhone = null;
+        externalContactName = null;
         externalContactPhone = null;
         expectedReturnDate = null;
         borrowerType = defaultBorrowerType(borrowerTypes);
@@ -723,8 +738,18 @@ public final class BorrowReturnViewModel extends BaseUhfViewModel {
             return false;
         }
         if (DefaultBorrowRepository.BORROWER_TYPE_EXTERNAL.equals(borrowerType)
+                && !hasText(internalContactPhone)) {
+            setError("请填写内部联系人电话");
+            return false;
+        }
+        if (DefaultBorrowRepository.BORROWER_TYPE_EXTERNAL.equals(borrowerType)
+                && !hasText(externalContactName)) {
+            setError("请填写外部联系人");
+            return false;
+        }
+        if (DefaultBorrowRepository.BORROWER_TYPE_EXTERNAL.equals(borrowerType)
                 && !hasText(externalContactPhone)) {
-            setError("请填写联系电话");
+            setError("请填写外部联系人电话");
             return false;
         }
         return true;
@@ -875,7 +900,8 @@ public final class BorrowReturnViewModel extends BaseUhfViewModel {
                 !initialFailed && bootstrapLoaded, initialFailed, canIssueScan,
                 canIssueSubmit, canReturnScan, canReturnSubmit, mode, operation,
                 getCurrentScanState(), operatorName, serverTime, borrowerTypes,
-                borrowerType, selectedBorrower, externalOrgName, externalContactPhone,
+                borrowerType, selectedBorrower, externalOrgName, internalContactPhone,
+                externalContactName, externalContactPhone,
                 expectedReturnDate, new ArrayList<>(assetsById.values()),
                 new ArrayList<>(issuesByKey.values()), readingsByEpc.size(),
                 duplicateReadCount, latestEpc, infoMessage, errorMessage,

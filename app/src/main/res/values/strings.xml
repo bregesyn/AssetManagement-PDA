@@ -389,7 +389,9 @@
     <string name="borrow_select_borrower">选择借用人</string>
     <string name="borrow_change_borrower">更换借用人</string>
     <string name="borrow_external_org_hint">外部公司名称 *</string>
-    <string name="borrow_external_phone_hint">联系电话 *</string>
+    <string name="borrow_internal_contact_phone_hint">内部联系人电话 *</string>
+    <string name="borrow_external_contact_name_hint">外部联系人 *</string>
+    <string name="borrow_external_contact_phone_hint">外部联系人电话 *</string>
     <string name="borrow_expected_date_unselected">选择预计归还日期 *</string>
     <string name="borrow_expected_date_format">预计归还日期：%1$s</string>
     <string name="borrow_return_policy_hint">归还不选择借用单、仓库或位置。服务端会按资产定位当前借用明细，并恢复借用前仓位；实际归还日期将在审批通过后由后台记录。</string>

@@ -26,6 +26,7 @@ public final class DefaultBorrowRepository implements BorrowRepository {
     public static final int MAX_REMARK_LENGTH = 500;
     public static final int MAX_KEYWORD_LENGTH = 30;
     public static final int MAX_ORG_NAME_LENGTH = 100;
+    public static final int MAX_CONTACT_NAME_LENGTH = 100;
     public static final int MAX_PHONE_LENGTH = 30;
 
     public static final String BORROWER_TYPE_INTERNAL = "INTERNAL";
@@ -58,29 +59,34 @@ public final class DefaultBorrowRepository implements BorrowRepository {
     @Override
     public RequestHandle batchCheckIssue(String borrowerType, Long borrowUserId,
             Long borrowDeptId, String borrowOrgName, String borrowContactPhone,
+            String borrowExternalContactName, String borrowExternalContactPhone,
             String expectedReturnDate, List<PdaAssetIdentifyRequest> identifiers,
             RepositoryCallback<PdaBorrowBatchCheckDto> callback) {
         List<PdaAssetIdentifyRequest> checked = normalizeIdentifiers(identifiers);
         IssueInput input = normalizeIssueInput(borrowerType, borrowUserId, borrowDeptId,
-                borrowOrgName, borrowContactPhone, expectedReturnDate);
+                borrowOrgName, borrowContactPhone, borrowExternalContactName,
+                borrowExternalContactPhone, expectedReturnDate);
         if (!check(callback, input != null && checked != null)) {
             return RequestHandle.NONE;
         }
         return callExecutor.execute(apiService.borrowIssueBatchCheck(
                 new PdaBorrowIssueBatchCheckRequestDto(input.borrowerType,
                         input.borrowUserId, input.borrowDeptId, input.borrowOrgName,
-                        input.borrowContactPhone, input.expectedReturnDate, checked)),
+                        input.borrowContactPhone, input.borrowExternalContactName,
+                        input.borrowExternalContactPhone, input.expectedReturnDate, checked)),
                 true, callback);
     }
 
     @Override
     public RequestHandle batchSubmitIssue(String borrowerType, Long borrowUserId,
             Long borrowDeptId, String borrowOrgName, String borrowContactPhone,
+            String borrowExternalContactName, String borrowExternalContactPhone,
             String expectedReturnDate, List<PdaAssetIdentifyRequest> identifiers,
             String remark, RepositoryCallback<PdaBorrowIssueBatchSubmitDto> callback) {
         List<PdaAssetIdentifyRequest> checked = normalizeIdentifiers(identifiers);
         IssueInput input = normalizeIssueInput(borrowerType, borrowUserId, borrowDeptId,
-                borrowOrgName, borrowContactPhone, expectedReturnDate);
+                borrowOrgName, borrowContactPhone, borrowExternalContactName,
+                borrowExternalContactPhone, expectedReturnDate);
         String checkedRemark = trim(remark);
         if (!check(callback, input != null && checked != null
                 && (checkedRemark == null || checkedRemark.length() <= MAX_REMARK_LENGTH))) {
@@ -89,8 +95,9 @@ public final class DefaultBorrowRepository implements BorrowRepository {
         return callExecutor.execute(apiService.borrowIssueBatchSubmit(
                 new PdaBorrowIssueBatchSubmitRequestDto(input.borrowerType,
                         input.borrowUserId, input.borrowDeptId, input.borrowOrgName,
-                        input.borrowContactPhone, input.expectedReturnDate, checked,
-                        checkedRemark)), true, callback);
+                        input.borrowContactPhone, input.borrowExternalContactName,
+                        input.borrowExternalContactPhone, input.expectedReturnDate,
+                        checked, checkedRemark)), true, callback);
     }
 
     @Override
@@ -117,6 +124,7 @@ public final class DefaultBorrowRepository implements BorrowRepository {
 
     private IssueInput normalizeIssueInput(String borrowerType, Long borrowUserId,
             Long borrowDeptId, String borrowOrgName, String borrowContactPhone,
+            String borrowExternalContactName, String borrowExternalContactPhone,
             String expectedReturnDate) {
         String type = trim(borrowerType);
         if (type == null) {
@@ -131,20 +139,27 @@ public final class DefaultBorrowRepository implements BorrowRepository {
             return null;
         }
         String org = trim(borrowOrgName);
-        String phone = trim(borrowContactPhone);
+        String internalContactPhone = trim(borrowContactPhone);
+        String externalContactName = trim(borrowExternalContactName);
+        String externalContactPhone = trim(borrowExternalContactPhone);
         if (BORROWER_TYPE_EXTERNAL.equals(type)) {
-            if (org == null || phone == null
+            if (org == null || internalContactPhone == null || externalContactName == null
+                    || externalContactPhone == null
                     || org.length() > MAX_ORG_NAME_LENGTH
-                    || phone.length() > MAX_PHONE_LENGTH) {
+                    || internalContactPhone.length() > MAX_PHONE_LENGTH
+                    || externalContactName.length() > MAX_CONTACT_NAME_LENGTH
+                    || externalContactPhone.length() > MAX_PHONE_LENGTH) {
                 return null;
             }
         } else {
             // 内部借用不携带外部联系资料，避免切换借用类型后混入旧表单值。
             org = null;
-            phone = null;
+            internalContactPhone = null;
+            externalContactName = null;
+            externalContactPhone = null;
         }
-        return new IssueInput(type, borrowUserId, borrowDeptId, org, phone,
-                expectedReturnDate.trim());
+        return new IssueInput(type, borrowUserId, borrowDeptId, org, internalContactPhone,
+                externalContactName, externalContactPhone, expectedReturnDate.trim());
     }
 
     private List<PdaAssetIdentifyRequest> normalizeIdentifiers(
@@ -220,15 +235,21 @@ public final class DefaultBorrowRepository implements BorrowRepository {
         private final Long borrowDeptId;
         private final String borrowOrgName;
         private final String borrowContactPhone;
+        private final String borrowExternalContactName;
+        private final String borrowExternalContactPhone;
         private final String expectedReturnDate;
 
         private IssueInput(String borrowerType, Long borrowUserId, Long borrowDeptId,
-                String borrowOrgName, String borrowContactPhone, String expectedReturnDate) {
+                String borrowOrgName, String borrowContactPhone,
+                String borrowExternalContactName, String borrowExternalContactPhone,
+                String expectedReturnDate) {
             this.borrowerType = borrowerType;
             this.borrowUserId = borrowUserId;
             this.borrowDeptId = borrowDeptId;
             this.borrowOrgName = borrowOrgName;
             this.borrowContactPhone = borrowContactPhone;
+            this.borrowExternalContactName = borrowExternalContactName;
+            this.borrowExternalContactPhone = borrowExternalContactPhone;
             this.expectedReturnDate = expectedReturnDate;
         }
     }

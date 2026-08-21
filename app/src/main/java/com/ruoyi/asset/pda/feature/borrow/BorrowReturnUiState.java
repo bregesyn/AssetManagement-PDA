@@ -40,6 +40,8 @@ public final class BorrowReturnUiState {
     private final String borrowerType;
     private final PdaMasterDataDto selectedBorrower;
     private final String externalOrgName;
+    private final String internalContactPhone;
+    private final String externalContactName;
     private final String externalContactPhone;
     private final String expectedReturnDate;
     private final List<BorrowAssetItem> assets;
@@ -60,6 +62,7 @@ public final class BorrowReturnUiState {
             Operation operation, UhfScanState scanState, String operatorName,
             String serverTime, List<PdaDictItemDto> borrowerTypes, String borrowerType,
             PdaMasterDataDto selectedBorrower, String externalOrgName,
+            String internalContactPhone, String externalContactName,
             String externalContactPhone, String expectedReturnDate,
             List<BorrowAssetItem> assets, List<BorrowIssueItem> issues, int rawEpcCount,
             int duplicateReadCount, String latestEpc, String infoMessage,
@@ -82,6 +85,8 @@ public final class BorrowReturnUiState {
         this.borrowerType = borrowerType;
         this.selectedBorrower = selectedBorrower;
         this.externalOrgName = externalOrgName;
+        this.internalContactPhone = internalContactPhone;
+        this.externalContactName = externalContactName;
         this.externalContactPhone = externalContactPhone;
         this.expectedReturnDate = expectedReturnDate;
         this.assets = immutable(assets);
@@ -118,6 +123,8 @@ public final class BorrowReturnUiState {
     public String getBorrowerType() { return borrowerType; }
     public PdaMasterDataDto getSelectedBorrower() { return selectedBorrower; }
     public String getExternalOrgName() { return externalOrgName; }
+    public String getInternalContactPhone() { return internalContactPhone; }
+    public String getExternalContactName() { return externalContactName; }
     public String getExternalContactPhone() { return externalContactPhone; }
     public String getExpectedReturnDate() { return expectedReturnDate; }
     public List<BorrowAssetItem> getAssets() { return assets; }
@@ -141,6 +148,7 @@ public final class BorrowReturnUiState {
     public boolean hasPendingWork() {
         return !assets.isEmpty() || !issues.isEmpty() || rawEpcCount > 0
                 || selectedBorrower != null || hasText(externalOrgName)
+                || hasText(internalContactPhone) || hasText(externalContactName)
                 || hasText(externalContactPhone) || hasText(expectedReturnDate);
     }
 

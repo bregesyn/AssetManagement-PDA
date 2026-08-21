@@ -12,10 +12,12 @@ public final class PdaBorrowIssueBatchSubmitRequestDto
 
     public PdaBorrowIssueBatchSubmitRequestDto(String borrowerType, Long borrowUserId,
             Long borrowDeptId, String borrowOrgName, String borrowContactPhone,
+            String borrowExternalContactName, String borrowExternalContactPhone,
             String expectedReturnDate, List<PdaAssetIdentifyRequest> identifiers,
             String remark) {
         super(borrowerType, borrowUserId, borrowDeptId, borrowOrgName,
-                borrowContactPhone, expectedReturnDate, identifiers);
+                borrowContactPhone, borrowExternalContactName, borrowExternalContactPhone,
+                expectedReturnDate, identifiers);
         this.remark = remark;
     }
 }

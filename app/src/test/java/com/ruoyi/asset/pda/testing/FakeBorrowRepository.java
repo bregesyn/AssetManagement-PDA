@@ -26,6 +26,8 @@ public final class FakeBorrowRepository implements BorrowRepository {
     private Long lastBorrowDeptId;
     private String lastBorrowOrgName;
     private String lastBorrowContactPhone;
+    private String lastBorrowExternalContactName;
+    private String lastBorrowExternalContactPhone;
     private String lastExpectedReturnDate;
     private String lastRemark;
     private List<PdaAssetIdentifyRequest> lastIdentifiers;
@@ -47,11 +49,13 @@ public final class FakeBorrowRepository implements BorrowRepository {
     @Override
     public RequestHandle batchCheckIssue(String borrowerType, Long borrowUserId,
             Long borrowDeptId, String borrowOrgName, String borrowContactPhone,
+            String borrowExternalContactName, String borrowExternalContactPhone,
             String expectedReturnDate, List<PdaAssetIdentifyRequest> identifiers,
             RepositoryCallback<PdaBorrowBatchCheckDto> callback) {
         issueCheckCount++;
         recordIssue(borrowerType, borrowUserId, borrowDeptId, borrowOrgName,
-                borrowContactPhone, expectedReturnDate, identifiers);
+                borrowContactPhone, borrowExternalContactName, borrowExternalContactPhone,
+                expectedReturnDate, identifiers);
         issueCheckCallback = callback;
         return RequestHandle.NONE;
     }
@@ -59,11 +63,13 @@ public final class FakeBorrowRepository implements BorrowRepository {
     @Override
     public RequestHandle batchSubmitIssue(String borrowerType, Long borrowUserId,
             Long borrowDeptId, String borrowOrgName, String borrowContactPhone,
+            String borrowExternalContactName, String borrowExternalContactPhone,
             String expectedReturnDate, List<PdaAssetIdentifyRequest> identifiers,
             String remark, RepositoryCallback<PdaBorrowIssueBatchSubmitDto> callback) {
         issueSubmitCount++;
         recordIssue(borrowerType, borrowUserId, borrowDeptId, borrowOrgName,
-                borrowContactPhone, expectedReturnDate, identifiers);
+                borrowContactPhone, borrowExternalContactName, borrowExternalContactPhone,
+                expectedReturnDate, identifiers);
         lastRemark = remark;
         issueSubmitCallback = callback;
         return RequestHandle.NONE;
@@ -117,6 +123,8 @@ public final class FakeBorrowRepository implements BorrowRepository {
     public Long getLastBorrowDeptId() { return lastBorrowDeptId; }
     public String getLastBorrowOrgName() { return lastBorrowOrgName; }
     public String getLastBorrowContactPhone() { return lastBorrowContactPhone; }
+    public String getLastBorrowExternalContactName() { return lastBorrowExternalContactName; }
+    public String getLastBorrowExternalContactPhone() { return lastBorrowExternalContactPhone; }
     public String getLastExpectedReturnDate() { return lastExpectedReturnDate; }
     public String getLastRemark() { return lastRemark; }
     public List<PdaAssetIdentifyRequest> getLastIdentifiers() { return lastIdentifiers; }
@@ -127,13 +135,17 @@ public final class FakeBorrowRepository implements BorrowRepository {
     public int getReturnSubmitCount() { return returnSubmitCount; }
 
     private void recordIssue(String borrowerType, Long borrowUserId, Long borrowDeptId,
-            String borrowOrgName, String borrowContactPhone, String expectedReturnDate,
+            String borrowOrgName, String borrowContactPhone,
+            String borrowExternalContactName, String borrowExternalContactPhone,
+            String expectedReturnDate,
             List<PdaAssetIdentifyRequest> identifiers) {
         lastBorrowerType = borrowerType;
         lastBorrowUserId = borrowUserId;
         lastBorrowDeptId = borrowDeptId;
         lastBorrowOrgName = borrowOrgName;
         lastBorrowContactPhone = borrowContactPhone;
+        lastBorrowExternalContactName = borrowExternalContactName;
+        lastBorrowExternalContactPhone = borrowExternalContactPhone;
         lastExpectedReturnDate = expectedReturnDate;
         lastIdentifiers = copy(identifiers);
     }

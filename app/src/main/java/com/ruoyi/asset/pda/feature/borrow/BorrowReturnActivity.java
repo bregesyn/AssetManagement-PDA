@@ -124,7 +124,19 @@ public final class BorrowReturnActivity extends SessionAwareActivity {
                 viewModel.setExternalOrgName(editable == null ? null : editable.toString());
             }
         });
-        binding.borrowExternalPhoneInput.addTextChangedListener(new SimpleTextWatcher() {
+        binding.borrowInternalContactPhoneInput.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+                viewModel.setInternalContactPhone(editable == null ? null : editable.toString());
+            }
+        });
+        binding.borrowExternalContactNameInput.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+                viewModel.setExternalContactName(editable == null ? null : editable.toString());
+            }
+        });
+        binding.borrowExternalContactPhoneInput.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable editable) {
                 viewModel.setExternalContactPhone(editable == null ? null : editable.toString());
@@ -324,9 +336,13 @@ public final class BorrowReturnActivity extends SessionAwareActivity {
                 && "EXTERNAL".equalsIgnoreCase(state.getBorrowerType());
         setVisible(binding.borrowExternalForm, showExternal);
         binding.borrowExternalOrgInput.setEnabled(enabled && showExternal);
-        binding.borrowExternalPhoneInput.setEnabled(enabled && showExternal);
+        binding.borrowInternalContactPhoneInput.setEnabled(enabled && showExternal);
+        binding.borrowExternalContactNameInput.setEnabled(enabled && showExternal);
+        binding.borrowExternalContactPhoneInput.setEnabled(enabled && showExternal);
         setTextIfChanged(binding.borrowExternalOrgInput, state.getExternalOrgName());
-        setTextIfChanged(binding.borrowExternalPhoneInput, state.getExternalContactPhone());
+        setTextIfChanged(binding.borrowInternalContactPhoneInput, state.getInternalContactPhone());
+        setTextIfChanged(binding.borrowExternalContactNameInput, state.getExternalContactName());
+        setTextIfChanged(binding.borrowExternalContactPhoneInput, state.getExternalContactPhone());
         binding.borrowExpectedDateButton.setEnabled(enabled);
         if (hasText(state.getExpectedReturnDate())) {
             binding.borrowExpectedDateButton.setText(getString(
